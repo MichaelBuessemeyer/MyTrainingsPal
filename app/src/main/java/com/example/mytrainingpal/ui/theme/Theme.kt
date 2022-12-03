@@ -15,9 +15,11 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = DarkPetrol,
+    onPrimary = Color.White,
     background = LightPetrol,
     onBackground = Color.White,
     secondary = Orange,
+    onSecondary = Color.Black,
 
     /*
     secondaryContainer = Color,

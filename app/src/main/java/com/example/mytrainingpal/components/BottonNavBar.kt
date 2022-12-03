@@ -1,9 +1,6 @@
 package com.example.mytrainingpal.components
 
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
@@ -13,11 +10,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    BottomAppBar {
+    BottomAppBar(backgroundColor = MaterialTheme.colors.primary) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         tabScreens.forEach { screen ->
             BottomNavigationItem(
+                selectedContentColor = MaterialTheme.colors.secondary,
+                unselectedContentColor = MaterialTheme.colors.onPrimary,
                 icon = { Icon(screen.icon, "") },
                 label = { Text(screen.label) },
                 alwaysShowLabel = false,
