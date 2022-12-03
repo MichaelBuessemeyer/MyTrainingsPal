@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Sports
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ExerciseFloatingButton(navigateToTrainingScreen: () -> Unit) {
+fun StartExerciseFloatingButton(navigateToTrainingScreen: () -> Unit) {
     FloatingActionButton(onClick = { navigateToTrainingScreen() }) {
         Icon(imageVector = Icons.Default.Sports, contentDescription = "Start Training")
     }
