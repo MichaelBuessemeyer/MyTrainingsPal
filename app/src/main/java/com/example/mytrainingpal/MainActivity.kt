@@ -11,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.mytrainingpal.components.AppNavHost
 import com.example.mytrainingpal.model.*
 import com.example.mytrainingpal.ui.theme.MyTrainingPalTheme
 import java.time.LocalDate
+import java.util.*
 
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +31,10 @@ class MainActivity : ComponentActivity() {
             }
         }
         // Load some stuff into the db.
-        var db = TheMuscleBase.getDatabaseInstance(this)
+        val db = Room.databaseBuilder(
+            applicationContext,
+            TheMuscleBase::class.java, "TheMuscleBase"
+        ).allowMainThreadQueries().build()
         var muscleDao = db.getMuscleDao()
         var musclePainEntryMapDao = db.getMusclePainEntryMapDao()
         var musclePainEntryDao = db.getMusclePainEntryDao()
@@ -45,9 +50,9 @@ class MainActivity : ComponentActivity() {
         var muscleId10 = muscleDao.insert(Muscle(name = "right_chest"))
 
         var musclePainEntryId1 =
-            musclePainEntryDao.insert(MusclePainEntry(date = LocalDate.of(2022, 12, 1)))
+            musclePainEntryDao.insert(MusclePainEntry(date = GregorianCalendar(2022, Calendar.DECEMBER, 1).time))
         var musclePainEntryId2 =
-            musclePainEntryDao.insert(MusclePainEntry(date = LocalDate.of(2022, 12, 2)))
+            musclePainEntryDao.insert(MusclePainEntry(date = GregorianCalendar(2022, Calendar.DECEMBER, 2).time))
         var mappingId1 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId1, 2))
         var mappingId2 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId2, 2))
         var mappingId3 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId3, 2))

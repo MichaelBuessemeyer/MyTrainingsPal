@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 
 
 @Database(entities = [MusclePainEntry::class,Muscle::class,MusclePainEntryMap::class],version = 1)
+@TypeConverters(DateConverter::class)
 abstract class TheMuscleBase: RoomDatabase() {
 
     abstract fun getMuscleDao(): MuscleDao
