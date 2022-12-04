@@ -49,6 +49,8 @@ android {
 def nav_version = "2.5.3"
 
 dependencies {
+
+    implementation "io.github.boguszpawlowski.composecalendar:composecalendar:1.0.2"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
     implementation 'androidx.core:core-ktx:1.7.0'
