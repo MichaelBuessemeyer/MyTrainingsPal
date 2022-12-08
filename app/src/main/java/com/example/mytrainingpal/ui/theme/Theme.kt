@@ -19,7 +19,7 @@ private val LightColorPalette = lightColors(
     background = LightPetrol,
     onBackground = Color.White,
     secondary = Orange,
-    onSecondary = Color.Black,
+    onSecondary = Color.White,
 
     /*
     secondaryContainer = Color,
