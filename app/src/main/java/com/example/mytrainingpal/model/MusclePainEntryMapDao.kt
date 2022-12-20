@@ -11,5 +11,5 @@ abstract class MusclePainEntryMapDao {
     abstract fun getAllSoreMuscleEntryMaps(): List<MusclePainEntryMap>
     @Transaction
     @Query("SELECT * FROM MusclePainEntry")
-    abstract fun getAllMusclePainEntriesWithExercises(): List<MusclePainEntryWithMuscles>
+    abstract fun getAllMusclePainEntriesWithMuscles(): List<MusclePainEntryWithMuscles>
 }

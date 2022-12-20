@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
         for(musclePainEntry: MusclePainEntry in musclePainEntryDao.getAllMusclePainEntries()) {
             Log.d(TAG,"MusclePainEntry is ${musclePainEntry.date} with id ${musclePainEntry.musclePainEntryId}")
         }
-        for(mapping: MusclePainEntryWithMuscles in musclePainEntryMapDao.getAllMusclePainEntriesWithExercises()){
+        for(mapping: MusclePainEntryWithMuscles in musclePainEntryMapDao.getAllMusclePainEntriesWithMuscles()){
             Log.d(TAG, "MusclePainEntry on day ${mapping.musclePainEntry.date} has the following pain:")
             for(connection in mapping.soreMusclesConnections){
                 Log.d(TAG, "\t\t Pain Value:${connection.musclePainEntryToMuscleConnection.painIntensity}")
