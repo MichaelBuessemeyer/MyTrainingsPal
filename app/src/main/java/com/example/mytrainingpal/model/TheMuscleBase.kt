@@ -5,13 +5,17 @@ import androidx.room.*
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [MusclePainEntry::class,Muscle::class,MusclePainEntryMap::class],version = 1)
+@Database(entities = [MusclePainEntry::class,Muscle::class,MusclePainEntryMap::class, Exercise::class, ExerciseMuscleMap::class, WorkoutEntry::class, WorkoutEntryExerciseMap::class],version = 1)
 @TypeConverters(DateConverter::class)
 abstract class TheMuscleBase: RoomDatabase() {
 
     abstract fun getMuscleDao(): MuscleDao
     abstract fun getMusclePainEntryDao(): MusclePainEntryDao
     abstract fun getMusclePainEntryMapDao(): MusclePainEntryMapDao
+    abstract fun getExerciseDao(): ExerciseDao
+    abstract fun getExerciseMuscleMapDao(): ExerciseMuscleMapDao
+    abstract fun getWorkoutEntryDao(): WorkoutEntryDao
+    abstract fun getWorkoutEntryExerciseMapDao(): WorkoutEntryExerciseMapDao
 
     companion object {
 

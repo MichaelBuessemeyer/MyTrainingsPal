@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Entity(
     primaryKeys = ["exerciseIdMap", "muscleIdMap"],
-    indices = [Index("exerciseIdMap")],
+    indices = [Index("exerciseIdMap"), Index("muscleIdMap")],
     foreignKeys = [
         ForeignKey(
             entity = Exercise::class,
@@ -25,5 +25,5 @@ import androidx.room.*
 )
 data class ExerciseMuscleMap(
     val exerciseIdMap: Long,
-    val muscleIdMap: Long,
+    var muscleIdMap: Long,
 )

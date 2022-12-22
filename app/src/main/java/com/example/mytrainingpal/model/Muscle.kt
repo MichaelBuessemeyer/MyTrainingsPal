@@ -9,5 +9,5 @@ import androidx.room.*
 data class Muscle(
     @PrimaryKey
     val muscleId: Long? = null,
-    val name: String
+    var name: String
 )

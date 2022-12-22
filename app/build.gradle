@@ -51,6 +51,8 @@ android {
 def nav_version = "2.5.3"
 
 dependencies {
+    implementation 'androidx.test.ext:junit-ktx:1.1.4'
+
     // room dependency
     def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"

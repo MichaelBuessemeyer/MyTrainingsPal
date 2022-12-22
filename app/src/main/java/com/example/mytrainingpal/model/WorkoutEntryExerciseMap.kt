@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Entity(
     primaryKeys = ["workoutIdMap", "exerciseIdMap"],
-    indices = [Index("workoutIdMap")],
+    indices = [Index("workoutIdMap"), Index("exerciseIdMap")],
     foreignKeys = [
         ForeignKey(
             entity = WorkoutEntry::class,

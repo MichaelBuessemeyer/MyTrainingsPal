@@ -12,4 +12,8 @@ abstract class MusclePainEntryDao {
     // Method below probably not needed
     @Query("SELECT * FROM MusclePainEntry WHERE musclePainEntryId=:musclePainEntryId")
     abstract fun getMusclePainEntryById(musclePainEntryId: Long): MusclePainEntry
+    @Update
+    abstract fun updateMusclePainEntry(musclePainEntry: MusclePainEntry)
+    @Delete
+    abstract fun deleteMusclePainEntry(musclePainEntry: MusclePainEntry)
 }

@@ -9,6 +9,6 @@ data class MusclePainEntry(
     @PrimaryKey(autoGenerate = true)
     val musclePainEntryId: Long? = null,
     @TypeConverters(DateConverter::class)
-    val date: Date
+    var date: Date
 ) {
 }

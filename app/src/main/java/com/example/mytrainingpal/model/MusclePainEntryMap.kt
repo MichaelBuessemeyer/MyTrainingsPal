@@ -3,9 +3,10 @@ package com.example.mytrainingpal.model
 import androidx.room.*
 
 
+
 @Entity(
     primaryKeys = ["musclePainEntryIdMap", "muscleIdMap"],
-    indices = [Index("musclePainEntryIdMap")],
+    indices = [Index("musclePainEntryIdMap"), Index("muscleIdMap")],
     foreignKeys = [
         ForeignKey(
             entity = MusclePainEntry::class,
@@ -26,5 +27,10 @@ import androidx.room.*
 data class MusclePainEntryMap(
     val musclePainEntryIdMap: Long,
     val muscleIdMap: Long,
-    val painIntensity: Long,
+    var painIntensity: Long,
 )
+
+object MusclePainEntryMapConstants {
+    const val SEVERE_PAIN: Long = 2
+    const val MODERATE_PAIN: Long = 2
+}
