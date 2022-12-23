@@ -31,6 +31,7 @@ fun CalendarScreenContent() {
             horizontalSwipeEnabled = false,
             monthContainer = { content ->
                 WidgetCard(
+                    hasBorder = false,
                     content = { content(PaddingValues(4.dp)) },
                 )
             },

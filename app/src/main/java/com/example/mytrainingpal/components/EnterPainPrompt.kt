@@ -16,18 +16,8 @@ import androidx.compose.ui.unit.sp
 fun EnterPainPrompt(navigateToMusclePain: () -> Unit) {
 
 // Card Reference: https://foso.github.io/Jetpack-Compose-Playground/material/card/
-    Card(
-        border = BorderStroke(2.dp, MaterialTheme.colors.secondary),
-        backgroundColor = MaterialTheme.colors.primary,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        elevation = 10.dp,
-
-    ){
-        Column(
-            //modifier = Modifier.padding(20.dp)
-        ){
+    WidgetCard(true){
+        Column{
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

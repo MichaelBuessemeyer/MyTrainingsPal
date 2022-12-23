@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun OverallRecordsCard() {
     val daysExercised = 100 //TODO: get from database
-    WidgetCard {
+    WidgetCard (hasBorder = false) {
         Column(
             modifier = Modifier.padding(5.dp)
         ) {

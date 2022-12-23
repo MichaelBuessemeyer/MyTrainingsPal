@@ -21,17 +21,17 @@ fun MusclePainWidget(navigateToMusclePain: () -> Unit = {}) {
     if (!painWasAlreadyEntered) {
         title = "Guessed sore muscles:"
     }
-    WidgetCard {
+    WidgetCard (hasBorder = false) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(5.dp)
         ) {
             Text(title, modifier = Modifier.align(Alignment.Start))
-            Image(
+            //Image(
                 // TODO: Show the muscles that are sore (get last pain input from database)
-                painterResource(id = R.drawable.body_muscles),
-                contentDescription = "Body Muscle SVG",
-            )
+                //painterResource(id = R.drawable.body_muscles),
+                //contentDescription = "Body Muscle SVG",
+            //)
             Button(
                 border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
                 onClick = { navigateToMusclePain() },
