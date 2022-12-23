@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.mytrainingpal.components.AppNavHost
@@ -60,12 +61,20 @@ class MainActivity : ComponentActivity() {
         var mappingId3 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId3, 2))
         var mappingId4 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId4, 2))
 
-        for(muscle: Muscle in muscleDao.getAllMuscles().value!!) {
-            Log.d(TAG,"Muscle is ${muscle.name} with id ${muscle.muscleId}")
+        if(muscleDao.getAllMuscles().value != null) {
+            for (muscle: Muscle in muscleDao.getAllMuscles().value!!) {
+                Log.d(TAG, "Muscle is ${muscle.name} with id ${muscle.muscleId}")
+            }
         }
-        for(musclePainEntry: MusclePainEntry in musclePainEntryDao.getAllMusclePainEntries().value!!) {
-            Log.d(TAG,"MusclePainEntry is ${musclePainEntry.date} with id ${musclePainEntry.musclePainEntryId}")
+        if(musclePainEntryDao.getAllMusclePainEntries().value != null) {
+            for (musclePainEntry: MusclePainEntry in musclePainEntryDao.getAllMusclePainEntries().value!!) {
+                Log.d(
+                    TAG,
+                    "MusclePainEntry is ${musclePainEntry.date} with id ${musclePainEntry.musclePainEntryId}"
+                )
+            }
         }
+
         for(mapping: MusclePainEntryWithMuscles in musclePainEntryMapDao.getAllMusclePainEntriesWithMuscles()){
             Log.d(TAG, "MusclePainEntry on day ${mapping.musclePainEntry.date} has the following pain:")
             for(connection in mapping.soreMusclesConnections){
