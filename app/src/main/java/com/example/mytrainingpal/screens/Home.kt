@@ -21,7 +21,7 @@ fun HomeScreen(navController: NavController) {
                 RouteGroups.SETTINGS.route
             )
         })
-    }, navController = navController)
+    }, topBarTitle = null, topBarIcon = null, navController = navController)
 }
 
 @Composable

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.Greeting
+import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.WidgetCard
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
@@ -20,7 +21,7 @@ import io.github.boguszpawlowski.composecalendar.StaticCalendar
 
 @Composable
 fun CalendarScreen(navController: NavController) {
-    TabScreen(tabContent = { CalendarScreenContent() }, navController = navController)
+    TabScreen(tabContent = { CalendarScreenContent() }, topBarIcon = Screen.CalendarMain.icon, topBarTitle = Screen.CalendarMain.label,navController = navController)
 }
 
 @Composable
