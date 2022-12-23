@@ -22,7 +22,7 @@ class MuscleRepository(private val muscleDao: MuscleDao) {
         }
     }
 
-    fun deleteMuslce(muscle: Muscle) {
+    fun deleteMuscle(muscle: Muscle) {
         coroutineScope.launch(Dispatchers.IO) {
             muscleDao.deleteMuscle(muscle)
         }

@@ -22,4 +22,16 @@ class WorkoutEntryExerciseMapViewModel(application: Application) : ViewModel() {
         allWorkoutEntryExerciseMaps = repository.allWorkoutEntryExerciseMaps
         searchResults = repository.searchResults
     }
+
+    fun insertWorkoutEntryExerciseMap(workoutEntryExerciseMap: WorkoutEntryExerciseMap) {
+        repository.insertWorkoutEntryExerciseMap(workoutEntryExerciseMap)
+    }
+
+    fun findWorkoutEntryExerciseMapById(id: Long) {
+        repository.findWorkoutEntryExerciseMapeById(id)
+    }
+
+    fun deleteWorkoutEntryExerciseMap(workoutEntryExerciseMap: WorkoutEntryExerciseMap) {
+        repository.deleteWorkoutEntryExerciseMap(workoutEntryExerciseMap)
+    }
 }

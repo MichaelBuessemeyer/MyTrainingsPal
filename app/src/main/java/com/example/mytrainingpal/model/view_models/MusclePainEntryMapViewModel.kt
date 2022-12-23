@@ -22,4 +22,16 @@ class MusclePainEntryMapViewModel(application: Application) : ViewModel() {
         allMusclePainEntryMaps = repository.allMusclePainEntryMaps
         searchResults = repository.searchResults
     }
+
+    fun insertMusclePainEntryMap(musclePainEntryMap: MusclePainEntryMap) {
+        repository.insertMusclePainEntryMap(musclePainEntryMap)
+    }
+
+    fun findMusclePainEntryMapById(id: Long) {
+        repository.findMusclePainEntryMapById(id)
+    }
+
+    fun deleteMusclePainEntryMap(musclePainEntryMap: MusclePainEntryMap) {
+        repository.deleteMusclePainEntryMap(musclePainEntryMap)
+    }
 }

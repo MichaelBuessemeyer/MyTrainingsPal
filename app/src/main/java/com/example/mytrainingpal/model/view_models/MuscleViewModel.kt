@@ -22,4 +22,16 @@ class MuscleViewModel(application: Application) : ViewModel() {
         allMuscles = repository.allMuscles
         searchResults = repository.searchResults
     }
+
+    fun insertMuscle(muscle: Muscle) {
+        repository.insertMuscle(muscle)
+    }
+
+    fun findMuscleById(id: Long) {
+        repository.findMuscleById(id)
+    }
+
+    fun deleteMuscle(muscle: Muscle) {
+        repository.deleteMuscle(muscle)
+    }
 }

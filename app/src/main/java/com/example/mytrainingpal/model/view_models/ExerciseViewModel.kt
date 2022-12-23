@@ -22,4 +22,16 @@ class ExerciseViewModel(application: Application) : ViewModel() {
         allExercises = repository.allExercises
         searchResults = repository.searchResults
     }
+
+    fun insertExercise(exercise: Exercise) {
+        repository.insertExercise(exercise)
+    }
+
+    fun findExerciseById(id: Long) {
+        repository.findExerciseById(id)
+    }
+
+    fun deleteExercise(exercise: Exercise) {
+        repository.deleteExercise(exercise)
+    }
 }

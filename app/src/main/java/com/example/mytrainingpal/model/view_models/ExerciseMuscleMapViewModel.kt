@@ -22,4 +22,16 @@ class ExerciseMuscleMapViewModel(application: Application) : ViewModel() {
         allExerciseMuscleMaps = repository.allExerciseMuscleMaps
         searchResults = repository.searchResults
     }
+
+    fun insertExerciseMuscleMap(exerciseMuscleMap: ExerciseMuscleMap) {
+        repository.insertExerciseMuscleMap(exerciseMuscleMap)
+    }
+
+    fun findExerciseMuscleMapById(id: Long) {
+        repository.findExerciseMuscleMapById(id)
+    }
+
+    fun deleteExerciseMuscleMap(exerciseMuscleMap: ExerciseMuscleMap) {
+        repository.deleteExerciseMuscleMap(exerciseMuscleMap)
+    }
 }

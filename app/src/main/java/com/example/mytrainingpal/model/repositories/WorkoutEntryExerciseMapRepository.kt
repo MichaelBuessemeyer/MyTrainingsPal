@@ -29,7 +29,7 @@ class WorkoutEntryExerciseMapRepository(private val workoutEntryExerciseMapDao: 
         }
     }
 
-    fun findExerciseById(id: Long) {
+    fun findWorkoutEntryExerciseMapeById(id: Long) {
         coroutineScope.launch(Dispatchers.Main) {
             searchResults.value = listOf(asyncFindById(id).await())
         }

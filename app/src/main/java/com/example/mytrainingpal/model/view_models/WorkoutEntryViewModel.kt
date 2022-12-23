@@ -22,4 +22,16 @@ class WorkoutEntryViewModel(application: Application) : ViewModel() {
         allWorkouts = repository.allWorkouts
         searchResults = repository.searchResults
     }
+
+    fun insertWorkoutEntry(workoutEntry: WorkoutEntry) {
+        repository.insertWorkoutEntry(workoutEntry)
+    }
+
+    fun findWorkoutEntryById(id: Long) {
+        repository.findWorkoutEntryById(id)
+    }
+
+    fun deleteWorkoutEntry(workoutEntry: WorkoutEntry) {
+        repository.deleteWorkoutEntry(workoutEntry)
+    }
 }
