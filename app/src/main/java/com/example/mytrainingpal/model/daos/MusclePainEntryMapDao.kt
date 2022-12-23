@@ -1,6 +1,9 @@
-package com.example.mytrainingpal.model
+package com.example.mytrainingpal.model.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.mytrainingpal.model.MusclePainEntryMap
+import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
 
 
 @Dao
@@ -8,7 +11,7 @@ abstract class MusclePainEntryMapDao {
     @Insert
     abstract fun insert(musclePainEntryMap: MusclePainEntryMap): Long
     @Query("SELECT * FROM MusclePainEntryMap")
-    abstract fun getAllSoreMuscleEntryMaps(): List<MusclePainEntryMap>
+    abstract fun getAllSoreMuscleEntryMaps(): LiveData<List<MusclePainEntryMap>>
     @Query("SELECT * FROM MusclePainEntryMap WHERE musclePainEntryIdMap=:musclePainEntryIdMap")
     abstract fun getMusclePainEntryMapByMusclePainEntryIdMap(musclePainEntryIdMap: Long): MusclePainEntryMap
     @Transaction

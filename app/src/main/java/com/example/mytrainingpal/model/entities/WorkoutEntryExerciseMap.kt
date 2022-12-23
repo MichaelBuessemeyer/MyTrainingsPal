@@ -1,6 +1,8 @@
-package com.example.mytrainingpal.model
+package com.example.mytrainingpal.model.entities
 
 import androidx.room.*
+import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.model.entities.WorkoutEntry
 
 
 @Entity(

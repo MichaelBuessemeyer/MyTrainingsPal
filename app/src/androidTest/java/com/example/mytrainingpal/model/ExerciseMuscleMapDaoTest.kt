@@ -5,6 +5,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.mytrainingpal.model.daos.ExerciseDao
+import com.example.mytrainingpal.model.daos.ExerciseMuscleMapDao
+import com.example.mytrainingpal.model.daos.MuscleDao
+import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.model.entities.ExerciseMuscleMap
+import com.example.mytrainingpal.model.entities.Muscle
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -61,10 +67,10 @@ class ExerciseMuscleMapDaoTest {
         val exerciseMuscleMapRet = exerciseMuscleMapDao.getExerciseMuscleMapByExerciseId(exerciseId)
         assertThat(exerciseMuscleMapRet, equalTo(exerciseMuscleMap))
         var allMaps = exerciseMuscleMapDao.getAllExerciseMuscleMaps()
-        assertEquals(1, allMaps.size)
+        assertEquals(1, allMaps.value!!.size)
         exerciseMuscleMapDao.deleteExerciseMuscleMap(exerciseMuscleMap)
         allMaps = exerciseMuscleMapDao.getAllExerciseMuscleMaps()
-        assertEquals(0, allMaps.size)
+        assertEquals(0, allMaps.value!!.size)
     }
 
     @Test

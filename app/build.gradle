@@ -65,6 +65,9 @@ dependencies {
     implementation "com.chargemap.compose:numberpicker:1.0.3"
     implementation "io.github.boguszpawlowski.composecalendar:composecalendar:1.0.2"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
     implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'

@@ -14,8 +14,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.mytrainingpal.components.AppNavHost
 import com.example.mytrainingpal.model.*
+import com.example.mytrainingpal.model.entities.Muscle
+import com.example.mytrainingpal.model.entities.MusclePainEntry
+import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
 import com.example.mytrainingpal.ui.theme.MyTrainingPalTheme
-import java.time.LocalDate
 import java.util.*
 
 
@@ -58,10 +60,10 @@ class MainActivity : ComponentActivity() {
         var mappingId3 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId3, 2))
         var mappingId4 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId4, 2))
 
-        for(muscle: Muscle in muscleDao.getAllMuscles()) {
+        for(muscle: Muscle in muscleDao.getAllMuscles().value!!) {
             Log.d(TAG,"Muscle is ${muscle.name} with id ${muscle.muscleId}")
         }
-        for(musclePainEntry: MusclePainEntry in musclePainEntryDao.getAllMusclePainEntries()) {
+        for(musclePainEntry: MusclePainEntry in musclePainEntryDao.getAllMusclePainEntries().value!!) {
             Log.d(TAG,"MusclePainEntry is ${musclePainEntry.date} with id ${musclePainEntry.musclePainEntryId}")
         }
         for(mapping: MusclePainEntryWithMuscles in musclePainEntryMapDao.getAllMusclePainEntriesWithMuscles()){

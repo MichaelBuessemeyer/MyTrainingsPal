@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.model
+package com.example.mytrainingpal.model.entities
 
 import androidx.room.*
 

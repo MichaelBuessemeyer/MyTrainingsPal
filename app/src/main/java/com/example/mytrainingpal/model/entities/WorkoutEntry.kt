@@ -1,6 +1,7 @@
-package com.example.mytrainingpal.model
+package com.example.mytrainingpal.model.entities
 
 import androidx.room.*
+import com.example.mytrainingpal.model.DateConverter
 import java.util.Date
 
 

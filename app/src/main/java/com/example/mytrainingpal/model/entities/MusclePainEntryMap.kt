@@ -1,7 +1,8 @@
 package com.example.mytrainingpal.model
 
 import androidx.room.*
-
+import com.example.mytrainingpal.model.entities.Muscle
+import com.example.mytrainingpal.model.entities.MusclePainEntry
 
 
 @Entity(

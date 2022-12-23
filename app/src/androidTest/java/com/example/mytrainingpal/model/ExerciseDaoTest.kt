@@ -5,6 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.mytrainingpal.model.daos.ExerciseDao
+import com.example.mytrainingpal.model.entities.Exercise
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -52,7 +54,7 @@ class ExerciseDaoTest {
         assertThat(exerciseRet, equalTo(exercise))
         exerciseDao.deleteExercise(exercise)
         val allExercises = exerciseDao.getAllExercises()
-        assertEquals(0, allExercises.size)
+        assertEquals(0, allExercises.value!!.size)
     }
 
     @Test

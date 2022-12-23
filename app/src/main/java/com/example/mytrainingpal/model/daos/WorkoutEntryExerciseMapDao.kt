@@ -1,6 +1,9 @@
-package com.example.mytrainingpal.model
+package com.example.mytrainingpal.model.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.mytrainingpal.model.intermediate_entities.WorkoutEntryWithExercises
+import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
 
 
 @Dao
@@ -8,7 +11,7 @@ abstract class WorkoutEntryExerciseMapDao {
     @Insert
     abstract fun insert(workoutEntryExerciseMap: WorkoutEntryExerciseMap): Long
     @Query("SELECT * FROM WorkoutEntryExerciseMap")
-    abstract fun getAllWorkoutEntryExerciseMaps(): List<WorkoutEntryExerciseMap>
+    abstract fun getAllWorkoutEntryExerciseMaps(): LiveData<List<WorkoutEntryExerciseMap>>
     @Transaction
     @Query("SELECT * FROM WorkoutEntry")
     abstract fun getAllWorkoutEntriesWithExercises(): List<WorkoutEntryWithExercises>
