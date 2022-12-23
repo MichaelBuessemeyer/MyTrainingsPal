@@ -1,6 +1,7 @@
 package com.example.mytrainingpal.model.intermediate_entities
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Relation
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
 

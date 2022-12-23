@@ -2,16 +2,18 @@ package com.example.mytrainingpal.model
 
 import android.content.Context
 import androidx.room.*
-import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.mytrainingpal.model.daos.*
 import com.example.mytrainingpal.model.entities.*
 import java.util.concurrent.Executors
 
 
-@Database(entities = [MusclePainEntry::class, Muscle::class,MusclePainEntryMap::class, Exercise::class, ExerciseMuscleMap::class, WorkoutEntry::class, WorkoutEntryExerciseMap::class],version = 1)
+@Database(
+    entities = [MusclePainEntry::class, Muscle::class, MusclePainEntryMap::class, Exercise::class, ExerciseMuscleMap::class, WorkoutEntry::class, WorkoutEntryExerciseMap::class],
+    version = 1
+)
 @TypeConverters(DateConverter::class)
-abstract class TheMuscleBase: RoomDatabase() {
+abstract class TheMuscleBase : RoomDatabase() {
 
     abstract fun getMuscleDao(): MuscleDao
     abstract fun getMusclePainEntryDao(): MusclePainEntryDao

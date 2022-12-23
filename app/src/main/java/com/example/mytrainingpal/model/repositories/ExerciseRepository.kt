@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.mytrainingpal.model.daos.ExerciseDao
 import com.example.mytrainingpal.model.entities.Exercise
 import kotlinx.coroutines.*
+
 // How to implement repository and viewmodel classes taken from
 // https://www.answertopia.com/jetpack-compose/a-jetpack-compose-room-database-and-repository-tutorial/
 

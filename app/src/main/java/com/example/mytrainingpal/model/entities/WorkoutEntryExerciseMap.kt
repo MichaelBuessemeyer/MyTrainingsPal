@@ -1,8 +1,8 @@
 package com.example.mytrainingpal.model.entities
 
-import androidx.room.*
-import com.example.mytrainingpal.model.entities.Exercise
-import com.example.mytrainingpal.model.entities.WorkoutEntry
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 
 
 @Entity(
