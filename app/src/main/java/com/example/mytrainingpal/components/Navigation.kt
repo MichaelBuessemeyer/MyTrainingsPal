@@ -96,7 +96,7 @@ fun AppNavHost(
             composable(Screen.CalendarMain.route) {
                 val owner = LocalViewModelStoreOwner.current
 
-                if(owner != null) {
+                if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
                             LocalContext.current.applicationContext

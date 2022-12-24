@@ -23,8 +23,15 @@ import io.github.boguszpawlowski.composecalendar.StaticCalendar
 
 
 @Composable
-fun CalendarScreen(navController: NavController, muscleViewModel: MuscleViewModel, exerciseViewModel: ExerciseViewModel) {
-    TabScreen(tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) }, navController = navController )
+fun CalendarScreen(
+    navController: NavController,
+    muscleViewModel: MuscleViewModel,
+    exerciseViewModel: ExerciseViewModel
+) {
+    TabScreen(
+        tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) },
+        navController = navController
+    )
 }
 
 @Composable
@@ -60,12 +67,13 @@ fun CalendarScreenContent(muscleViewModel: MuscleViewModel, exerciseViewModel: E
                     )
                 }
             })
-        if(allExercises.isNotEmpty()){
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(allExercises) { exercise ->
-                Greeting(name = exercise.name)
+        if (allExercises.isNotEmpty()) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(allExercises) { exercise ->
+                    Greeting(name = exercise.name)
+                }
             }
-        } } else {
+        } else {
             Text("Still loading exer")
         }
     }
