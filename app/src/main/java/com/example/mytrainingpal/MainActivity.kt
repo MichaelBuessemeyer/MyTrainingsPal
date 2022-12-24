@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.mytrainingpal.components.AppNavHost
-import com.example.mytrainingpal.model.*
+import com.example.mytrainingpal.model.MusclePainEntryMap
+import com.example.mytrainingpal.model.TheMuscleBase
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.entities.MusclePainEntry
 import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
@@ -53,33 +53,63 @@ class MainActivity : ComponentActivity() {
         var muscleId10 = muscleDao.insert(Muscle(name = "right_chest"))
 
         var musclePainEntryId1 =
-            musclePainEntryDao.insert(MusclePainEntry(date = GregorianCalendar(2022, Calendar.DECEMBER, 1).time))
+            musclePainEntryDao.insert(
+                MusclePainEntry(
+                    date = GregorianCalendar(
+                        2022,
+                        Calendar.DECEMBER,
+                        1
+                    ).time
+                )
+            )
         var musclePainEntryId2 =
-            musclePainEntryDao.insert(MusclePainEntry(date = GregorianCalendar(2022, Calendar.DECEMBER, 2).time))
-        var mappingId1 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId1, 2))
-        var mappingId2 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId2, 2))
-        var mappingId3 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId3, 2))
-        var mappingId4 = musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId4, 2))
+            musclePainEntryDao.insert(
+                MusclePainEntry(
+                    date = GregorianCalendar(
+                        2022,
+                        Calendar.DECEMBER,
+                        2
+                    ).time
+                )
+            )
+        var mappingId1 =
+            musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId1, 2))
+        var mappingId2 =
+            musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId2, 2))
+        var mappingId3 =
+            musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId3, 2))
+        var mappingId4 =
+            musclePainEntryMapDao.insert(MusclePainEntryMap(musclePainEntryId1, muscleId4, 2))
 
-        if(muscleDao.getAllMuscles().value != null) {
-            for (muscle: Muscle in muscleDao.getAllMuscles().value!!) {
-                Log.d(TAG, "Muscle is ${muscle.name} with id ${muscle.muscleId}")
+        muscleDao.getAllMuscles().value?.let { muscleList ->
+            {
+                for (muscle: Muscle in muscleList) {
+                    Log.d(TAG, "Muscle is ${muscle.name} with id ${muscle.muscleId}")
+                }
             }
         }
-        if(musclePainEntryDao.getAllMusclePainEntries().value != null) {
-            for (musclePainEntry: MusclePainEntry in musclePainEntryDao.getAllMusclePainEntries().value!!) {
+        musclePainEntryDao.getAllMusclePainEntries().value?.let { musclePainEntries ->
+            {
+                for (musclePainEntry: MusclePainEntry in musclePainEntries) {
+                    Log.d(
+                        TAG,
+                        "MusclePainEntry is ${musclePainEntry.date} with id ${musclePainEntry.musclePainEntryId}"
+                    )
+                }
+            }
+        }
+
+        for (mapping: MusclePainEntryWithMuscles in musclePainEntryMapDao.getAllMusclePainEntriesWithMuscles()) {
+            Log.d(
+                TAG,
+                "MusclePainEntry on day ${mapping.musclePainEntry.date} has the following pain:"
+            )
+            for (connection in mapping.soreMusclesConnections) {
                 Log.d(
                     TAG,
-                    "MusclePainEntry is ${musclePainEntry.date} with id ${musclePainEntry.musclePainEntryId}"
+                    "\t\t Pain Value:${connection.musclePainEntryToMuscleConnection.painIntensity}"
                 )
-            }
-        }
-
-        for(mapping: MusclePainEntryWithMuscles in musclePainEntryMapDao.getAllMusclePainEntriesWithMuscles()){
-            Log.d(TAG, "MusclePainEntry on day ${mapping.musclePainEntry.date} has the following pain:")
-            for(connection in mapping.soreMusclesConnections){
-                Log.d(TAG, "\t\t Pain Value:${connection.musclePainEntryToMuscleConnection.painIntensity}")
-                for(muscle in connection.soreMuscles){
+                for (muscle in connection.soreMuscles) {
                     Log.d(TAG, "\t\t Muscle Name:${muscle.name}")
                 }
             }
