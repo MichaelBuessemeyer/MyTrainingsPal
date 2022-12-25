@@ -1,7 +1,8 @@
-package com.example.mytrainingpal.model
+package com.example.mytrainingpal.model.entities
 
 import androidx.room.*
-import java.util.Date
+import com.example.mytrainingpal.model.DateConverter
+import java.util.*
 
 
 @Entity
@@ -9,6 +10,6 @@ data class MusclePainEntry(
     @PrimaryKey(autoGenerate = true)
     val musclePainEntryId: Long? = null,
     @TypeConverters(DateConverter::class)
-    val date: Date
+    var date: Date
 ) {
 }
