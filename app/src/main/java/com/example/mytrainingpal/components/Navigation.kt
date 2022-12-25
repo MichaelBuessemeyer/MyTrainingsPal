@@ -1,14 +1,22 @@
 package com.example.mytrainingpal.components
 
+import android.app.Application
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.mytrainingpal.model.GenericViewModelFactory
+import com.example.mytrainingpal.model.view_models.ExerciseViewModel
+import com.example.mytrainingpal.model.view_models.MuscleViewModel
 import com.example.mytrainingpal.screens.*
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
@@ -85,7 +93,32 @@ fun AppNavHost(
             route = RouteGroups.CALENDAR.route,
             startDestination = Screen.CalendarMain.route
         ) {
-            composable(Screen.CalendarMain.route) { CalendarScreen(navController) }
+            composable(Screen.CalendarMain.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if(owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current.applicationContext
+                                    as Application
+                        )
+                        val muscleViewModel: MuscleViewModel = viewModel(
+                            it,
+                            "MuscleViewModel",
+                            factory
+                        )
+                        val exerciseViewModel: ExerciseViewModel = viewModel(
+                            it,
+                            "ExerciseViewModel",
+                            factory
+                        )
+                        CalendarScreen(navController, muscleViewModel, exerciseViewModel)
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+
+            }
             // TODO: Add CalendarDetailsScreen and so on
         }
         // Use those to maintain several back stacks for navigation
