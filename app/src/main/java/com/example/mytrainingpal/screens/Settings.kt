@@ -1,5 +1,6 @@
 package com.example.mytrainingpal.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,6 +23,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.chargemap.compose.numberpicker.ListItemPicker
 import com.example.mytrainingpal.Greeting
+import com.example.mytrainingpal.R
 import com.example.mytrainingpal.components.TabScreen
 
 
@@ -39,25 +43,52 @@ fun SettingsScreen(navController: NavController) {
         @Composable
         fun MainSettingsScreenContent(nameOfUser: String, updateName: (String) -> Unit, ageOfUser: Int, updateAge: (Int) -> Unit) {
             val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top,
-                modifier = Modifier
-                    .blur(if (showDialog) 5.dp else 0.dp)
-            ) {
+            Row(verticalAlignment = Alignment.Top) {
                 Text(
                     text = "Settings",
                     style = MaterialTheme.typography.h1,
                     textAlign = TextAlign.Center
                 )
             }
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier) {
+            Row(verticalAlignment = Alignment.Top) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                ) {
+                    val image = painterResource(R.drawable.klauskiste)
+                    //Step 3 create a box to overlap image and texts
+                    Box {
+                        Image(
+                            painter = image,
+                            contentDescription = null,
+                        modifier = Modifier
+                            .width(width = 200.dp)
+                            .height(height = 200.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+                }
+            Row(verticalAlignment = Alignment.Top) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                ) {
+
+
                     Text(text = "My Name:")
+                }
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+
 
                     TextField(
                         value = nameOfUser,
@@ -66,22 +97,27 @@ fun SettingsScreen(navController: NavController) {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                     )
                 }
-                    //IconButton(onClick = { setShowDialog(true) }) {
-                    //    Icon(
-                    //        imageVector = Icons.Default.Edit,
-                    //        contentDescription = "",
-                    //        tint = MaterialTheme.colors.secondary
-                    //    )
-                    //}
-                }
-                Row(verticalAlignment = Alignment.Top) {
+            }
+            Row(verticalAlignment = Alignment.Top) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                ) {
                     Text(text = "My Age:")
+                }
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
                     TextField(
                         value = ageOfUser.toString(),
                         onValueChange = { value -> updateAge(value.toInt()) },
                         modifier = Modifier.width(200.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
+                }
             }
-            //NameInputDialog(showDialog, setShowDialog, nameOfUser, updateName)
         }
