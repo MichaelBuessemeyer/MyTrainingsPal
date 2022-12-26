@@ -21,7 +21,7 @@ fun MusclePainWidget(navigateToMusclePain: () -> Unit = {}) {
     if (!painWasAlreadyEntered) {
         title = "Guessed sore muscles:"
     }
-    WidgetCard {
+    WidgetCard(hasBorder = false) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(5.dp)
