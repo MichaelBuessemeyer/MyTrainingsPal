@@ -10,6 +10,10 @@ import androidx.compose.runtime.Composable
 @Composable
 fun StartExerciseFloatingButton(navigateToTrainingScreen: () -> Unit) {
     FloatingActionButton(onClick = { navigateToTrainingScreen() }) {
-        Icon(imageVector = Icons.Default.FitnessCenter, tint = MaterialTheme.colors.onSecondary, contentDescription = "Start Training")
+        Icon(
+            imageVector = Icons.Default.FitnessCenter,
+            tint = MaterialTheme.colors.onSecondary,
+            contentDescription = "Start Training"
+        )
     }
 }

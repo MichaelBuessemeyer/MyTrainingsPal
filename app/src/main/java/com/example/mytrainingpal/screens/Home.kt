@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.states.rememberTodaysMusclePainEntryState
 
@@ -35,6 +36,10 @@ fun HomeScreenContent(
     musclePainEntryViewModel: MusclePainEntryViewModel
 ) {
     val todaysMusclePainEntry = rememberTodaysMusclePainEntryState(musclePainEntryViewModel)
+    val exercise: Exercise = Exercise(name = "Test", pathToGif = "somePath")
+    val weight by remember { mutableStateOf(20) }
+    var sets by remember { mutableStateOf(4) }
+    var reps by remember { mutableStateOf(10) }
 
     Column(
         Modifier.verticalScroll(rememberScrollState()),
@@ -45,6 +50,13 @@ fun HomeScreenContent(
             EnterPainPrompt(navigateToMusclePain = navigateToMusclePain)
         }
         MusclePainWidget(navigateToMusclePain = navigateToMusclePain)
+        ExerciseWidget(
+            exercise,
+            sets = sets,
+            reps = reps,
+            weight = weight,
+            onRepsChanged = { reps = it },
+            onSetsChanged = { sets = it })
         OverallRecordsCard()
         OverallRecordsCard()
         LastTrainingStatCard(thisTraining = false)
