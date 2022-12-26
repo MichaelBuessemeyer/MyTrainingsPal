@@ -21,47 +21,14 @@ import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.states.RememberAddingSoreMusclesToList
 import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
+import com.example.mytrainingpal.util.todayDate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.util.*
 
 @Composable
 fun MusclePainScreen(
     navController: NavController,
-    musclePainEntryViewModel: MusclePainEntryViewModel,
-    musclePainEntryMapViewModel: MusclePainEntryMapViewModel
-) {
-    TabScreen(
-        tabContent = {
-            MusclePainScreenContent(
-                navigateToHome = {
-                    navController.navigate(
-                        RouteGroups.HOME.route
-                    )
-                },
-                musclePainEntryViewModel = musclePainEntryViewModel,
-                musclePainEntryMapViewModel = musclePainEntryMapViewModel,
-            )
-        }, topBarTitle = Screen.MusclePainMain.label, topBarIcon = Screen.MusclePainMain.icon,
-        navController = navController
-    )
-
-}
-
-fun todayDate(): Date {
-    val todayDate = LocalDateTime.now()
-    return GregorianCalendar(
-        todayDate.year,
-        todayDate.monthValue,
-        todayDate.dayOfMonth
-    ).time
-}
-
-@Composable
-fun MusclePainScreenContent(
-    navigateToHome: () -> Unit,
     musclePainEntryViewModel: MusclePainEntryViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel
 ) {
@@ -72,18 +39,20 @@ fun MusclePainScreenContent(
     val soreMuscles: SnapshotStateList<Pair<Muscle, Long>> = remember { mutableStateListOf() }
     RememberAddingSoreMusclesToList(musclePainEntryMapViewModel, soreMuscles)
 
-    MusclePainWidget(soreMuscles = soreMuscles, editable = true,
-        addSoreMuscle = { pair -> soreMuscles.add(pair) },
-        setSoreMuscle = { index, pair -> soreMuscles[index] = pair },
-        removeSoreMuscle = { index -> soreMuscles.removeAt(index) })
-    FloatingActionButton(onClick = {
+    val navigateToHome = {
+        navController.navigate(
+            RouteGroups.HOME.route
+        )
+    }
+    val saveSoreMuscleAndNavToHome = {
         val coroutineScope = CoroutineScope(Dispatchers.Main)
         coroutineScope.launch(Dispatchers.IO) {
             var musclePainEntryId = todaysMusclePainEntry?.musclePainEntryId
             if (musclePainEntryId == null) {
-                musclePainEntryId = musclePainEntryViewModel.insertMusclePainEntryOnCurrentThread(
-                    MusclePainEntry(date = todayDate())
-                )
+                musclePainEntryId =
+                    musclePainEntryViewModel.insertMusclePainEntryOnCurrentThread(
+                        MusclePainEntry(date = todayDate())
+                    )
             } else {
                 musclePainEntryMapViewModel.deleteAllSoreMusclesForMusclePainEntryOnCurrentThread(
                     musclePainEntryId
@@ -98,11 +67,26 @@ fun MusclePainScreenContent(
             }
         }
         coroutineScope.launch(Dispatchers.Main) { navigateToHome() }
-    }) {
-        Icon(
-            imageVector = Icons.Default.Check,
-            tint = MaterialTheme.colors.onSecondary,
-            contentDescription = "Save"
-        )
     }
+
+    TabScreen(
+        tabContent = {
+            MusclePainWidget(soreMuscles = soreMuscles, editable = true,
+                addSoreMuscle = { pair -> soreMuscles.add(pair) },
+                setSoreMuscle = { index, pair -> soreMuscles[index] = pair },
+                removeSoreMuscle = { index -> soreMuscles.removeAt(index) })
+        },
+        topBarTitle = Screen.MusclePainMain.label, topBarIcon = Screen.MusclePainMain.icon,
+        navController = navController,
+        floatingActionButton = {
+            FloatingActionButton(onClick = { saveSoreMuscleAndNavToHome() }) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    tint = MaterialTheme.colors.onSecondary,
+                    contentDescription = "Save"
+                )
+            }
+        }
+    )
+
 }
