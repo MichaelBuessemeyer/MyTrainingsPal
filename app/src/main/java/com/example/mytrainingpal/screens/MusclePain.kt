@@ -15,6 +15,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.MusclePainWidget
 import com.example.mytrainingpal.components.RouteGroups
+import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.entities.MusclePainEntry
@@ -42,7 +43,8 @@ fun MusclePainScreen(
             musclePainEntryViewModel = musclePainEntryViewModel,
             musclePainEntryMapViewModel = musclePainEntryMapViewModel,
         )
-    }, navController = navController)
+    }, topBarTitle = Screen.MusclePainMain.label, topBarIcon = Screen.MusclePainMain.icon,
+        navController = navController)
 
 }
 

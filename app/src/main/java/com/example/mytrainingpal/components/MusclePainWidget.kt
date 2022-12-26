@@ -135,7 +135,7 @@ fun MusclePainWidget(
             }
         }
     }
-    WidgetCard {
+    WidgetCard(hasBorder = false) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(5.dp)

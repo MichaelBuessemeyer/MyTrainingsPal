@@ -19,6 +19,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.chargemap.compose.numberpicker.ListItemPicker
+import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 
 
@@ -29,7 +30,7 @@ fun TrainingScreen(navController: NavController) {
         MainTrainingScreenContent(
             minutes = minutes,
             updateMinutes = { inputValue: Int -> minutes = inputValue })
-    }, navController = navController)
+    },topBarTitle = Screen.TrainingMain.label, topBarIcon = Screen.TrainingMain.icon, navController = navController)
 }
 
 @Composable
