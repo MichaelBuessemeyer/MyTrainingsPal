@@ -3,6 +3,7 @@ package com.example.mytrainingpal.components
 import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
@@ -17,11 +18,21 @@ import coil.request.ImageRequest
 
 @Composable
 fun GifImage(
-    size: Int,
-    // TODO: gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-    gifPath: Any?
+    gifPath: String,
+    size: Int
 ) {
+
     val context = LocalContext.current
+    // Getting the resource id of the gif using its path.
+    // Code from https://stackoverflow.com/questions/70062705/how-can-i-get-drawable-resource-by-string was used.
+    val gifResourceId = remember(gifPath) {
+        context.resources.getIdentifier(
+            gifPath,
+            "drawable",
+            context.packageName
+        )
+    }
+
     val imageLoader = ImageLoader.Builder(context)
         .components {
             if (Build.VERSION.SDK_INT >= 28) {
@@ -34,11 +45,10 @@ fun GifImage(
 
     Image(
         painter = rememberAsyncImagePainter(
-            ImageRequest.Builder(context).data(data = gifPath).apply(block = {
+            ImageRequest.Builder(context).data(data = gifResourceId).apply(block = {
                 size(size)
             }).build(), imageLoader = imageLoader
         ),
         contentDescription = null,
-        //modifier = Modifier.fillMaxWidth()
     )
 }
