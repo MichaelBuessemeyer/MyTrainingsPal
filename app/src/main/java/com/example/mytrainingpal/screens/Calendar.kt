@@ -19,21 +19,24 @@ import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.WidgetCard
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
-import com.example.mytrainingpal.model.view_models.MuscleViewModel
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 
 
 @Composable
 fun CalendarScreen(
     navController: NavController,
-    muscleViewModel: MuscleViewModel,
     exerciseViewModel: ExerciseViewModel
 ) {
-    TabScreen(tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) }, topBarIcon = Screen.CalendarMain.icon, topBarTitle = Screen.CalendarMain.label,navController = navController)
+    TabScreen(
+        tabContent = { CalendarScreenContent(exerciseViewModel) },
+        topBarIcon = Screen.CalendarMain.icon,
+        topBarTitle = Screen.CalendarMain.label,
+        navController = navController
+    )
 }
 
 @Composable
-fun CalendarScreenContent(muscleViewModel: MuscleViewModel, exerciseViewModel: ExerciseViewModel) {
+fun CalendarScreenContent(exerciseViewModel: ExerciseViewModel) {
     val allExercises by exerciseViewModel.allExercises.observeAsState(listOf())
     Column {
         StaticCalendar(

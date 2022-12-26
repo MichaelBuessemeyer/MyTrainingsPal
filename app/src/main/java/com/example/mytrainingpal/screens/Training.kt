@@ -26,11 +26,16 @@ import com.example.mytrainingpal.components.TabScreen
 @Composable
 fun TrainingScreen(navController: NavController) {
     var minutes by remember { mutableStateOf(20) }
-    TabScreen(tabContent = {
-        MainTrainingScreenContent(
-            minutes = minutes,
-            updateMinutes = { inputValue: Int -> minutes = inputValue })
-    },topBarTitle = Screen.TrainingMain.label, topBarIcon = Screen.TrainingMain.icon, navController = navController)
+    TabScreen(
+        tabContent = {
+            MainTrainingScreenContent(
+                minutes = minutes,
+                updateMinutes = { inputValue: Int -> minutes = inputValue })
+        },
+        topBarTitle = Screen.TrainingMain.label,
+        topBarIcon = Screen.TrainingMain.icon,
+        navController = navController
+    )
 }
 
 @Composable

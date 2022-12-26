@@ -14,7 +14,7 @@ fun LastTrainingStatCard(thisTraining: Boolean = true) {
     val date = "10.02.22" //TODO: get everything from database
     var thisOrLastString = "This"
     if (!thisTraining) thisOrLastString = "Last"
-    WidgetCard (hasBorder = false) {
+    WidgetCard(hasBorder = false) {
         Column(
             modifier = Modifier.padding(5.dp)
         ) {

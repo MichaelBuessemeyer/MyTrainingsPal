@@ -42,6 +42,10 @@ class MusclePainEntryMapViewModel(application: Application) : ViewModel() {
         repository.deleteAllSoreMusclesForMusclePainEntry(musclePainEntryId)
     }
 
+    fun deleteAllSoreMusclesForMusclePainEntryOnCurrentThread(musclePainEntryId: Long) {
+        repository.deleteAllSoreMusclesForMusclePainEntryOnCurrentThread(musclePainEntryId)
+    }
+
     fun getMusclePainEntryByIdWithMuscles(id: Long) {
         repository.getMusclePainEntryByIdWithMuscles(id)
     }

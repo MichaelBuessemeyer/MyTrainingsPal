@@ -364,7 +364,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             standingCalfRaisesId,
                                             arrayOf(leftCalfId, rightCalfId)
                                         )
-                                        // Adding demo sore muscle pain entry
+                                        /* Adding demo sore muscle pain entry
                                         val date = GregorianCalendar(2022, 12, 26).time
                                         val musclePainEntry1 =
                                             musclePainEntryDao.insert(MusclePainEntry(null, date))
@@ -378,7 +378,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                     7
                                                 )
                                             )
-                                        }
+                                        }*/
                                     }
                                 }
                             })

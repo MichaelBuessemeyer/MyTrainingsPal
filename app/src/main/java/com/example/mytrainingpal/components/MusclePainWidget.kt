@@ -1,6 +1,5 @@
 package com.example.mytrainingpal.components
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -88,13 +87,6 @@ fun MusclePainWidget(
     showEditButton: Boolean = false,
     soreMuscles: MutableList<Pair<Muscle, Long>>
 ) {
-    Log.d(
-        "MusclePainWidget",
-        "------------------------------------------------------- soreMuscles---------"
-    )
-    for (muscle in soreMuscles) {
-        Log.d("MusclePainWidget", "muscle = ${muscle.first.name}, soreness = ${muscle.second}")
-    }
     val painter = rememberVectorPainter(image = getBodyMusclesWithPain(soreMuscles))
     val size = remember { mutableStateOf(IntSize.Zero) }
     val painWasAlreadyEntered = true // TODO: Get this from the database
@@ -110,7 +102,6 @@ fun MusclePainWidget(
             if (xVals.first < relativeX && relativeX < xVals.second
                 && yVals.first < relativeY && relativeY < yVals.second
             ) {
-                Log.d("Tabbed Muscle", "Tabbed at muscle $muscleName")
                 val index = soreMuscles.indexOfFirst { entry -> entry.first.name == muscleName }
                 if (index > -1) {
                     when (soreMuscles[index].second) {
@@ -156,10 +147,6 @@ fun MusclePainWidget(
                             if (editable) {
                                 handleMuscleTab(offset)
                             }
-                            Log.d(
-                                "Tab Position",
-                                "Tabbed at: $offset with size ${size.value} with relative x: ${offset.x / size.value.width}, y: ${offset.y / size.value.height}"
-                            )
                         }
                     }
                 )

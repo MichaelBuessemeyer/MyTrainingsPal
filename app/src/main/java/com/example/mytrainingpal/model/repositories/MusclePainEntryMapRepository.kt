@@ -37,6 +37,10 @@ class MusclePainEntryMapRepository(private val musclePainEntryMapDao: MusclePain
         }
     }
 
+    fun deleteAllSoreMusclesForMusclePainEntryOnCurrentThread(musclePainEntryId: Long) {
+        musclePainEntryMapDao.deleteAllSoreMusclesForMusclePainEntry(musclePainEntryId)
+    }
+
     fun findMusclePainEntryMapById(id: Long) {
         coroutineScope.launch(Dispatchers.Main) {
             searchResults.value = listOf(findMusclePainEntryMapOnlyByIdAsync(id).await())
