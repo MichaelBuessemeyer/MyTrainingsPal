@@ -8,6 +8,8 @@ import com.example.mytrainingpal.model.entities.MusclePainEntry
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.util.todayDate
 
+
+// A composable serving as a state that returns today's MusclePainEntry if there is one.
 @Composable
 fun rememberTodaysMusclePainEntryState(musclePainEntryViewModel: MusclePainEntryViewModel): MusclePainEntry? {
     val allMusclePainEntries by musclePainEntryViewModel.allMusclePainEntries.observeAsState(listOf())

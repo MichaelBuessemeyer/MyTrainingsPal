@@ -41,7 +41,7 @@ fun HomeScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         UserNameWithSettings(navigateToSettings)
-        if (todaysMusclePainEntry != null) {
+        if (todaysMusclePainEntry == null) {
             EnterPainPrompt(navigateToMusclePain = navigateToMusclePain)
         }
         MusclePainWidget(navigateToMusclePain = navigateToMusclePain)
