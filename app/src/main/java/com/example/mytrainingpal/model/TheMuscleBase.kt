@@ -5,7 +5,6 @@ import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.mytrainingpal.model.daos.*
 import com.example.mytrainingpal.model.entities.*
-import java.util.*
 import java.util.concurrent.Executors
 
 
@@ -49,12 +48,6 @@ abstract class TheMuscleBase : RoomDatabase() {
                                         val exerciseDao = localInstance.getExerciseDao()
                                         val exerciseMuscleMapDao =
                                             localInstance.getExerciseMuscleMapDao()
-                                        // instantiating musclePainEntry related DAOs
-                                        val musclePainEntryDao =
-                                            localInstance.getMusclePainEntryDao()
-                                        val musclePainEntryMapDao =
-                                            localInstance.getMusclePainEntryMapDao()
-
 
                                         fun connectExerciseWithMuscles(
                                             exerciseId: Long,
@@ -351,21 +344,6 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             standingCalfRaisesId,
                                             arrayOf(leftCalvesId, rightCalvesId)
                                         )
-                                        // Adding demo sore muscle pain entry
-                                        val date = GregorianCalendar(2022, 12, 26).time
-                                        val musclePainEntry1 =
-                                            musclePainEntryDao.insert(MusclePainEntry(null, date))
-                                        val listOfMuscles =
-                                            arrayOf(leftQuadricepsId, rightQuadricepsId)
-                                        for (muscleId: Long in listOfMuscles) {
-                                            musclePainEntryMapDao.insert(
-                                                MusclePainEntryMap(
-                                                    musclePainEntry1,
-                                                    muscleId,
-                                                    7
-                                                )
-                                            )
-                                        }
                                     }
                                 }
                             })

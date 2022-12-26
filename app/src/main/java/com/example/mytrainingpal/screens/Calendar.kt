@@ -29,7 +29,11 @@ fun CalendarScreen(
     muscleViewModel: MuscleViewModel,
     exerciseViewModel: ExerciseViewModel
 ) {
-    TabScreen(tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) }, topBarIcon = Screen.CalendarMain.icon, topBarTitle = Screen.CalendarMain.label,navController = navController)
+    TabScreen(
+        tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) },
+        topBarIcon = Screen.CalendarMain.icon,
+        topBarTitle = Screen.CalendarMain.label,
+        navController = navController)
 }
 
 @Composable
