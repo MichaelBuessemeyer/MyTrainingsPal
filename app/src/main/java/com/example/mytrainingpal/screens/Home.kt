@@ -25,7 +25,7 @@ fun HomeScreen(navController: NavController, musclePainEntryViewModel: MusclePai
         },
             musclePainEntryViewModel
         )
-    }, navController = navController)
+    }, topBarTitle = null, topBarIcon = null, navController = navController)
 }
 
 @Composable
