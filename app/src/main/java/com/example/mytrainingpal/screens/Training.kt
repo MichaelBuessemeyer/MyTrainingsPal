@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.CustomNumberInput
 import com.example.mytrainingpal.components.TabScreen
+import com.example.mytrainingpal.components.Screen
+
 
 
 @Composable
@@ -23,7 +25,7 @@ fun TrainingScreen(navController: NavController) {
         MainTrainingScreenContent(
             minutes = minutes,
             updateMinutes = { inputValue: Int -> minutes = inputValue })
-    }, navController = navController)
+    },topBarTitle = Screen.TrainingMain.label, topBarIcon = Screen.TrainingMain.icon, navController = navController)
 }
 
 @Composable

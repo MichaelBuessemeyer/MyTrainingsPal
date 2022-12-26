@@ -37,7 +37,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                             // How to add default data to the database taken from Amir's stack overflow answer
                             // https://stackoverflow.com/questions/50520840/what-is-the-proper-way-to-implement-addcallback-when-providing-roomdatabase-v.
                             // prepopulate the database after onCreate was called
-                            .addCallback(object : RoomDatabase.Callback() {
+                            .addCallback(object : Callback() {
+                                @Suppress("UNUSED_VARIABLE")
                                 override fun onCreate(db: SupportSQLiteDatabase) {
                                     super.onCreate(db)
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.Greeting
+import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.WidgetCard
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
@@ -30,8 +31,9 @@ fun CalendarScreen(
 ) {
     TabScreen(
         tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) },
-        navController = navController
-    )
+        topBarIcon = Screen.CalendarMain.icon,
+        topBarTitle = Screen.CalendarMain.label,
+        navController = navController)
 }
 
 @Composable
@@ -42,6 +44,7 @@ fun CalendarScreenContent(muscleViewModel: MuscleViewModel, exerciseViewModel: E
             horizontalSwipeEnabled = false,
             monthContainer = { content ->
                 WidgetCard(
+                    hasBorder = false,
                     content = { content(PaddingValues(4.dp)) },
                 )
             },
