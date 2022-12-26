@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, musclePainEntryViewModel: MusclePainEntryViewModel) {
     TabScreen(tabContent = {
         HomeScreenContent(navigateToMusclePain = {
             navController.navigate(
@@ -20,16 +22,21 @@ fun HomeScreen(navController: NavController) {
             navController.navigate(
                 RouteGroups.SETTINGS.route
             )
-        })
+        },
+            musclePainEntryViewModel
+        )
     }, navController = navController)
 }
 
 @Composable
-fun HomeScreenContent(navigateToMusclePain: () -> Unit = {}, navigateToSettings: () -> Unit = {}) {
+fun HomeScreenContent(navigateToMusclePain: () -> Unit = {}, navigateToSettings: () -> Unit = {}, musclePainEntryViewModel: MusclePainEntryViewModel
+) {
+    // TODO: this list is apparently returned empty, probably because I still couldn't to add mock data to the DB
+    val allMusclePainEntries by musclePainEntryViewModel.allMusclePainEntries.observeAsState(listOf())
 
+    // test variable to see if prompt gets displayed
     var wasPainEntered by remember { mutableStateOf(true) }
-    //TODO wasPainEntered should be updated in the model, toggled to true or false
-    // in that case we need a Model instance passed into HomeScreenContent
+
     Column(
         Modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally

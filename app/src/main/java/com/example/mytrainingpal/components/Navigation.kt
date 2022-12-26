@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
+import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.model.view_models.MuscleViewModel
 import com.example.mytrainingpal.screens.*
 
@@ -73,7 +74,27 @@ fun AppNavHost(
             route = RouteGroups.HOME.route,
             startDestination = Screen.Home.route
         ) {
-            composable(Screen.Home.route) { HomeScreen(navController) }
+            composable(Screen.Home.route) {
+                // TODO: to avoid repeating code increase the following code's scope
+                val owner = LocalViewModelStoreOwner.current
+
+                if(owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current.applicationContext
+                                    as Application
+                        )
+                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+                        HomeScreen(navController, musclePainEntryViewModel)
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+           }
         }
         navigation(
             route = RouteGroups.SETTINGS.route,

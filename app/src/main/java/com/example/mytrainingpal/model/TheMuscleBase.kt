@@ -5,6 +5,7 @@ import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.mytrainingpal.model.daos.*
 import com.example.mytrainingpal.model.entities.*
+import java.util.*
 import java.util.concurrent.Executors
 
 
@@ -47,6 +48,11 @@ abstract class TheMuscleBase : RoomDatabase() {
                                         val exerciseDao = localInstance.getExerciseDao()
                                         val exerciseMuscleMapDao =
                                             localInstance.getExerciseMuscleMapDao()
+                                        // instantiating musclePainEntry related DAOs
+                                        val musclePainEntryDao = localInstance.getMusclePainEntryDao()
+                                        val musclePainEntryMapDao =
+                                            localInstance.getMusclePainEntryMapDao()
+
 
                                         fun connectExerciseWithMuscles(
                                             exerciseId: Long,
@@ -61,7 +67,6 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                 )
                                             }
                                         }
-
                                         val leftBicepsId =
                                             muscleDao.insert(Muscle(name = "Left Biceps"))
                                         val rightBicepsId =
@@ -343,6 +348,32 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             standingCalfRaisesId,
                                             arrayOf(leftCalvesId, rightCalvesId)
                                         )
+
+                                        // ***********************************************************
+                                        // TODO: creating a mock entry on the MusclePainEntryMap table for testing purposes: didn't work though :(
+
+                                        // create date
+                                        var date = GregorianCalendar(2033, 11, 14).time
+
+                                        // create musclePainEntry
+                                        val musclePainEntry1 = musclePainEntryDao.insert(MusclePainEntry(null, date))
+
+                                        // create entered muscles list
+                                        var listOfMuscles = arrayOf(leftQuadricepsId, rightQuadricepsId)
+
+                                        // fill MusclePainEntryMap table
+
+                                        for (muscleId: Long in listOfMuscles) {
+                                            musclePainEntryMapDao.insert(
+                                                MusclePainEntryMap(
+                                                    musclePainEntry1,
+                                                    muscleId,
+                                                    7
+                                                )
+                                            )
+                                        }
+                                        // ***********************************************************
+
                                     }
                                 }
                             })
