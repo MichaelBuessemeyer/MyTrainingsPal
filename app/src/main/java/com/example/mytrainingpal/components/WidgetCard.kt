@@ -19,10 +19,10 @@ fun WidgetCard(hasBorder: Boolean, content: @Composable () -> Unit) {
             .fillMaxWidth()
             .padding(5.dp),
         border =
-        if(hasBorder){
+        if (hasBorder) {
             BorderStroke(2.dp, MaterialTheme.colors.secondary)
         } else {
-            BorderStroke(2.dp, MaterialTheme.colors.background)
+            null
         }
     ) {
         content()

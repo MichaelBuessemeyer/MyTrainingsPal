@@ -1,8 +1,10 @@
 package com.example.mytrainingpal.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
@@ -15,16 +17,15 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun EnterPainPrompt(navigateToMusclePain: () -> Unit) {
 
-// Card Reference: https://foso.github.io/Jetpack-Compose-Playground/material/card/
-    WidgetCard(true){
-        Column{
+    WidgetCard(hasBorder = true) {
+        Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(15.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Text(
                     text = "Please Enter Your Sore Muscles",
                     color = MaterialTheme.colors.secondary,
@@ -35,10 +36,10 @@ fun EnterPainPrompt(navigateToMusclePain: () -> Unit) {
                 )
                 IconButton(
                     onClick = { navigateToMusclePain() }
-                ){
+                ) {
                     Icon(
                         Icons.Default.Edit, contentDescription = "Edit Muscle Pain",
-                        tint =  MaterialTheme.colors.secondary
+                        tint = MaterialTheme.colors.secondary
                     )
                 }
             }
