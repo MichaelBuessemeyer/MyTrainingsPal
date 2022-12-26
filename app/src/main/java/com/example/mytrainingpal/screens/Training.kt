@@ -84,12 +84,18 @@ fun NumberPickerDialog(
             onDismissRequest = { setShowDialog(false) }
         ) {
             val dialogShape = RoundedCornerShape(8)
-            Box(modifier = Modifier.background(MaterialTheme.colors.background, dialogShape).border(1.dp, MaterialTheme.colors.secondary, dialogShape).padding(16.dp)) {
+            Box(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background, dialogShape)
+                    .border(1.dp, MaterialTheme.colors.secondary, dialogShape)
+                    .padding(16.dp)
+            ) {
                 ListItemPicker(
                     value = minutes,
                     onValueChange = { value -> updateMinutes(value) },
                     list = listOf(10, 15, 20, 30, 45, 60, 90),
-                    dividersColor = MaterialTheme.colors.primary,)
+                    dividersColor = MaterialTheme.colors.primary,
+                )
             }
         }
     }
