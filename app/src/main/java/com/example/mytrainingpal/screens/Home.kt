@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
-import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.states.RememberAddingSoreMusclesToList

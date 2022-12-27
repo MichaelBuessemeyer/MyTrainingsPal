@@ -13,9 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.CustomNumberInput
-import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.Screen
-
+import com.example.mytrainingpal.components.TabScreen
 
 
 @Composable
