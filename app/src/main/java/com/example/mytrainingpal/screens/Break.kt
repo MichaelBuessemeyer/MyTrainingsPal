@@ -100,7 +100,6 @@ fun BreakScreenContent() {
 @Composable
 fun BreakTimer(
     totalTime: Long,
-    //handleColor: Color,
     inactiveBarColor: Color,
     activeBarColor: Color,
     modifier: Modifier = Modifier,
