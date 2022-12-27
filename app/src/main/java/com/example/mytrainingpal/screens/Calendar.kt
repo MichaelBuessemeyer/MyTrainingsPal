@@ -8,29 +8,43 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.Greeting
+import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.WidgetCard
+import com.example.mytrainingpal.model.view_models.ExerciseViewModel
+import com.example.mytrainingpal.model.view_models.MuscleViewModel
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 
 
 @Composable
-fun CalendarScreen(navController: NavController) {
-    TabScreen(tabContent = { CalendarScreenContent() }, navController = navController)
+fun CalendarScreen(
+    navController: NavController,
+    muscleViewModel: MuscleViewModel,
+    exerciseViewModel: ExerciseViewModel
+) {
+    TabScreen(
+        tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) },
+        topBarIcon = Screen.CalendarMain.icon,
+        topBarTitle = Screen.CalendarMain.label,
+        navController = navController)
 }
 
 @Composable
-fun CalendarScreenContent() {
-    val placeholderNumbers = List(100) { it }
+fun CalendarScreenContent(muscleViewModel: MuscleViewModel, exerciseViewModel: ExerciseViewModel) {
+    val allExercises by exerciseViewModel.allExercises.observeAsState(listOf())
     Column {
         StaticCalendar(
             horizontalSwipeEnabled = false,
             monthContainer = { content ->
                 WidgetCard(
+                    hasBorder = false,
                     content = { content(PaddingValues(4.dp)) },
                 )
             },
@@ -56,10 +70,14 @@ fun CalendarScreenContent() {
                     )
                 }
             })
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(placeholderNumbers) { number ->
-                Greeting(name = "$number")
+        if (allExercises.isNotEmpty()) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(allExercises) { exercise ->
+                    Greeting(name = exercise.name)
+                }
             }
+        } else {
+            Text("Still loading exer")
         }
     }
 }
