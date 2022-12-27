@@ -1,5 +1,6 @@
 package com.example.mytrainingpal.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +25,7 @@ import androidx.navigation.NavController
 import com.chargemap.compose.numberpicker.ListItemPicker
 import com.example.mytrainingpal.Greeting
 import com.example.mytrainingpal.R
+import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 
 
@@ -31,47 +33,52 @@ import com.example.mytrainingpal.components.TabScreen
 fun SettingsScreen(navController: NavController) {
     var nameOfUser by remember { mutableStateOf("Klaus Kiste") }
     var ageOfUser by remember { mutableStateOf(21) }
+    var timeToTrainUser by remember { mutableStateOf("7:00") }
     TabScreen(tabContent = {
         MainSettingsScreenContent(
             nameOfUser = nameOfUser,
             updateName = { inputValue: String -> nameOfUser = inputValue },
             ageOfUser = ageOfUser,
-            updateAge = { inputValue: Int -> ageOfUser = inputValue })
-    },navController = navController)
+            updateAge = { inputValue: Int -> ageOfUser = inputValue },
+            timeToTrainUser = timeToTrainUser,
+            updateTimeToTrain = { inputValue: String -> timeToTrainUser = inputValue })
+    },topBarTitle = Screen.Settings.label, topBarIcon = Screen.Settings.icon, navController = navController)
 }
 
         @Composable
-        fun MainSettingsScreenContent(nameOfUser: String, updateName: (String) -> Unit, ageOfUser: Int, updateAge: (Int) -> Unit) {
+        fun MainSettingsScreenContent(nameOfUser: String, updateName: (String) -> Unit, ageOfUser: Int, updateAge: (Int) -> Unit, timeToTrainUser: String, updateTimeToTrain: (String) -> Unit) {
             val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
-            Row(verticalAlignment = Alignment.Top) {
-                Text(
-                    text = "Settings",
-                    style = MaterialTheme.typography.h1,
-                    textAlign = TextAlign.Center
-                )
-            }
-            Row(verticalAlignment = Alignment.Top) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
+            val image = painterResource(R.drawable.klauskiste)
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
 
-                ) {
-                    val image = painterResource(R.drawable.klauskiste)
-                    //Step 3 create a box to overlap image and texts
-                    Box {
-                        Image(
-                            painter = image,
-                            contentDescription = null,
+
+                Box {
+                    Image(
+                        painter = image,
+                        contentDescription = null,
                         modifier = Modifier
                             .width(width = 200.dp)
                             .height(height = 200.dp),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
+                        contentScale = ContentScale.Crop
+                    )
                 }
+                Button(
+                    border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.background,
+                        contentColor = MaterialTheme.colors.secondary
+                    ),
+                ) {
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Profile Picture")
                 }
+            }
+
             Row(verticalAlignment = Alignment.Top) {
                 Column(
                     horizontalAlignment = Alignment.Start,
@@ -120,4 +127,121 @@ fun SettingsScreen(navController: NavController) {
                     )
                 }
             }
-        }
+            Row(verticalAlignment = Alignment.Top) {
+                    Text(text = "Notify me on")
+            }
+                Row(verticalAlignment = Alignment.Top) {
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Muscle Pain")
+                    }
+                }
+            Row(verticalAlignment = Alignment.Top) {
+                Text(text = "at")
+                TextField(
+                    value = timeToTrainUser,
+                    onValueChange = { value -> updateTimeToTrain(value) },
+                    modifier = Modifier.width(200.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+            }
+            Row(verticalAlignment = Alignment.Top) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                ) {
+                    Text(text = "Default break:")
+                }
+                Column(
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    TextField(
+                        value = ageOfUser.toString(),
+                        onValueChange = { value -> updateAge(value.toInt()) },
+                        modifier = Modifier.width(200.dp),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    )
+                }
+            }
+            }
+
