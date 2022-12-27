@@ -35,5 +35,5 @@ data class MusclePainEntryMap(
 
 object MusclePainEntryMapConstants {
     const val SEVERE_PAIN: Long = 2
-    const val MODERATE_PAIN: Long = 2
+    const val MODERATE_PAIN: Long = 1
 }

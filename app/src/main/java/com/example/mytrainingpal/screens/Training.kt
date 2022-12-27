@@ -13,19 +13,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.CustomNumberInput
-import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.Screen
-
+import com.example.mytrainingpal.components.TabScreen
 
 
 @Composable
 fun TrainingScreen(navController: NavController) {
     var minutes by remember { mutableStateOf(20) }
-    TabScreen(tabContent = {
-        MainTrainingScreenContent(
-            minutes = minutes,
-            updateMinutes = { inputValue: Int -> minutes = inputValue })
-    },topBarTitle = Screen.TrainingMain.label, topBarIcon = Screen.TrainingMain.icon, navController = navController)
+    TabScreen(
+        tabContent = {
+            MainTrainingScreenContent(
+                minutes = minutes,
+                updateMinutes = { inputValue: Int -> minutes = inputValue })
+        },
+        topBarTitle = Screen.TrainingMain.label,
+        topBarIcon = Screen.TrainingMain.icon,
+        navController = navController
+    )
 }
 
 @Composable
