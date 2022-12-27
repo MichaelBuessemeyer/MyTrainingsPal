@@ -28,8 +28,11 @@ fun TabScreen(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Column(verticalArrangement = Arrangement.Center,modifier = Modifier
-                            .fillMaxHeight().padding(end = 16.dp)) {
+                        Column(
+                            verticalArrangement = Arrangement.Center, modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(end = 16.dp)
+                        ) {
                             Icon(
                                 topBarIcon,
                                 "",

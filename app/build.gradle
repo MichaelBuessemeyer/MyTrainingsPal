@@ -63,6 +63,7 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
     implementation "com.chargemap.compose:numberpicker:1.0.3"
     implementation "androidx.compose.runtime:runtime-livedata:1.3.2"
     implementation "io.github.boguszpawlowski.composecalendar:composecalendar:1.0.2"

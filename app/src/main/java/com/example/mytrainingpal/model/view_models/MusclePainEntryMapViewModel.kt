@@ -1,7 +1,7 @@
 package com.example.mytrainingpal.model.view_models
 
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,14 +9,14 @@ import com.example.mytrainingpal.model.MusclePainEntryMap
 import com.example.mytrainingpal.model.TheMuscleBase
 import com.example.mytrainingpal.model.repositories.MusclePainEntryMapRepository
 
-class MusclePainEntryMapViewModel(application: Application) : ViewModel() {
+class MusclePainEntryMapViewModel(context: Context) : ViewModel() {
 
     val allMusclePainEntryMaps: LiveData<List<MusclePainEntryMap>>
     private val repository: MusclePainEntryMapRepository
     val searchResults: MutableLiveData<List<MusclePainEntryMap>>
 
     init {
-        val muscleDatabase = TheMuscleBase.getDatabaseInstance(application)
+        val muscleDatabase = TheMuscleBase.getDatabaseInstance(context)
         val musclePainEntryMapDao = muscleDatabase.getMusclePainEntryMapDao()
         repository = MusclePainEntryMapRepository(musclePainEntryMapDao)
         allMusclePainEntryMaps = repository.allMusclePainEntryMaps

@@ -33,7 +33,8 @@ fun CalendarScreen(
         tabContent = { CalendarScreenContent(muscleViewModel, exerciseViewModel) },
         topBarIcon = Screen.CalendarMain.icon,
         topBarTitle = Screen.CalendarMain.label,
-        navController = navController)
+        navController = navController
+    )
 }
 
 @Composable
