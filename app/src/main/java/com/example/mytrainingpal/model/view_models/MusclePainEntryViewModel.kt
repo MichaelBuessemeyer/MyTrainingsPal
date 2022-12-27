@@ -27,6 +27,10 @@ class MusclePainEntryViewModel(application: Application) : ViewModel() {
         repository.insertMusclePainEntry(musclePainEntry)
     }
 
+    fun insertMusclePainEntryOnCurrentThread(musclePainEntry: MusclePainEntry): Long {
+        return repository.insertMusclePainEntryOnCurrentThread(musclePainEntry)
+    }
+
     fun findMusclePainEntryById(id: Long) {
         repository.findMusclePainEntryById(id)
     }
