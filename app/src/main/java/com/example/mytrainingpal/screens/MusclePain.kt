@@ -8,6 +8,10 @@ import com.example.mytrainingpal.components.TabScreen
 
 @Composable
 fun MusclePainScreen(navController: NavController) {
-    TabScreen({ Greeting(name = "Muscle Pain") }, topBarTitle = Screen.MusclePainMain.label, topBarIcon = Screen.MusclePainMain.icon,navController = navController)
-
+    TabScreen(
+        { Greeting(name = "Muscle Pain") },
+        topBarTitle = Screen.MusclePainMain.label,
+        topBarIcon = Screen.MusclePainMain.icon,
+        navController = navController
+    )
 }

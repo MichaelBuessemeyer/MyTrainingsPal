@@ -30,8 +30,8 @@ sealed class Screen(
     object Home : Screen("homeMain", "Home", Icons.Default.Home)
     object MusclePainMain :
         Screen("musclePainMain", "Muscle Pain", Icons.Default.SentimentVeryDissatisfied)
-
     object TrainingMain : Screen("trainingMain", "Training", Icons.Default.FitnessCenter)
+    object TrainingsPreview : Screen("trainingsPreview", "TrainingsPreview", Icons.Default.FitnessCenter)
     object CalendarMain : Screen("calendarMain", "Calendar", Icons.Default.CalendarToday)
     object Settings : Screen("settingsMain", "Settings", Icons.Default.Settings)
 }
@@ -147,6 +147,30 @@ fun AppNavHost(
             startDestination = Screen.TrainingMain.route
         ) {
             composable(Screen.TrainingMain.route) { TrainingScreen(navController) }
+            composable(Screen.TrainingsPreview.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current.applicationContext
+                                    as Application
+                        )
+                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+                        val exerciseViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+                        TrainingsPreviewScreen(navController)
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                } }
             // TODO: Add further Trainings Screens
         }
     }

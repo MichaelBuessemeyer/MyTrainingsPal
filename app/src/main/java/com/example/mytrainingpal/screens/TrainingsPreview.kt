@@ -18,7 +18,7 @@ import com.example.mytrainingpal.components.TabScreen
 
 
 @Composable
-fun TrainingScreen(navController: NavController) {
+fun TrainingsPreviewScreen(navController: NavController) {
     var minutes by remember { mutableStateOf(20) }
     TabScreen(
         tabContent = {
@@ -33,7 +33,7 @@ fun TrainingScreen(navController: NavController) {
 }
 
 @Composable
-fun MainTrainingScreenContent(minutes: Int, updateMinutes: (Int) -> Unit) {
+fun TrainingsPreviewScreenContent(minutes: Int, updateMinutes: (Int) -> Unit) {
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
