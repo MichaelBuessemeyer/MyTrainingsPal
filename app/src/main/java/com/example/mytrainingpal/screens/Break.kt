@@ -2,10 +2,7 @@ package com.example.mytrainingpal.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.runtime.*
+import androidx.compose.material.* import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +16,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.mytrainingpal.R
+import com.example.mytrainingpal.components.GifImage
 
 import com.example.mytrainingpal.components.TabScreen
 import kotlinx.coroutines.delay
@@ -26,7 +25,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun BreakScreen(navController: NavController) {
-    TabScreen(tabContent = { BreakScreenContent() }, navController = navController)
+    TabScreen(tabContent = { BreakScreenContent() }, null, null, navController = navController)
 
 }
 
@@ -81,8 +80,9 @@ fun BreakScreenContent() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Column {
-                Text(text = "Next Up")
-                Icon(imageVector = Icons.Default.Image, contentDescription = "Exercise gif")
+                Text(text = "Next Up:")
+                // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
+                GifImage("exercise_4",200)
             }
             Text(
                 text = "Exercise Name",
@@ -96,7 +96,6 @@ fun BreakScreenContent() {
         }
     }
 }
-
 
 @Composable
 fun BreakTimer(
