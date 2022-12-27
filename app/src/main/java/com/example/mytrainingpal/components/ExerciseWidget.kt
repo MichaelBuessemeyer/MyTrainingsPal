@@ -20,9 +20,7 @@ fun ExerciseWidget(
     onRepsChanged: (Int) -> Unit,
     onSetsChanged: (Int) -> Unit
 ) {
-
-    val data = listOf(Text("Reps"), "Item 2", "Item 3", "Item 4", "Item 5")
-    WidgetCard {
+    WidgetCard(hasBorder = false) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
