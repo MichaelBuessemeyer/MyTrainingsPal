@@ -16,8 +16,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
+import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
-import com.example.mytrainingpal.model.view_models.MuscleViewModel
 import com.example.mytrainingpal.screens.*
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
@@ -83,12 +83,21 @@ fun AppNavHost(
                             LocalContext.current.applicationContext
                                     as Application
                         )
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
                         val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
                             it,
                             "MusclePainEntryViewModel",
                             factory
                         )
-                        HomeScreen(navController, musclePainEntryViewModel)
+                        HomeScreen(
+                            navController,
+                            musclePainEntryViewModel,
+                            musclePainEntryMapViewModel
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
@@ -106,7 +115,33 @@ fun AppNavHost(
             route = RouteGroups.MUSCLE_PAIN.route,
             startDestination = Screen.MusclePainMain.route
         ) {
-            composable(Screen.MusclePainMain.route) { MusclePainScreen(navController) }
+            composable(Screen.MusclePainMain.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current.applicationContext
+                                    as Application
+                        )
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
+                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+                        MusclePainScreen(
+                            navController,
+                            musclePainEntryMapViewModel = musclePainEntryMapViewModel,
+                            musclePainEntryViewModel = musclePainEntryViewModel
+                        )
+                    }
+                } else Text("")
+            }
             // TODO: Add MusclePainDetailsScreen and so on
         }
         navigation(
@@ -122,17 +157,12 @@ fun AppNavHost(
                             LocalContext.current.applicationContext
                                     as Application
                         )
-                        val muscleViewModel: MuscleViewModel = viewModel(
-                            it,
-                            "MuscleViewModel",
-                            factory
-                        )
                         val exerciseViewModel: ExerciseViewModel = viewModel(
                             it,
                             "ExerciseViewModel",
                             factory
                         )
-                        CalendarScreen(navController, muscleViewModel, exerciseViewModel)
+                        CalendarScreen(navController, exerciseViewModel)
                     }
                 } else {
                     Text("Still Loading View Model")

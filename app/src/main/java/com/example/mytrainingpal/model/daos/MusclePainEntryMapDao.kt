@@ -22,6 +22,22 @@ abstract class MusclePainEntryMapDao {
     abstract fun getAllMusclePainEntriesWithMuscles(): List<MusclePainEntryWithMuscles>
 
     @Transaction
+    @Query("SELECT * FROM MusclePainEntry where musclePainEntryId=:musclePainEntryId")
+    abstract fun getMusclePainEntryByIdWithMuscles(musclePainEntryId: Long): MusclePainEntryWithMuscles
+
+    @Transaction
+    @Query("INSERT INTO MusclePainEntryMap (musclePainEntryIdMap, painIntensity, muscleIdMap) select :musclePainEntryId, :painIntensity, muscleId FROM Muscle WHERE name = :muscleName")
+    abstract fun insertForMusclePainEntryIdAndMuscleName(
+        musclePainEntryId: Long,
+        muscleName: String,
+        painIntensity: Long
+    ): Long
+
+    @Transaction
+    @Query("DELETE FROM MusclePainEntryMap WHERE musclePainEntryIdMap=:musclePainEntryId")
+    abstract fun deleteAllSoreMusclesForMusclePainEntry(musclePainEntryId: Long)
+
+    @Transaction
     @Query("SELECT * FROM MusclePainEntry WHERE musclePainEntryId=:musclePainEntryId")
     abstract fun getAllMusclePainEntriesWithMusclesByMusclePainEntryId(musclePainEntryId: Long): List<MusclePainEntryWithMuscles>
 
