@@ -6,7 +6,6 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     primary = DarkPetrol,
@@ -61,12 +60,6 @@ fun MyTrainingPalTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    // Using SystemUiController to set menu top bar to transparent.
-    // Code taken from https://stackoverflow.com/questions/65610216/how-to-change-statusbar-color-in-jetpack-compose.
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(
-        color = Color.Transparent
-    )
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

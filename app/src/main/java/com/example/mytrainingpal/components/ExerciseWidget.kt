@@ -29,7 +29,6 @@ fun ExerciseWidget(
             ) {
                 val gifWithInPxl = LocalDensity.current.run { 80.dp.toPx() }.toInt()
                 GifImage(gifPath = exercise.pathToGif, size = gifWithInPxl)
-                // Text("Place holder", style = MaterialTheme.typography.body2)
             }
 
             Column(
