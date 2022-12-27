@@ -14,27 +14,39 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.CustomNumberInput
 import com.example.mytrainingpal.components.Screen
+import com.example.mytrainingpal.components.StartExerciseFloatingButton
 import com.example.mytrainingpal.components.TabScreen
+import com.example.mytrainingpal.util.IntHolder
 
 
 @Composable
-fun TrainingScreen(navController: NavController) {
-    var minutes by remember { mutableStateOf(20) }
+fun TrainingScreen(navController: NavController, duration: IntHolder) {
+    var minutes by remember { mutableStateOf(duration.value) }
     TabScreen(
         tabContent = {
             MainTrainingScreenContent(
                 minutes = minutes,
-                updateMinutes = { inputValue: Int -> minutes = inputValue })
+                updateMinutes = { inputValue: Int ->
+                    run {
+                        minutes = inputValue
+                        duration.value = inputValue
+                    }
+                })
         },
         topBarTitle = Screen.TrainingMain.label,
         topBarIcon = Screen.TrainingMain.icon,
-        navController = navController
+        navController = navController,
+        floatingActionButton = {
+            StartExerciseFloatingButton {
+                navController.navigate(Screen.TrainingsPreview.route)
+            }
+        }
     )
 }
 
 @Composable
 fun MainTrainingScreenContent(minutes: Int, updateMinutes: (Int) -> Unit) {
-    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+    val (showDialog) = remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
