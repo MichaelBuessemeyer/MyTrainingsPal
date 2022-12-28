@@ -15,10 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
-import com.example.mytrainingpal.model.view_models.ExerciseViewModel
-import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
-import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
-import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
 import com.example.mytrainingpal.screens.*
@@ -220,21 +216,29 @@ fun AppNavHost(
                             "MusclePainEntryViewModel",
                             factory
                         )
-                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
-                            "WorkoutEntryViewModel",
+                            "MusclePainEntryMapViewModel",
                             factory
                         )
-                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel = viewModel(
+                        val exerciseMuscleMapViewModel: ExerciseMuscleMapViewModel = viewModel(
                             it,
-                            "WorkoutEntryExerciseMapViewModel",
+                            "ExerciseMuscleMapViewModel",
                             factory
                         )
-                        TrainingsPreviewScreen(navController, duration, exercises, musclePainEntryViewModel, exerciseViewModel, workoutEntryViewModel, workoutEntryExerciseMapViewModel)
+                        TrainingsPreviewScreen(
+                            navController,
+                            duration,
+                            exercises,
+                            musclePainEntryViewModel,
+                            musclePainEntryMapViewModel,
+                            exerciseMuscleMapViewModel,
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
-                } }
+                }
+            }
             // TODO: Add further Trainings Screens
         }
     }

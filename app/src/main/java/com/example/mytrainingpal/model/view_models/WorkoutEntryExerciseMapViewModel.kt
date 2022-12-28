@@ -30,6 +30,9 @@ class WorkoutEntryExerciseMapViewModel(context: Context) : ViewModel() {
         repository.insertWorkoutEntryExerciseMap(workoutEntryExerciseMap)
     }
 
+    fun insertForWorkoutIdAndExerciseId(workoutId: Long, exerciseId: Long) {
+        repository.insertForWorkoutEntryIdAndExerciseId(workoutId, exerciseId)
+    }
     fun findWorkoutEntryExerciseMapById(id: Long) {
         repository.findWorkoutEntryExerciseMapeById(id)
     }

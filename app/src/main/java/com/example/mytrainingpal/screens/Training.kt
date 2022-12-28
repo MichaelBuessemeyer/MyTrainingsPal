@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.CustomNumberInput
 import com.example.mytrainingpal.components.Screen
-import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.StartExerciseFloatingButton
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.util.IntHolder
@@ -22,6 +21,7 @@ import com.example.mytrainingpal.util.IntHolder
 
 @Composable
 fun TrainingScreen(navController: NavController, duration: IntHolder) {
+    if (duration.value < 10) duration.value = 20
     var minutes by remember { mutableStateOf(duration.value) }
     TabScreen(
         tabContent = {

@@ -28,4 +28,13 @@ abstract class WorkoutEntryExerciseMapDao {
     @Delete
     abstract fun deleteWorkoutEntryExerciseMap(workoutEntryExerciseMap: WorkoutEntryExerciseMap)
 
+    @Transaction
+    @Query("INSERT INTO WorkoutEntryExerciseMap (workoutIdMap, exerciseIdMap, sets, reps, weight) select :workoutId, :exerciseId, :sets, :reps, :weight")
+    abstract fun insertForWorkoutEntryIdAndExerciseId(
+        workoutId: Long,
+        exerciseId: Long,
+        sets: Long,
+        reps: String,
+        weight: Long
+    ): Long
 }
