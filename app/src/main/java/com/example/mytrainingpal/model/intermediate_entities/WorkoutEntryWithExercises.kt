@@ -4,6 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.mytrainingpal.model.entities.WorkoutEntry
 import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
+import com.example.mytrainingpal.util.TrainingStats
+import java.util.concurrent.TimeUnit
 
 
 data class WorkoutEntryWithExercises(
@@ -15,4 +17,17 @@ data class WorkoutEntryWithExercises(
         entityColumn = "workoutIdMap",
     )
     val exerciseConnections: List<WorkoutEntryExerciseConnection>
-)
+) {
+    fun calculateStats(): TrainingStats {
+        val workoutDuration =
+            TimeUnit.MILLISECONDS.toMinutes(workoutEntry.endTime.time - workoutEntry.startTime.time)
+                .toInt()
+        var totalWeightLifted = 0
+        for ((workoutEntryToExerciseConnection) in exerciseConnections) {
+            val weightLifted = workoutEntryToExerciseConnection.reps.split(",")
+                .sumOf { it.toInt() * workoutEntryToExerciseConnection.weight.toInt() }
+            totalWeightLifted += weightLifted
+        }
+        return TrainingStats(workoutDuration, totalWeightLifted, workoutEntry.date)
+    }
+}

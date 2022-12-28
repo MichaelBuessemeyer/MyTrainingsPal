@@ -5,6 +5,7 @@ import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.mytrainingpal.model.daos.*
 import com.example.mytrainingpal.model.entities.*
+import java.util.*
 import java.util.concurrent.Executors
 
 
@@ -48,6 +49,10 @@ abstract class TheMuscleBase : RoomDatabase() {
                                         val exerciseDao = localInstance.getExerciseDao()
                                         val exerciseMuscleMapDao =
                                             localInstance.getExerciseMuscleMapDao()
+                                        val workoutEntryExerciseMapDao =
+                                            localInstance.getWorkoutEntryExerciseMapDao()
+                                        val workoutEntryDao =
+                                            localInstance.getWorkoutEntryDao()
 
                                         fun connectExerciseWithMuscles(
                                             exerciseId: Long,
@@ -58,6 +63,23 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                     ExerciseMuscleMap(
                                                         exerciseId,
                                                         muscleId
+                                                    )
+                                                )
+                                            }
+                                        }
+
+                                        fun connectWorkoutEntryWithExercises(
+                                            workoutId: Long,
+                                            exerciseIds: Array<Long>,
+                                        ) {
+                                            for (exerciseId in exerciseIds) {
+                                                workoutEntryExerciseMapDao.insert(
+                                                    WorkoutEntryExerciseMap(
+                                                        workoutId,
+                                                        exerciseId,
+                                                        4,
+                                                        "10,10,10,10",
+                                                        20
                                                     )
                                                 )
                                             }
@@ -109,10 +131,10 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             muscleDao.insert(Muscle(name = "Right Obliques"))
                                         val abdominalsId =
                                             muscleDao.insert(Muscle(name = "Abdominals"))
-                                        val leftGlutsId =
-                                            muscleDao.insert(Muscle(name = "Left Gluts"))
-                                        val rightGlutsId =
-                                            muscleDao.insert(Muscle(name = "Right Gluts"))
+                                        val leftGlutesId =
+                                            muscleDao.insert(Muscle(name = "Left Glutes"))
+                                        val rightGlutesId =
+                                            muscleDao.insert(Muscle(name = "Right Glutes"))
                                         val leftQuadricepsId =
                                             muscleDao.insert(Muscle(name = "Left Quadriceps"))
                                         val rightQuadricepsId =
@@ -157,7 +179,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Lat pull up",
-                                                "res/gifs/Exercise_1.gif"
+                                                "exercise_1"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -173,7 +195,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Legs raises",
-                                                "res/gifs/Exercise_2.gif"
+                                                "exercise_2"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -190,7 +212,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Butterfly",
-                                                "res/gifs/Exercise_3.gif"
+                                                "exercise_3"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -208,7 +230,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Arm Raises",
-                                                "res/gifs/Exercise_4.gif"
+                                                "exercise_4"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -226,7 +248,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Leg Curls",
-                                                "res/gifs/Exercise_5.gif"
+                                                "exercise_5"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -242,7 +264,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Leg Extension",
-                                                "res/gifs/Exercise_6.gif"
+                                                "exercise_6"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -253,7 +275,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Deadlifts with kettlebell",
-                                                "res/gifs/Exercise_7.gif"
+                                                "exercise_7"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -265,8 +287,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                 rightForearmId,
                                                 leftQuadricepsId,
                                                 rightQuadricepsId,
-                                                leftGlutsId,
-                                                rightGlutsId,
+                                                leftGlutesId,
+                                                rightGlutesId,
                                                 trapeziusId,
                                                 lowerBackId,
                                             )
@@ -275,14 +297,14 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Lunges",
-                                                "res/gifs/Exercise_8.gif"
+                                                "exercise_8"
                                             )
                                         )
                                         connectExerciseWithMuscles(
                                             armLungesId,
                                             arrayOf(
-                                                leftGlutsId,
-                                                rightGlutsId,
+                                                leftGlutesId,
+                                                rightGlutesId,
                                                 leftHamstringsId,
                                                 rightHamstringsId,
                                                 leftQuadricepsId,
@@ -293,7 +315,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Hammer Curls",
-                                                "res/gifs/Exercise_9.gif"
+                                                "exercise_9"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -304,7 +326,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Overhead dumbbell press",
-                                                "res/gifs/Exercise_10.gif"
+                                                "exercise_10"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -321,7 +343,7 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Leg Press",
-                                                "res/gifs/Exercise_11.gif"
+                                                "exercise_11"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -331,15 +353,15 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                 rightQuadricepsId,
                                                 leftHamstringsId,
                                                 rightHamstringsId,
-                                                leftGlutsId,
-                                                rightGlutsId
+                                                leftGlutesId,
+                                                rightGlutesId
                                             )
                                         )
                                         val seatedCalfRaiseId = exerciseDao.insert(
                                             Exercise(
                                                 null,
                                                 "Seated Calf Raise",
-                                                "res/gifs/Exercise_13.gif"
+                                                "exercise_13"
                                             )
                                         )
                                         connectExerciseWithMuscles(
@@ -350,12 +372,100 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             Exercise(
                                                 null,
                                                 "Standing Calf Raise",
-                                                "res/gifs/Exercise_14.gif"
+                                                "exercise_14"
                                             )
                                         )
                                         connectExerciseWithMuscles(
                                             standingCalfRaisesId,
                                             arrayOf(leftCalfId, rightCalfId)
+                                        )
+
+                                        val workout1Id = workoutEntryDao.insert(
+                                            WorkoutEntry(
+                                                null,
+                                                GregorianCalendar(2022, Calendar.DECEMBER, 1).time,
+                                                GregorianCalendar(
+                                                    2022,
+                                                    Calendar.DECEMBER,
+                                                    1,
+                                                    12,
+                                                    30
+                                                ).time,
+                                                GregorianCalendar(
+                                                    2022,
+                                                    Calendar.DECEMBER,
+                                                    1,
+                                                    14,
+                                                    30
+                                                ).time,
+                                                ""
+                                            )
+                                        )
+                                        val workout2Id = workoutEntryDao.insert(
+                                            WorkoutEntry(
+                                                null,
+                                                GregorianCalendar(2022, Calendar.DECEMBER, 2).time,
+                                                GregorianCalendar(
+                                                    2022,
+                                                    Calendar.DECEMBER,
+                                                    2,
+                                                    12,
+                                                    30
+                                                ).time,
+                                                GregorianCalendar(
+                                                    2022,
+                                                    Calendar.DECEMBER,
+                                                    2,
+                                                    14,
+                                                    30
+                                                ).time,
+                                                ""
+                                            )
+                                        )
+                                        val workout3Id = workoutEntryDao.insert(
+                                            WorkoutEntry(
+                                                null,
+                                                GregorianCalendar(2022, Calendar.DECEMBER, 3).time,
+                                                GregorianCalendar(
+                                                    2022,
+                                                    Calendar.DECEMBER,
+                                                    3,
+                                                    12,
+                                                    30
+                                                ).time,
+                                                GregorianCalendar(
+                                                    2022,
+                                                    Calendar.DECEMBER,
+                                                    3,
+                                                    14,
+                                                    30
+                                                ).time,
+                                                ""
+                                            )
+                                        )
+                                        connectWorkoutEntryWithExercises(
+                                            workout1Id,
+                                            arrayOf(
+                                                legPressId,
+                                                overheadDumbbellPressId,
+                                                hammerCurlsId
+                                            )
+                                        )
+                                        connectWorkoutEntryWithExercises(
+                                            workout2Id,
+                                            arrayOf(
+                                                legPressId,
+                                                overheadDumbbellPressId,
+                                                hammerCurlsId
+                                            )
+                                        )
+                                        connectWorkoutEntryWithExercises(
+                                            workout3Id,
+                                            arrayOf(
+                                                legPressId,
+                                                overheadDumbbellPressId,
+                                                hammerCurlsId
+                                            )
                                         )
                                     }
                                 }
