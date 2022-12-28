@@ -17,5 +17,4 @@ data class WorkoutEntry(
     val endTime: Date,
     val comment: String,
     val picturePath: String? = null
-) {
-}
+)
