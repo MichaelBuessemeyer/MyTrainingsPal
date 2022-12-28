@@ -5,7 +5,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -32,11 +31,28 @@ sealed class Screen(
 ) {
     object Home : Screen("homeMain", "Home", Icons.Default.Home, RouteGroups.HOME.route)
     object MusclePainMain :
-        Screen("musclePainMain", "Muscle Pain", Icons.Default.SentimentVeryDissatisfied, RouteGroups.MUSCLE_PAIN.route)
-    object TrainingMain : Screen("trainingMain", "Training", Icons.Default.FitnessCenter, RouteGroups.TRAINING.route)
-    object TrainingsPreview : Screen("trainingsPreview", "TrainingsPreview", Icons.Default.FitnessCenter, RouteGroups.TRAINING.route)
-    object CalendarMain : Screen("calendarMain", "Calendar", Icons.Default.CalendarToday, RouteGroups.CALENDAR.route)
-    object Settings : Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+        Screen(
+            "musclePainMain",
+            "Muscle Pain",
+            Icons.Default.SentimentVeryDissatisfied,
+            RouteGroups.MUSCLE_PAIN.route
+        )
+
+    object TrainingMain :
+        Screen("trainingMain", "Training", Icons.Default.FitnessCenter, RouteGroups.TRAINING.route)
+
+    object TrainingsPreview : Screen(
+        "trainingsPreview",
+        "TrainingsPreview",
+        Icons.Default.FitnessCenter,
+        RouteGroups.TRAINING.route
+    )
+
+    object CalendarMain :
+        Screen("calendarMain", "Calendar", Icons.Default.CalendarToday, RouteGroups.CALENDAR.route)
+
+    object Settings :
+        Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
 }
 
 enum class RouteGroups(val route: String) {
@@ -202,21 +218,42 @@ fun AppNavHost(
                             "MusclePainEntryViewModel",
                             factory
                         )
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
                         val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
                             it,
                             "WorkoutEntryViewModel",
                             factory
                         )
-                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel = viewModel(
+                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel =
+                            viewModel(
+                                it,
+                                "WorkoutEntryExerciseMapViewModel",
+                                factory
+                            )
+                        val exerciseMuscleMapViewModel: ExerciseMuscleMapViewModel = viewModel(
                             it,
-                            "WorkoutEntryExerciseMapViewModel",
+                            "ExerciseMuscleMapViewModel",
                             factory
                         )
-                        TrainingsPreviewScreen(navController, duration, exercises, musclePainEntryViewModel, exerciseViewModel, workoutEntryViewModel, workoutEntryExerciseMapViewModel)
+                        TrainingsPreviewScreen(
+                            navController,
+                            duration,
+                            exercises,
+                            musclePainEntryViewModel,
+                            musclePainEntryMapViewModel,
+                            exerciseViewModel,
+                            exerciseMuscleMapViewModel,
+                            workoutEntryExerciseMapViewModel
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
-                } }
+                }
+            }
             // TODO: Add further Trainings Screens
         }
     }

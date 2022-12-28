@@ -1,6 +1,7 @@
 package com.example.mytrainingpal.model.intermediate_entities
 
 import androidx.room.Embedded
+import androidx.room.Junction
 import androidx.room.Relation
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.ExerciseMuscleMap
@@ -15,5 +16,6 @@ data class ExerciseWithMuscles(
         parentColumn = "exerciseId",
         entityColumn = "exerciseIdMap",
     )
-    val muscles: List<Muscle>
+
+    val muscleConnections: List<ExerciseMusclesConnection>
 )
