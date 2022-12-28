@@ -5,7 +5,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -33,10 +32,15 @@ sealed class Screen(
     object Home : Screen("homeMain", "Home", Icons.Default.Home, RouteGroups.HOME.route)
     object MusclePainMain :
         Screen("musclePainMain", "Muscle Pain", Icons.Default.SentimentVeryDissatisfied, RouteGroups.MUSCLE_PAIN.route)
+    object Settings : Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+    // *** TRAINING route group objects
     object TrainingMain : Screen("trainingMain", "Training", Icons.Default.FitnessCenter, RouteGroups.TRAINING.route)
     object TrainingsPreview : Screen("trainingsPreview", "TrainingsPreview", Icons.Default.FitnessCenter, RouteGroups.TRAINING.route)
+    object Break : Screen("break", "Break", Icons.Default.FitnessCenter, RouteGroups.TRAINING.route)
+    object ScreenToggle : Screen("screenToggle", "ScreenToggle", Icons.Default.Favorite, RouteGroups.TRAINING.route)
+    // ***
     object CalendarMain : Screen("calendarMain", "Calendar", Icons.Default.CalendarToday, RouteGroups.CALENDAR.route)
-    object Settings : Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+
 }
 
 enum class RouteGroups(val route: String) {
@@ -182,6 +186,12 @@ fun AppNavHost(
             // list of exercises for current workout. gets updated by reference
             val exercises = mutableListOf<Pair<Exercise, ExerciseDetails>>()
             val duration = IntHolder(0)
+
+            // *** ScreenToggle navigation
+            composable(Screen.ScreenToggle.route) { ToggleComposable(navController) }
+            // *** BreakScreen navigation
+            composable(Screen.Break.route) { BreakScreen(navController) }
+
             composable(Screen.TrainingMain.route) { TrainingScreen(navController, duration) }
             composable(Screen.TrainingsPreview.route) {
                 val owner = LocalViewModelStoreOwner.current

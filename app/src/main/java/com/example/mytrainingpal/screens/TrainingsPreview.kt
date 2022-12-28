@@ -4,15 +4,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AcUnit
-import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.Screen
+import com.example.mytrainingpal.components.StartExerciseFloatingButton
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.TextIconWidget
 import com.example.mytrainingpal.model.entities.Exercise
@@ -43,7 +45,19 @@ fun TrainingsPreviewScreen(navController: NavController, duration: IntHolder, ex
         },
         topBarTitle = Screen.TrainingsPreview.label,
         topBarIcon = Screen.TrainingsPreview.icon,
-        navController = navController
+        navController = navController,
+        floatingActionButton =
+        {
+            FloatingActionButton(onClick = { navController.navigate(
+                Screen.ScreenToggle.route
+            ) }) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    tint = MaterialTheme.colors.onSecondary,
+                    contentDescription = "Start Training"
+                )
+            }
+        }
     )
 }
 

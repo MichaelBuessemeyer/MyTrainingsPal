@@ -1,8 +1,10 @@
 package com.example.mytrainingpal.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.* import androidx.compose.runtime.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,80 +24,79 @@ import com.example.mytrainingpal.components.GifImage
 import com.example.mytrainingpal.components.TabScreen
 import kotlinx.coroutines.delay
 
-
-@Composable
-fun BreakScreen(navController: NavController) {
-    TabScreen(tabContent = { BreakScreenContent() }, null, null, navController = navController)
-
-}
-
 // Timer composable adapted from Phillip Lackners' open source code available on Github:
 // https://github.com/philipplackner/ComposeTimer/blob/master/app/src/main/java/com/plcoding/composetimer/MainActivity.kt
 
-@Composable
-fun BreakScreenContent() {
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun BreakScreen(navController: NavController) {
     var currentExercise: Int = 4;
     var totalExercises: Int = 10;
     var totalBreakTimeInSeconds: Int = 25
 
-    Column(
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxSize()
-            .padding(5.dp)
+    Scaffold(
+        backgroundColor = MaterialTheme.colors.background
     ) {
-        Text(
-            text = "Exercise $currentExercise / $totalExercises"
-        )
-        Text(
-            text = "Break",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Box(
-            contentAlignment = Alignment.Center
-        ) {
-            BreakTimer(
-                totalTime = totalBreakTimeInSeconds * 1000L,
-                //handleColor = Color.Green,
-                inactiveBarColor = MaterialTheme.colors.primary,
-                activeBarColor = MaterialTheme.colors.secondary,
-                modifier = Modifier.size(180.dp)
-            )
-        }
-
-        LinearProgressIndicator(
-            progress = currentExercise / totalExercises.toFloat(),
-            backgroundColor = MaterialTheme.colors.primary,
-            color = MaterialTheme.colors.secondary,
+        Column(
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-        )
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier.fillMaxWidth()
+                .fillMaxSize()
+                .padding(5.dp)
         ) {
-            Column {
-                Text(text = "Next Up:")
-                // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-                GifImage("exercise_4",200)
-            }
             Text(
-                text = "Exercise Name",
-                fontSize = 18.sp,
+                text = "Exercise $currentExercise / $totalExercises"
+            )
+            Text(
+                text = "Break",
+                fontSize = 25.sp,
                 fontWeight = FontWeight.Bold
             )
-            Column {
-                Text(text = "20 REPS")
-                Text(text = "30 SETS")
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                BreakTimer(
+                    totalTime = totalBreakTimeInSeconds * 1000L,
+                    //handleColor = Color.Green,
+                    inactiveBarColor = MaterialTheme.colors.primary,
+                    activeBarColor = MaterialTheme.colors.secondary,
+                    modifier = Modifier.size(180.dp)
+                )
+            }
+
+            LinearProgressIndicator(
+                progress = currentExercise / totalExercises.toFloat(),
+                backgroundColor = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.secondary,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column {
+                    Text(text = "Next Up:")
+                    // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
+                    GifImage("exercise_4", 200)
+                }
+                Text(
+                    text = "Exercise Name",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Column {
+                    Text(text = "20 REPS")
+                    Text(text = "30 SETS")
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun BreakTimer(
