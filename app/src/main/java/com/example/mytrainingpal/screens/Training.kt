@@ -46,7 +46,7 @@ fun TrainingScreen(navController: NavController, duration: IntHolder) {
 
 @Composable
 fun MainTrainingScreenContent(minutes: Int, updateMinutes: (Int) -> Unit) {
-    val (showDialog) = remember { mutableStateOf(false) }
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,

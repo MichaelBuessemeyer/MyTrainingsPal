@@ -109,10 +109,10 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             muscleDao.insert(Muscle(name = "Right Obliques"))
                                         val abdominalsId =
                                             muscleDao.insert(Muscle(name = "Abdominals"))
-                                        val leftGlutsId =
-                                            muscleDao.insert(Muscle(name = "Left Gluts"))
-                                        val rightGlutsId =
-                                            muscleDao.insert(Muscle(name = "Right Gluts"))
+                                        val leftGlutesId =
+                                            muscleDao.insert(Muscle(name = "Left Glutes"))
+                                        val rightGlutesId =
+                                            muscleDao.insert(Muscle(name = "Right Glutes"))
                                         val leftQuadricepsId =
                                             muscleDao.insert(Muscle(name = "Left Quadriceps"))
                                         val rightQuadricepsId =
@@ -265,8 +265,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                 rightForearmId,
                                                 leftQuadricepsId,
                                                 rightQuadricepsId,
-                                                leftGlutsId,
-                                                rightGlutsId,
+                                                leftGlutesId,
+                                                rightGlutesId,
                                                 trapeziusId,
                                                 lowerBackId,
                                             )
@@ -281,8 +281,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                                         connectExerciseWithMuscles(
                                             armLungesId,
                                             arrayOf(
-                                                leftGlutsId,
-                                                rightGlutsId,
+                                                leftGlutesId,
+                                                rightGlutesId,
                                                 leftHamstringsId,
                                                 rightHamstringsId,
                                                 leftQuadricepsId,
@@ -331,8 +331,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                                                 rightQuadricepsId,
                                                 leftHamstringsId,
                                                 rightHamstringsId,
-                                                leftGlutsId,
-                                                rightGlutsId
+                                                leftGlutesId,
+                                                rightGlutesId
                                             )
                                         )
                                         val seatedCalfRaiseId = exerciseDao.insert(

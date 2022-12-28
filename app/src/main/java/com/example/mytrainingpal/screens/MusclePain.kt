@@ -1,5 +1,6 @@
 package com.example.mytrainingpal.screens
 
+import android.widget.Toast
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -9,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.MusclePainWidget
-import com.example.mytrainingpal.components.RouteGroups
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.model.entities.Muscle
@@ -25,6 +26,7 @@ import com.example.mytrainingpal.util.todayDate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun MusclePainScreen(
@@ -32,6 +34,7 @@ fun MusclePainScreen(
     musclePainEntryViewModel: MusclePainEntryViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel
 ) {
+    val context = LocalContext.current
     val todaysMusclePainEntry = RememberTodaysMusclePainEntryState(musclePainEntryViewModel)
     RememberFetchMusclePainEntryWithMuscles(todaysMusclePainEntry, musclePainEntryMapViewModel)
     // Keeping track of a mutable list of sore muscles with the help of post
@@ -39,11 +42,6 @@ fun MusclePainScreen(
     val soreMuscles: SnapshotStateList<Pair<Muscle, Long>> = remember { mutableStateListOf() }
     RememberAddingSoreMusclesToList(musclePainEntryMapViewModel, soreMuscles)
 
-    val navigateToHome = {
-        navController.navigate(
-            RouteGroups.HOME.route
-        )
-    }
     val saveSoreMuscleAndNavToHome = {
         val coroutineScope = CoroutineScope(Dispatchers.Main)
         coroutineScope.launch(Dispatchers.IO) {
@@ -65,8 +63,14 @@ fun MusclePainScreen(
                     painIntensity
                 )
             }
+            // Update UI in IO Coroutine from: https://stackoverflow.com/questions/59491707/how-to-wait-for-end-of-a-coroutine
+            withContext(Dispatchers.Main) {
+                //update the UI
+                // Show toast from: https://medium.com/smartherd/how-to-create-toast-message-in-jetpack-compose-android-6144c2749ae0
+                Toast.makeText(context, "Saved changes.", Toast.LENGTH_SHORT).show()
+            }
+
         }
-        coroutineScope.launch(Dispatchers.Main) { navigateToHome() }
     }
 
     TabScreen(
