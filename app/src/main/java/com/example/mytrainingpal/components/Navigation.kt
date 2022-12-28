@@ -1,9 +1,11 @@
 package com.example.mytrainingpal.components
 
-import android.app.Application
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -14,10 +16,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
+import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
 import com.example.mytrainingpal.screens.*
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
@@ -29,7 +33,7 @@ sealed class Screen(
 ) {
     object Home : Screen("homeMain", "Home", Icons.Default.Home)
     object MusclePainMain :
-        Screen("musclePainMain", "Muscle Pain", Icons.Default.SentimentVeryDissatisfied)
+        Screen("musclePainMain", "Muscle Pain", ShoulderPainIcon())
 
     object TrainingMain : Screen("trainingMain", "Training", Icons.Default.FitnessCenter)
     object CalendarMain : Screen("calendarMain", "Calendar", Icons.Default.CalendarToday)
@@ -80,8 +84,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
@@ -93,9 +96,16 @@ fun AppNavHost(
                             "MusclePainEntryViewModel",
                             factory
                         )
+                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel =
+                            viewModel(
+                                it,
+                                "WorkoutEntryExerciseMapViewModel",
+                                factory
+                            )
                         HomeScreen(
                             navController,
                             musclePainEntryViewModel,
+                            workoutEntryExerciseMapViewModel,
                             musclePainEntryMapViewModel
                         )
                     }
@@ -121,8 +131,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
@@ -154,8 +163,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val exerciseViewModel: ExerciseViewModel = viewModel(
                             it,

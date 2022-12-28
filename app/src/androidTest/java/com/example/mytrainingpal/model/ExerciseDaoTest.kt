@@ -37,7 +37,7 @@ class ExerciseDaoTest {
     @Test
     @Throws(Exception::class)
     fun testInsert() {
-        var exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        var exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         exercise = exercise.copy(exerciseId = exerciseId)
         val exerciseRet = exerciseDao.getExerciseById(exerciseId)
@@ -47,7 +47,7 @@ class ExerciseDaoTest {
     @Test
     @Throws(Exception::class)
     fun testDelete() {
-        var exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        var exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         exercise = exercise.copy(exerciseId = exerciseId)
         val exerciseRet = exerciseDao.getExerciseById(exerciseId)
@@ -60,12 +60,12 @@ class ExerciseDaoTest {
     @Test
     @Throws(Exception::class)
     fun testUpdate() {
-        var exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        var exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         exercise = exercise.copy(exerciseId = exerciseId)
         var exerciseRet = exerciseDao.getExerciseById(exerciseId)
         assertThat(exerciseRet, equalTo(exercise))
-        val newGifPath = "res/gifs/Exercise_2.gif"
+        val newGifPath = "exercise_2"
         exercise.pathToGif = newGifPath
         exerciseDao.updateExercise(exercise)
         exerciseRet = exerciseDao.getExerciseById(exerciseId)

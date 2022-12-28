@@ -48,7 +48,7 @@ class WorkoutEntryExerciseMapDaoTest {
     fun testInsert() {
         val workoutEntry = WorkoutEntry(null, GregorianCalendar(2022, Calendar.DECEMBER, 1).time,"12:12:00","13:30:22","",null)
         val workoutEntryId = workoutEntryDao.insert(workoutEntry)
-        val exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        val exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         val workoutEntryExerciseMap = WorkoutEntryExerciseMap(workoutEntryId, exerciseId, 4, "10,10,10,10", 20)
         val workoutEntryExerciseMapId = workoutEntryExerciseMapDao.insert(workoutEntryExerciseMap)
@@ -61,7 +61,7 @@ class WorkoutEntryExerciseMapDaoTest {
     fun testDelete() {
         val workoutEntry = WorkoutEntry(null, GregorianCalendar(2022, Calendar.DECEMBER, 1).time,"12:12:00","13:30:22","",null)
         val workoutEntryId = workoutEntryDao.insert(workoutEntry)
-        val exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        val exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         val workoutEntryExerciseMap = WorkoutEntryExerciseMap(workoutEntryId, exerciseId, 4, "10,10,10,10", 20)
         val workoutEntryExerciseMapId = workoutEntryExerciseMapDao.insert(workoutEntryExerciseMap)
@@ -79,7 +79,7 @@ class WorkoutEntryExerciseMapDaoTest {
     fun testUpdate() {
         val workoutEntry = WorkoutEntry(null, GregorianCalendar(2022, Calendar.DECEMBER, 1).time,"12:12:00","13:30:22","",null)
         val workoutEntryId = workoutEntryDao.insert(workoutEntry)
-        val exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        val exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         var workoutEntryExerciseMap = WorkoutEntryExerciseMap(workoutEntryId, exerciseId, 4, "10,10,10,10", 20)
         val workoutEntryExerciseMapId = workoutEntryExerciseMapDao.insert(workoutEntryExerciseMap)

@@ -11,3 +11,9 @@ fun todayDate(): Date {
         todayDate.dayOfMonth
     ).time
 }
+
+data class TrainingStats(
+    val durationInMinutes: Int,
+    val totalWeightLifted: Int,
+    val date: Date?
+)
