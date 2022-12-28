@@ -154,6 +154,7 @@ fun TrainingsPreviewScreenContent(
             text = "Your ${duration.value} min Routine",
             imageVector = Icons.Default.FitnessCenter
         )
+        // no lazyColumn here, because we know there won't be that many entries ;)
         exercises.forEach() { (exercise, details) ->
             var reps by remember { mutableStateOf(details.reps) }
             var sets by remember { mutableStateOf(details.sets) }
