@@ -1,18 +1,26 @@
 package com.example.mytrainingpal.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.runtime.*
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Portrait
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
-import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
+import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
 import com.example.mytrainingpal.states.RememberAddingSoreMusclesToList
 import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
@@ -21,6 +29,7 @@ import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
 fun HomeScreen(
     navController: NavController,
     musclePainEntryViewModel: MusclePainEntryViewModel,
+    workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
 ) {
     TabScreen(tabContent = {
@@ -34,6 +43,7 @@ fun HomeScreen(
             )
         },
             musclePainEntryViewModel = musclePainEntryViewModel,
+            workoutEntryExerciseMapViewModel = workoutEntryExerciseMapViewModel,
             musclePainEntryMapViewModel = musclePainEntryMapViewModel
         )
     }, topBarTitle = null, topBarIcon = null, navController = navController)
@@ -44,13 +54,10 @@ fun HomeScreenContent(
     navigateToMusclePain: () -> Unit = {},
     navigateToSettings: () -> Unit = {},
     musclePainEntryViewModel: MusclePainEntryViewModel,
+    workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
 ) {
     val todaysMusclePainEntry = RememberTodaysMusclePainEntryState(musclePainEntryViewModel)
-    val exercise = Exercise(name = "Test", pathToGif = "somePath")
-    val weight by remember { mutableStateOf(20) }
-    var sets by remember { mutableStateOf(4) }
-    var reps by remember { mutableStateOf(10) }
 
     RememberFetchMusclePainEntryWithMuscles(todaysMusclePainEntry, musclePainEntryMapViewModel)
     // Keeping track of a mutable list of sore muscles with the help of post
@@ -61,6 +68,13 @@ fun HomeScreenContent(
         Modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Icon(
+            imageVector = Icons.Default.Portrait,
+            contentDescription = "Profile Picture",
+            modifier = Modifier
+                .padding(8.dp)
+                .size(120.dp)
+        )
         UserNameWithSettings(navigateToSettings)
         if (todaysMusclePainEntry == null) {
             EnterPainPrompt(navigateToMusclePain = navigateToMusclePain)
@@ -70,15 +84,7 @@ fun HomeScreenContent(
             soreMuscles = soreMuscles,
             showEditButton = true,
         )
-        ExerciseWidget(
-            exercise,
-            sets = sets,
-            reps = reps,
-            weight = weight,
-            onRepsChanged = { reps = it },
-            onSetsChanged = { sets = it })
-        OverallRecordsCard()
-        OverallRecordsCard()
-        LastTrainingStatCard(thisTraining = false)
+        OverallRecordsCard(workoutEntryExerciseMapViewModel)
+        LastTrainingStatCard(workoutEntryExerciseMapViewModel)
     }
 }

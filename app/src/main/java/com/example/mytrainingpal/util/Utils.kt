@@ -1,8 +1,6 @@
 package com.example.mytrainingpal.util
 
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.YearMonth
 import java.util.*
 
 fun localDateToJavaDate(date: LocalDate): Date{
@@ -24,3 +22,9 @@ fun todayDate(): Date {
     val todayDate = LocalDate.now()
     return localDateToJavaDate(todayDate)
 }
+
+data class TrainingStats(
+    val durationInMinutes: Int,
+    val totalWeightLifted: Int,
+    val date: Date?
+)
