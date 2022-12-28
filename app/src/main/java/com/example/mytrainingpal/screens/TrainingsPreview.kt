@@ -45,7 +45,7 @@ fun TrainingsPreviewScreen(
 
     val allExercises by exerciseMuscleMapViewModel.allExercisesWithMuscles.observeAsState(listOf())
 
-    if (allExercises.isNotEmpty() && soreMuscles.isNotEmpty()) {
+    if (allExercises.isNotEmpty()) {
         val slightlySoreMuscles: Set<Muscle> =
             soreMuscles.filter { it.second == 1L }.map { it.first }.toSet()
         val verySoreMuscles: Set<Muscle> =
@@ -127,7 +127,6 @@ fun TrainingsPreviewScreen(
         navController = navController,
         floatingActionButton = {
             StartExerciseFloatingButton {
-                println("exercises: $exercises")
                 navController.navigate(Screen.Home.route)
             }
         }
