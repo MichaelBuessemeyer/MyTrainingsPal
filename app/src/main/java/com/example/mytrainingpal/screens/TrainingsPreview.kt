@@ -45,26 +45,33 @@ fun TrainingsPreviewScreen(
 
     val allExercises by exerciseMuscleMapViewModel.allExercisesWithMuscles.observeAsState(listOf())
 
-    val slightlySoreMuscles: Set<Muscle> =
-        soreMuscles.filter { it.second == 1L }.map { it.first }.toSet()
+    if (allExercises.isNotEmpty() && soreMuscles.isNotEmpty()) {
+        val slightlySoreMuscles: Set<Muscle> =
+            soreMuscles.filter { it.second == 1L }.map { it.first }.toSet()
+        val verySoreMuscles: Set<Muscle> =
+            soreMuscles.filter { it.second == 2L }.map { it.first }.toSet()
 
-    val unsoreExercises: MutableList<Exercise> = allExercises.filter { (_, muscles) ->
-        muscles.intersect(soreMuscles).isEmpty() && muscles.intersect(slightlySoreMuscles).isEmpty()
-    }.map { (exercise, _) -> exercise }.toMutableList()
-    val slightlySoreExercises: MutableList<Exercise> = allExercises.filter { (_, muscles) ->
-        muscles.intersect(soreMuscles).isEmpty() && muscles.intersect(slightlySoreMuscles)
-            .isNotEmpty()
-    }.map { (exercise, _) -> exercise }.toMutableList()
+        val unsoreExercises: MutableList<Exercise> = allExercises.filter { exerciseWithMuscles ->
+            val exerciseMuscles = exerciseWithMuscles.muscleConnections.map { it.muscles[0] }
+            exerciseMuscles.intersect(slightlySoreMuscles).isEmpty()
+                    && exerciseMuscles.intersect(verySoreMuscles).isEmpty()
+        }.map { (exercise) -> exercise }.toMutableList()
+        val slightlySoreExercises: MutableList<Exercise> =
+            allExercises.filter { exerciseWithMuscles ->
+                val exerciseMuscles = exerciseWithMuscles.muscleConnections.map { it.muscles[0] }
+                exerciseMuscles.intersect(slightlySoreMuscles).isNotEmpty()
+                        && exerciseMuscles.intersect(verySoreMuscles).isEmpty()
+            }.map { (exercise) -> exercise }.toMutableList()
 
-    val defaultReps = 10
-    val defaultSets = 3
-    val defaultWeight = 20
-    val defaultDetails = ExerciseDetails(
-        sets = defaultSets,
-        reps = defaultReps,
-        weight = defaultWeight
-    )
-    if (allExercises.isNotEmpty()) {
+        val defaultReps = 10
+        val defaultSets = 3
+        val defaultWeight = 20
+        val defaultDetails = ExerciseDetails(
+            sets = defaultSets,
+            reps = defaultReps,
+            weight = defaultWeight
+        )
+
         val setsNeeded = (duration.value / 2) + 1
         var setsLeftover = setsNeeded
         val selectedExercises: MutableList<Pair<Exercise, ExerciseDetails>> = mutableListOf()

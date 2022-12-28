@@ -1,11 +1,9 @@
 package com.example.mytrainingpal.model.intermediate_entities
 
 import androidx.room.Embedded
-import androidx.room.Junction
 import androidx.room.Relation
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.ExerciseMuscleMap
-import com.example.mytrainingpal.model.entities.Muscle
 
 
 data class ExerciseWithMuscles(
