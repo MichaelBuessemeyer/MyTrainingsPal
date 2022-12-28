@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mytrainingpal.model.daos.WorkoutEntryExerciseMapDao
 import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
+import com.example.mytrainingpal.model.intermediate_entities.WorkoutEntryWithExercises
 import kotlinx.coroutines.*
 
 // How to implement repository and viewmodel classes taken from
@@ -14,6 +15,8 @@ class WorkoutEntryExerciseMapRepository(private val workoutEntryExerciseMapDao: 
 
     val allWorkoutEntryExerciseMaps: LiveData<List<WorkoutEntryExerciseMap>> =
         workoutEntryExerciseMapDao.getAllWorkoutEntryExerciseMaps()
+    val allWorkoutEntriesWithExercises: LiveData<List<WorkoutEntryWithExercises>> =
+        workoutEntryExerciseMapDao.getAllWorkoutEntriesWithExercises()
     val searchResults = MutableLiveData<List<WorkoutEntryExerciseMap>>()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 

@@ -1,6 +1,5 @@
 package com.example.mytrainingpal.components
 
-import android.app.Application
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -14,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
@@ -99,8 +99,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
@@ -112,9 +111,16 @@ fun AppNavHost(
                             "MusclePainEntryViewModel",
                             factory
                         )
+                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel =
+                            viewModel(
+                                it,
+                                "WorkoutEntryExerciseMapViewModel",
+                                factory
+                            )
                         HomeScreen(
                             navController,
                             musclePainEntryViewModel,
+                            workoutEntryExerciseMapViewModel,
                             musclePainEntryMapViewModel
                         )
                     }
@@ -140,8 +146,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
@@ -173,8 +178,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val exerciseViewModel: ExerciseViewModel = viewModel(
                             it,
@@ -190,7 +194,7 @@ fun AppNavHost(
             }
             // TODO: Add CalendarDetailsScreen and so on
         }
-        // Use those to maintain several back stacks
+        // Use those to maintain several back stacks for navigation
         navigation(
             route = RouteGroups.TRAINING.route,
             startDestination = Screen.TrainingMain.route
@@ -205,8 +209,7 @@ fun AppNavHost(
                 if (owner != null) {
                     owner.let {
                         val factory = GenericViewModelFactory(
-                            LocalContext.current.applicationContext
-                                    as Application
+                            LocalContext.current
                         )
                         val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
                             it,

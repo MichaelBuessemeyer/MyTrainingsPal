@@ -1,25 +1,28 @@
 package com.example.mytrainingpal.model.view_models
 
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mytrainingpal.model.TheMuscleBase
 import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
+import com.example.mytrainingpal.model.intermediate_entities.WorkoutEntryWithExercises
 import com.example.mytrainingpal.model.repositories.WorkoutEntryExerciseMapRepository
 
-class WorkoutEntryExerciseMapViewModel(application: Application) : ViewModel() {
+class WorkoutEntryExerciseMapViewModel(context: Context) : ViewModel() {
 
     val allWorkoutEntryExerciseMaps: LiveData<List<WorkoutEntryExerciseMap>>
+    val allWorkoutEntriesWithExercises: LiveData<List<WorkoutEntryWithExercises>>
     private val repository: WorkoutEntryExerciseMapRepository
     val searchResults: MutableLiveData<List<WorkoutEntryExerciseMap>>
 
     init {
-        val muscleDatabase = TheMuscleBase.getDatabaseInstance(application)
+        val muscleDatabase = TheMuscleBase.getDatabaseInstance(context)
         val workoutEntryExerciseMapDao = muscleDatabase.getWorkoutEntryExerciseMapDao()
         repository = WorkoutEntryExerciseMapRepository(workoutEntryExerciseMapDao)
         allWorkoutEntryExerciseMaps = repository.allWorkoutEntryExerciseMaps
+        allWorkoutEntriesWithExercises = repository.allWorkoutEntriesWithExercises
         searchResults = repository.searchResults
     }
 

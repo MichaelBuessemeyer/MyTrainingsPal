@@ -47,7 +47,7 @@ class ExerciseMuscleMapDaoTest {
     fun testInsert() {
         val muscle = Muscle(null, "Biceps")
         val muscleId = muscleDao.insert(muscle)
-        val exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        val exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         val exerciseMuscleMap = ExerciseMuscleMap(exerciseId, muscleId)
         val exerciseMuscleMapId = exerciseMuscleMapDao.insert(exerciseMuscleMap)
@@ -60,7 +60,7 @@ class ExerciseMuscleMapDaoTest {
     fun testDelete() {
         val muscle = Muscle(null, "Biceps")
         val muscleId = muscleDao.insert(muscle)
-        val exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        val exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         val exerciseMuscleMap = ExerciseMuscleMap(exerciseId, muscleId)
         val exerciseMuscleMapId = exerciseMuscleMapDao.insert(exerciseMuscleMap)
@@ -80,7 +80,7 @@ class ExerciseMuscleMapDaoTest {
         val muscle2 = Muscle(null, "Triceps")
         val muscleId = muscleDao.insert(muscle)
         val muscle2Id = muscleDao.insert(muscle2)
-        val exercise = Exercise(null, "Biceps Curls", "res/gifs/Exercise_1.gif",)
+        val exercise = Exercise(null, "Biceps Curls", "exercise_1",)
         val exerciseId = exerciseDao.insert(exercise)
         val exerciseMuscleMap = ExerciseMuscleMap(exerciseId, muscleId)
         val exerciseMuscleMapId = exerciseMuscleMapDao.insert(exerciseMuscleMap)

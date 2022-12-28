@@ -16,7 +16,7 @@ abstract class WorkoutEntryExerciseMapDao {
 
     @Transaction
     @Query("SELECT * FROM WorkoutEntry")
-    abstract fun getAllWorkoutEntriesWithExercises(): List<WorkoutEntryWithExercises>
+    abstract fun getAllWorkoutEntriesWithExercises(): LiveData<List<WorkoutEntryWithExercises>>
 
     @Transaction
     @Query("SELECT * FROM WorkoutEntryExerciseMap WHERE workoutIdMap=:workoutId")
