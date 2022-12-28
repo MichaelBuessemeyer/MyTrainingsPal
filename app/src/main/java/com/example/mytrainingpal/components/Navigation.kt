@@ -208,11 +208,6 @@ fun AppNavHost(
                             LocalContext.current.applicationContext
                                     as Application
                         )
-                        val exerciseViewModel: ExerciseViewModel = viewModel(
-                            it,
-                            "ExerciseViewModel",
-                            factory
-                        )
                         val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
                             it,
                             "MusclePainEntryViewModel",
@@ -223,17 +218,6 @@ fun AppNavHost(
                             "MusclePainEntryMapViewModel",
                             factory
                         )
-                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
-                            it,
-                            "WorkoutEntryViewModel",
-                            factory
-                        )
-                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel =
-                            viewModel(
-                                it,
-                                "WorkoutEntryExerciseMapViewModel",
-                                factory
-                            )
                         val exerciseMuscleMapViewModel: ExerciseMuscleMapViewModel = viewModel(
                             it,
                             "ExerciseMuscleMapViewModel",
@@ -245,9 +229,7 @@ fun AppNavHost(
                             exercises,
                             musclePainEntryViewModel,
                             musclePainEntryMapViewModel,
-                            exerciseViewModel,
                             exerciseMuscleMapViewModel,
-                            workoutEntryExerciseMapViewModel
                         )
                     }
                 } else {
