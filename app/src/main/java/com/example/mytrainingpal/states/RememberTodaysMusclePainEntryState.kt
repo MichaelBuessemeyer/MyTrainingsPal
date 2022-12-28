@@ -11,7 +11,7 @@ import com.example.mytrainingpal.util.todayDate
 
 // A composable serving as a state that returns today's MusclePainEntry if there is one.
 @Composable
-fun rememberTodaysMusclePainEntryState(musclePainEntryViewModel: MusclePainEntryViewModel): MusclePainEntry? {
+fun RememberTodaysMusclePainEntryState(musclePainEntryViewModel: MusclePainEntryViewModel): MusclePainEntry? {
     val allMusclePainEntries by musclePainEntryViewModel.allMusclePainEntries.observeAsState(listOf())
     val todayMusclePainEntryId: MusclePainEntry? = remember(allMusclePainEntries) {
         val today = todayDate()

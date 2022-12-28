@@ -19,8 +19,8 @@ import androidx.navigation.navigation
 import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
+import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
-import com.example.mytrainingpal.model.view_models.MuscleViewModel
 import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
 import com.example.mytrainingpal.screens.*
 
@@ -86,6 +86,11 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
                         val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
                             it,
                             "MusclePainEntryViewModel",
@@ -100,7 +105,8 @@ fun AppNavHost(
                         HomeScreen(
                             navController,
                             musclePainEntryViewModel,
-                            workoutEntryExerciseMapViewModel
+                            workoutEntryExerciseMapViewModel,
+                            musclePainEntryMapViewModel
                         )
                     }
                 } else {
@@ -119,7 +125,32 @@ fun AppNavHost(
             route = RouteGroups.MUSCLE_PAIN.route,
             startDestination = Screen.MusclePainMain.route
         ) {
-            composable(Screen.MusclePainMain.route) { MusclePainScreen(navController) }
+            composable(Screen.MusclePainMain.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
+                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+                        MusclePainScreen(
+                            navController,
+                            musclePainEntryMapViewModel = musclePainEntryMapViewModel,
+                            musclePainEntryViewModel = musclePainEntryViewModel
+                        )
+                    }
+                } else Text("")
+            }
             // TODO: Add MusclePainDetailsScreen and so on
         }
         navigation(
@@ -134,17 +165,12 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
-                        val muscleViewModel: MuscleViewModel = viewModel(
-                            it,
-                            "MuscleViewModel",
-                            factory
-                        )
                         val exerciseViewModel: ExerciseViewModel = viewModel(
                             it,
                             "ExerciseViewModel",
                             factory
                         )
-                        CalendarScreen(navController, muscleViewModel, exerciseViewModel)
+                        CalendarScreen(navController, exerciseViewModel)
                     }
                 } else {
                     Text("Still Loading View Model")

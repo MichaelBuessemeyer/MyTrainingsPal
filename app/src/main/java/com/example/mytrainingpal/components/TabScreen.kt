@@ -15,7 +15,14 @@ fun TabScreen(
     tabContent: @Composable () -> Unit,
     topBarTitle: String?,
     topBarIcon: ImageVector?,
-    navController: NavController
+    navController: NavController,
+    floatingActionButton: @Composable () -> Unit = {
+        StartExerciseFloatingButton {
+            navController.navigate(
+                Screen.TrainingMain.route
+            )
+        }
+    },
 ) {
     Scaffold(
         topBar = {
@@ -49,7 +56,7 @@ fun TabScreen(
                 tabContent()
             }
         },
-        floatingActionButton = { StartExerciseFloatingButton { navController.navigate(Screen.TrainingMain.route) } },
+        floatingActionButton = floatingActionButton,
         bottomBar = { BottomNavBar(navController) }
     )
 }
