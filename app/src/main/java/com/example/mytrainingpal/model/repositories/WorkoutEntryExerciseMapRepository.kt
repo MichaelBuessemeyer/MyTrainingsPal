@@ -42,10 +42,4 @@ class WorkoutEntryExerciseMapRepository(private val workoutEntryExerciseMapDao: 
         coroutineScope.async(Dispatchers.IO) {
             return@async workoutEntryExerciseMapDao.getWorkoutEntryExerciseMapByWorkoutId(id)
         }
-
-    fun insertForWorkoutEntryIdAndExerciseId(workoutEntryId: Long, exerciseId: Long) {
-        coroutineScope.launch(Dispatchers.IO) {
-            workoutEntryExerciseMapDao.insertForWorkoutEntryIdAndExerciseId(workoutEntryId, exerciseId, 0, "0", 0)
-        }
-    }
 }

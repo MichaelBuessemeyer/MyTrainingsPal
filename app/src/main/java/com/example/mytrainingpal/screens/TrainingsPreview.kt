@@ -45,7 +45,7 @@ fun TrainingsPreviewScreen(
 
     val allExercises by exerciseMuscleMapViewModel.allExercisesWithMuscles.observeAsState(listOf())
 
-    if (allExercises.isNotEmpty()) {
+    remember(todaysMusclePainEntry, allExercises) {
         val slightlySoreMuscles: Set<Muscle> =
             soreMuscles.filter { it.second == 1L }.map { it.first }.toSet()
         val verySoreMuscles: Set<Muscle> =

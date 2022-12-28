@@ -28,10 +28,8 @@ fun TrainingScreen(navController: NavController, duration: IntHolder) {
             MainTrainingScreenContent(
                 minutes = minutes,
                 updateMinutes = { inputValue: Int ->
-                    run {
-                        minutes = inputValue
-                        duration.value = inputValue
-                    }
+                    minutes = inputValue
+                    duration.value = inputValue
                 })
         },
         topBarTitle = Screen.TrainingMain.label,
