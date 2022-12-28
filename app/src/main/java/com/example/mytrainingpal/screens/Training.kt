@@ -21,6 +21,7 @@ import com.example.mytrainingpal.util.IntHolder
 
 @Composable
 fun TrainingScreen(navController: NavController, duration: IntHolder) {
+    if (duration.value < 10) duration.value = 20
     var minutes by remember { mutableStateOf(duration.value) }
     TabScreen(
         tabContent = {
@@ -46,7 +47,7 @@ fun TrainingScreen(navController: NavController, duration: IntHolder) {
 
 @Composable
 fun MainTrainingScreenContent(minutes: Int, updateMinutes: (Int) -> Unit) {
-    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+    val (showDialog) = remember { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
