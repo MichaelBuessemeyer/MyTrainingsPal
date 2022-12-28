@@ -7,11 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mytrainingpal.model.TheMuscleBase
 import com.example.mytrainingpal.model.entities.ExerciseMuscleMap
+import com.example.mytrainingpal.model.intermediate_entities.ExerciseWithMuscles
 import com.example.mytrainingpal.model.repositories.ExerciseMuscleMapRepository
 
 class ExerciseMuscleMapViewModel(application: Application) : ViewModel() {
 
     val allExerciseMuscleMaps: LiveData<List<ExerciseMuscleMap>>
+    val allExercisesWithMuscles: LiveData<List<ExerciseWithMuscles>>
     private val repository: ExerciseMuscleMapRepository
     val searchResults: MutableLiveData<List<ExerciseMuscleMap>>
 
@@ -20,6 +22,7 @@ class ExerciseMuscleMapViewModel(application: Application) : ViewModel() {
         val exerciseMuscleMapDao = muscleDatabase.getExerciseMuscleMapDao()
         repository = ExerciseMuscleMapRepository(exerciseMuscleMapDao)
         allExerciseMuscleMaps = repository.allExerciseMuscleMaps
+        allExercisesWithMuscles = repository.allExercisesWithMuscles
         searchResults = repository.searchResults
     }
 
