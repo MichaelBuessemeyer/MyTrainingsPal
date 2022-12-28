@@ -49,7 +49,7 @@ fun TrainingsPreviewScreen(
         val slightlySoreMuscles: Set<Muscle> =
             soreMuscles.filter { it.second == MusclePainEntryMapConstants.MODERATE_PAIN }.map { it.first }.toSet()
         val verySoreMuscles: Set<Muscle> =
-            soreMuscles.filter { it.second == 2L }.map { it.first }.toSet()
+            soreMuscles.filter { it.second == MusclePainEntryMapConstants.SEVERE_PAIN  }.map { it.first }.toSet()
 
         val unsoreExercises: MutableList<Exercise> = allExercises.filter { exerciseWithMuscles ->
             val exerciseMuscles = exerciseWithMuscles.muscleConnections.map { it.muscles[0] }
