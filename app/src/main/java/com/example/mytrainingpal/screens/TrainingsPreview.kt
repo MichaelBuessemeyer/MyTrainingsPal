@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.model.MusclePainEntryMapConstants
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.view_models.ExerciseMuscleMapViewModel
@@ -47,9 +48,11 @@ fun TrainingsPreviewScreen(
 
     remember(todaysMusclePainEntry, allExercises) {
         val slightlySoreMuscles: Set<Muscle> =
-            soreMuscles.filter { it.second == MusclePainEntryMapConstants.MODERATE_PAIN }.map { it.first }.toSet()
+            soreMuscles.filter { it.second == MusclePainEntryMapConstants.MODERATE_PAIN }
+                .map { it.first }.toSet()
         val verySoreMuscles: Set<Muscle> =
-            soreMuscles.filter { it.second == MusclePainEntryMapConstants.SEVERE_PAIN  }.map { it.first }.toSet()
+            soreMuscles.filter { it.second == MusclePainEntryMapConstants.SEVERE_PAIN }
+                .map { it.first }.toSet()
 
         val unsoreExercises: List<Exercise> = allExercises.filter { exerciseWithMuscles ->
             val exerciseMuscles = exerciseWithMuscles.muscleConnections.map { it.muscles[0] }
@@ -75,39 +78,41 @@ fun TrainingsPreviewScreen(
         val setsNeeded = (duration.value / 2) + 1
         var setsLeftover = setsNeeded
         val selectedExercises: MutableList<Pair<Exercise, ExerciseDetails>> = mutableListOf()
-
-        if (unsoreExercises.size < (setsNeeded / defaultSets)) {
-            // fill the workout first with unsore exercises
-            selectedExercises.addAll(unsoreExercises.map { Pair(it, defaultDetails) })
-            setsLeftover -= (selectedExercises.size * defaultSets)
-            // then fill the workout with slightly sore exercises of full default sets
-            if (setsLeftover > defaultSets) {
-                val slightlySoreExercisesNeeded = setsLeftover / defaultSets
+        if (unsoreExercises.isNotEmpty() || slightlySoreExercises.isNotEmpty()) {
+            if (unsoreExercises.size < (setsNeeded / defaultSets)) {
+                // fill the workout first with unsore exercises
+                selectedExercises.addAll(unsoreExercises.map { Pair(it, defaultDetails) })
+                setsLeftover -= (selectedExercises.size * defaultSets)
+                // then fill the workout with slightly sore exercises of full default sets
+                if (setsLeftover > defaultSets) {
+                    val slightlySoreExercisesNeeded = setsLeftover / defaultSets
+                    selectedExercises.addAll(
+                        slightlySoreExercises.asSequence().shuffled()
+                            .take(slightlySoreExercisesNeeded)
+                            .map { Pair(it, defaultDetails) })
+                    setsLeftover -= defaultSets * slightlySoreExercisesNeeded
+                }
+            } else {
                 selectedExercises.addAll(
-                    slightlySoreExercises.asSequence().shuffled().take(slightlySoreExercisesNeeded)
+                    unsoreExercises.asSequence().shuffled().take(setsNeeded / defaultSets)
                         .map { Pair(it, defaultDetails) })
-                setsLeftover -= defaultSets * slightlySoreExercisesNeeded
+                setsLeftover -= (selectedExercises.size * defaultSets)
             }
-        } else {
-            selectedExercises.addAll(
-                unsoreExercises.asSequence().shuffled().take(setsNeeded / defaultSets)
-                    .map { Pair(it, defaultDetails) })
-            setsLeftover -= (selectedExercises.size * defaultSets)
-        }
-        // then increase the amount of sets one after another till the time is up
-        var i = 0
-        while (setsLeftover > 0) {
-            selectedExercises[i] = Pair(
-                selectedExercises[i].first, ExerciseDetails(
-                    sets = selectedExercises[i].second.sets + 1,
-                    reps = selectedExercises[i].second.reps,
-                    weight = selectedExercises[i].second.weight
+            // then increase the amount of sets one after another till the time is up
+            var i = 0
+            while (setsLeftover > 0) {
+                selectedExercises[i] = Pair(
+                    selectedExercises[i].first, ExerciseDetails(
+                        sets = selectedExercises[i].second.sets + 1,
+                        reps = selectedExercises[i].second.reps,
+                        weight = selectedExercises[i].second.weight
+                    )
                 )
-            )
-            setsLeftover--
-            i++
-            if (i >= selectedExercises.size) {
-                i = 0
+                setsLeftover--
+                i++
+                if (i >= selectedExercises.size) {
+                    i = 0
+                }
             }
         }
         exercises.clear()
