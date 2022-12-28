@@ -18,10 +18,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
-import com.example.mytrainingpal.model.view_models.ExerciseViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
+import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
 import com.example.mytrainingpal.screens.*
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
@@ -165,12 +165,21 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
-                        val exerciseViewModel: ExerciseViewModel = viewModel(
+                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
                             it,
-                            "ExerciseViewModel",
+                            "WorkoutEntryViewModel",
                             factory
                         )
-                        CalendarScreen(navController, exerciseViewModel)
+                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+                        CalendarScreen(
+                            navController,
+                            workoutEntryViewModel,
+                            musclePainEntryViewModel
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
