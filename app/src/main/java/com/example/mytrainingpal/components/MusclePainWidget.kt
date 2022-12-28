@@ -20,6 +20,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.example.mytrainingpal.components.svgs.getBodyMusclesWithPain
 import com.example.mytrainingpal.model.MusclePainEntryMapConstants
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.ui.theme.Orange
