@@ -56,12 +56,12 @@ fun TrainingsPreviewScreen(
             exerciseMuscles.intersect(slightlySoreMuscles).isEmpty()
                     && exerciseMuscles.intersect(verySoreMuscles).isEmpty()
         }.map { (exercise) -> exercise }
-        val slightlySoreExercises: MutableList<Exercise> =
+        val slightlySoreExercises: List<Exercise> =
             allExercises.filter { exerciseWithMuscles ->
                 val exerciseMuscles = exerciseWithMuscles.muscleConnections.map { it.muscles[0] }
                 exerciseMuscles.intersect(slightlySoreMuscles).isNotEmpty()
                         && exerciseMuscles.intersect(verySoreMuscles).isEmpty()
-            }.map { (exercise) -> exercise }.toMutableList()
+            }.map { (exercise) -> exercise }
 
         val defaultReps = 10
         val defaultSets = 3
