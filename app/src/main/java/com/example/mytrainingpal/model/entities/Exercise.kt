@@ -10,5 +10,4 @@ data class Exercise(
     val exerciseId: Long? = null,
     val name: String,
     var pathToGif: String,
-) {
-}
+)

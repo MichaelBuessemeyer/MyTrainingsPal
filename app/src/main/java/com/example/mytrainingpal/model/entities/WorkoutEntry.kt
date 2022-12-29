@@ -11,9 +11,10 @@ data class WorkoutEntry(
     val workoutId: Long? = null,
     @TypeConverters(DateConverter::class)
     val date: Date,
-    val startTime: String,
-    val endTime: String,
+    @TypeConverters(DateConverter::class)
+    val startTime: Date,
+    @TypeConverters(DateConverter::class)
+    val endTime: Date,
     val comment: String,
     val picturePath: String? = null
-) {
-}
+)

@@ -3,7 +3,7 @@ package com.example.mytrainingpal.model
 import androidx.room.TypeConverter
 import java.util.*
 
-// Taken from google docs accessed at 2nd Dec 2022
+// Taken from android docs accessed at 2nd Dec 2022
 // https://developer.android.com/training/data-storage/room/referencing-data
 class DateConverter {
     @TypeConverter

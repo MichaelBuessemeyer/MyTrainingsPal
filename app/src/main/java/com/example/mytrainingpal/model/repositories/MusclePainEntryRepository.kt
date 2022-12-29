@@ -23,6 +23,10 @@ class MusclePainEntryRepository(private val musclePainEntryDao: MusclePainEntryD
         }
     }
 
+    fun insertMusclePainEntryOnCurrentThread(newMusclePainEntry: MusclePainEntry): Long {
+        return musclePainEntryDao.insert(newMusclePainEntry)
+    }
+
     fun deleteMusclePainEntry(musclePainEntry: MusclePainEntry) {
         coroutineScope.launch(Dispatchers.IO) {
             musclePainEntryDao.deleteMusclePainEntry(musclePainEntry)
