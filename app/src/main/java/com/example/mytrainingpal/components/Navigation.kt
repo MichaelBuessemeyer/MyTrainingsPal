@@ -193,7 +193,7 @@ fun AppNavHost(
             val duration = IntHolder(0)
 
             // *** ScreenToggle navigation
-            composable(Screen.ScreenToggle.route) { ToggleComposable(navController) }
+            composable(Screen.ScreenToggle.route) { ToggleComposable(navController, exercises, 5000L) }
             // *** BreakScreen navigation
             composable(Screen.Break.route) { BreakScreen(navController) }
 

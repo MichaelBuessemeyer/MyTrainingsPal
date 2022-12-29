@@ -33,7 +33,7 @@ import kotlinx.coroutines.delay
 fun BreakScreen(navController: NavController) {
     var currentExercise: Int = 4;
     var totalExercises: Int = 10;
-    var totalBreakTimeInSeconds: Int = 25
+    var totalBreakTimeInSeconds: Int = 5
 
     Scaffold(
         backgroundColor = MaterialTheme.colors.background

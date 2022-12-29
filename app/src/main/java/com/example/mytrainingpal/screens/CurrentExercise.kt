@@ -8,25 +8,35 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import com.example.mytrainingpal.model.entities.Exercise
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun CurrentExerciseScreen(){
+fun CurrentExerciseScreen(exercise: String, currentSet: Int, totalSets: Int) {
+
+
 
     Scaffold(
         backgroundColor = MaterialTheme.colors.background
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-        ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+
+                Text(
+                    text = exercise,
+                    fontSize = 20.sp
+                )
+
             Text(
-                text = "CURRENT EXERCISE",
-                fontSize = 20.sp
+                text = "current set: $currentSet/ total sets: $totalSets",
+                fontSize = 15.sp
             )
+
         }
     }
-
 
 
 }
