@@ -9,24 +9,33 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DoNotDisturb
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.Greeting
+import com.example.mytrainingpal.components.CalendarListWidget
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.WidgetCard
+import com.example.mytrainingpal.model.entities.MusclePainEntry
+import com.example.mytrainingpal.model.entities.WorkoutEntry
+import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
+import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
+import com.example.mytrainingpal.ui.theme.Orange
+import com.example.mytrainingpal.ui.theme.Red
+import io.github.boguszpawlowski.composecalendar.StaticCalendar
+import java.time.LocalDateTime
 import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
 import com.example.mytrainingpal.model.view_models.ExerciseViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
-import com.example.mytrainingpal.util.calendarFromDate
-import com.example.mytrainingpal.util.localDateToJavaDate
+import com.example.mytrainingpal.util.*
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 import io.github.boguszpawlowski.composecalendar.rememberCalendarState
 import java.time.YearMonth
@@ -36,33 +45,37 @@ import java.util.*
 @Composable
 fun CalendarScreen(
     navController: NavController,
+    workoutEntryViewModel: WorkoutEntryViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel
+
 ) {
     TabScreen(
-        tabContent = { CalendarScreenContent(musclePainEntryMapViewModel) },
+        tabContent = { CalendarScreenContent(workoutEntryViewModel, musclePainEntryMapViewModel) },
         topBarIcon = Screen.CalendarMain.icon,
         topBarTitle = Screen.CalendarMain.label,
         navController = navController
     )
 }
 
-data class CalendarEntry(
-    val musclePainEntry: MusclePainEntryWithMuscles,
-    val date: Date
-)
-
 @Composable
-fun CalendarScreenContent(musclePainEntryMapViewModel: MusclePainEntryMapViewModel) {
+fun CalendarScreenContent(workoutEntryViewModel: WorkoutEntryViewModel, musclePainEntryMapViewModel: MusclePainEntryMapViewModel) {
     val calendarState = rememberCalendarState()
+    val allWorkouts by workoutEntryViewModel.allWorkouts.observeAsState(listOf())
     val allMusclePainEntriesWithMuscles by musclePainEntryMapViewModel.allMusclePainEntriesWithMuscles.observeAsState(listOf())
-    val dayEntryMap: Map<Date, CalendarEntry> = remember(allMusclePainEntriesWithMuscles){
+    val dayEntryMap: Map<Date, CalendarEntry> = remember(allMusclePainEntriesWithMuscles, allWorkouts){
         val calendarMap: MutableMap<Date, CalendarEntry> = mutableMapOf()
-        for(entry in allMusclePainEntriesWithMuscles){
-            calendarMap[entry.musclePainEntry.date] = CalendarEntry(entry, entry.musclePainEntry.date)
+        for(musclePainEntry in allMusclePainEntriesWithMuscles){
+            val date = musclePainEntry.musclePainEntry.date
+            calendarMap[date] = CalendarEntry(date, musclePainEntry)
+        }
+        for(workoutEntry in allWorkouts){
+            val date = workoutEntry.date
+            val existingMusclePainEntry = calendarMap[date]?.musclePainEntry
+            calendarMap[date] = CalendarEntry(date, musclePainEntry = existingMusclePainEntry, workoutEntry)
         }
         calendarMap
     }
-    val monthsSortedEntries = remember(calendarState, allMusclePainEntriesWithMuscles) {
+    val monthsSortedEntries = remember(calendarState.monthState.currentMonth, allMusclePainEntriesWithMuscles) {
         val sortedEntries: MutableList<CalendarEntry> = mutableListOf()
         for((date, entry) in dayEntryMap){
             val cal = calendarFromDate(date)
@@ -86,7 +99,6 @@ fun CalendarScreenContent(musclePainEntryMapViewModel: MusclePainEntryMapViewMod
             },
             dayContent = { day ->
                 var color = MaterialTheme.colors.background
-
                 //TODO: mark depending on recorded pain or training
                 if (dayEntryMap.containsKey(localDateToJavaDate(day.date))) {
                     color = MaterialTheme.colors.secondary
@@ -96,37 +108,38 @@ fun CalendarScreenContent(musclePainEntryMapViewModel: MusclePainEntryMapViewMod
                     modifier = Modifier
                         .padding(2.dp)
                         .background(color = color, shape = RoundedCornerShape(4.dp))
-                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
 
                 ) {
-                    Text(
-                        text = day.date.dayOfMonth.toString(),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                        Text(
+                            text = day.date.dayOfMonth.toString(),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
                 }
             })
         if (monthsSortedEntries.isNotEmpty()) {
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 items(monthsSortedEntries) { calendarEntry ->
-                    Row{
-                        val cal = calendarFromDate(calendarEntry.date)
-                        val musclePainEntry = calendarEntry.musclePainEntry.musclePainEntry
-                        Text("${cal.get(Calendar.DAY_OF_MONTH)}/${cal.get(Calendar.MONTH)}", style = MaterialTheme.typography.h2)
-                        Column {
-                            Icon(
-                                imageVector = Icons.Default.FitnessCenter,
-                                tint = MaterialTheme.colors.onSecondary,
-                                contentDescription = "Start Training",
-                                modifier = Modifier.size(50.dp)
-                            )
-                            Text("")
-                        }
-                    }
+                    CalendarListWidget(
+                        calendarEntry,
+                    )
                 }
             }
         } else {
-            Text("No entries this month.")
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 36.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.DoNotDisturb,
+                        contentDescription = "crossed circle icon",
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    Text("No entries for this month.")
+            }
         }
     }
 }

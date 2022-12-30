@@ -2,7 +2,10 @@ package com.example.mytrainingpal.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -180,17 +183,25 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
+                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
+                            it,
+                            "WorkoutEntryViewModel",
+                            factory
+                        )
                         val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
                             "MusclePainEntryMapViewModel",
                             factory
                         )
-                        CalendarScreen(navController, musclePainEntryMapViewModel)
+                        CalendarScreen(
+                            navController,
+                            workoutEntryViewModel,
+                            musclePainEntryMapViewModel
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
-
             }
             // TODO: Add CalendarDetailsScreen and so on
         }
