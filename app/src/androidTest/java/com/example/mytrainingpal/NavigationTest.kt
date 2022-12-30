@@ -48,7 +48,7 @@ class NavigationTest {
     }
 
     @Test
-    fun bottomNavBar_verifySNavToCalendar() {
+    fun bottomNavBar_verifyNavToCalendar() {
         composeTestRule.onNodeWithText("Calendar").performClick()
         composeTestRule.runOnIdle {
             assertEquals(navController.currentDestination?.route, Screen.CalendarMain.route)
