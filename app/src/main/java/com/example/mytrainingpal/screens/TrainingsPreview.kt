@@ -132,7 +132,8 @@ fun TrainingsPreviewScreen(
         navController = navController,
         floatingActionButton = {
             StartExerciseFloatingButton {
-                navController.navigate(Screen.Home.route)
+                //TODO changed for testing
+                navController.navigate(Screen.TrainingFinished.route)
             }
         }
     )

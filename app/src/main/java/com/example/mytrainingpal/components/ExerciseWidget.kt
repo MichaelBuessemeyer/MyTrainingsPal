@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mytrainingpal.model.entities.Exercise
 
 @Composable
-fun ExerciseWidget(
+fun   ExerciseWidget(
     exercise: Exercise,
     weight: Int,
     reps: Int,

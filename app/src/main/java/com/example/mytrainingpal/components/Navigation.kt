@@ -48,14 +48,14 @@ sealed class Screen(
         RouteGroups.TRAINING.route
     )
 
+    object TrainingFinished:
+    Screen("trainingFinished", "Finished", Icons.Default.Celebration, RouteGroups.TRAINING.route)
+
     object CalendarMain :
         Screen("calendarMain", "Calendar", Icons.Default.CalendarToday, RouteGroups.CALENDAR.route)
 
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
-
-    object WorkoutFinished:
-        Screen("finishedMain", "Finished", Icons.Default.Celebration)
 }
 
 enum class RouteGroups(val route: String) {
@@ -241,6 +241,11 @@ fun AppNavHost(
                 } else {
                     Text("Still Loading View Model")
                 }
+            }
+            composable(Screen.TrainingFinished.route) {
+                WorkoutFinishedScreen(
+                    navController
+                )
             }
             // TODO: Add further Trainings Screens
         }
