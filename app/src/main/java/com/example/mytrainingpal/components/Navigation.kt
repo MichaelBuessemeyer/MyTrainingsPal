@@ -13,7 +13,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
