@@ -11,5 +11,4 @@ data class MusclePainEntry(
     val musclePainEntryId: Long? = null,
     @TypeConverters(DateConverter::class)
     var date: Date
-) {
-}
+)

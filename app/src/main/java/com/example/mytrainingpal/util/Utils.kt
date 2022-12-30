@@ -22,9 +22,3 @@ fun todayDate(): Date {
     val todayDate = LocalDate.now()
     return localDateToJavaDate(todayDate)
 }
-
-data class TrainingStats(
-    val durationInMinutes: Int,
-    val totalWeightLifted: Int,
-    val date: Date?
-)
