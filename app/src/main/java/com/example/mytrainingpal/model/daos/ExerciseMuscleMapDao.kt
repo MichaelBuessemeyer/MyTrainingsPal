@@ -3,6 +3,7 @@ package com.example.mytrainingpal.model.daos
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.mytrainingpal.model.entities.ExerciseMuscleMap
+import com.example.mytrainingpal.model.intermediate_entities.ExerciseWithMuscles
 
 @Dao
 abstract class ExerciseMuscleMapDao {
@@ -11,6 +12,10 @@ abstract class ExerciseMuscleMapDao {
 
     @Query("SELECT * FROM ExerciseMuscleMap")
     abstract fun getAllExerciseMuscleMaps(): LiveData<List<ExerciseMuscleMap>>
+
+    @Transaction
+    @Query("SELECT * FROM Exercise")
+    abstract fun getAllExercisesWithMuscles(): LiveData<List<ExerciseWithMuscles>>
 
     // Method below probably not needed
     @Query("SELECT * FROM ExerciseMuscleMap WHERE exerciseIdMap=:exerciseId")

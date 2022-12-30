@@ -1,11 +1,11 @@
 package com.example.mytrainingpal.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,15 +21,14 @@ fun ExerciseWidget(
     onSetsChanged: (Int) -> Unit
 ) {
 
-    val data = listOf(Text("Reps"), "Item 2", "Item 3", "Item 4", "Item 5")
-    WidgetCard {
+    WidgetCard(hasBorder = false) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(5.dp)
             ) {
-                Text("Place holder", style = MaterialTheme.typography.body2)
-                Text("Put preview gif here", fontSize = 10.sp)
+                val gifWithInPxl = LocalDensity.current.run { 80.dp.toPx() }.toInt()
+                GifImage(gifPath = exercise.pathToGif, size = gifWithInPxl)
             }
 
             Column(
