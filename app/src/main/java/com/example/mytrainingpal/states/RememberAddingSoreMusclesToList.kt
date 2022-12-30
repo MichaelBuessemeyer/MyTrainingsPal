@@ -6,8 +6,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.mytrainingpal.model.entities.Muscle
+import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 
+
+fun addSoreMusclesToList(soreMuscles: MutableList<Pair<Muscle, Long>>, todayMusclePainEntry: MusclePainEntryWithMuscles){
+    soreMuscles.clear()
+    for ((connection, soreMusclesList) in todayMusclePainEntry.soreMusclesConnections) {
+        soreMuscles.add(Pair(soreMusclesList[0], connection.painIntensity))
+    }
+}
 
 // A composable serving as a state that returns today's MusclePainEntry if there is one.
 @Composable
@@ -21,11 +29,8 @@ fun RememberAddingSoreMusclesToList(
     remember(maybeTodayMusclePainEntry) {
         // "Sideeffect" to load the already existing muscle pain entry of today.
         if (maybeTodayMusclePainEntry != null) {
-            soreMuscles.clear()
             val todayMusclePainEntry = maybeTodayMusclePainEntry!!
-            for ((connection, soreMusclesList) in todayMusclePainEntry.soreMusclesConnections) {
-                soreMuscles.add(Pair(soreMusclesList[0], connection.painIntensity))
-            }
+            addSoreMusclesToList(soreMuscles, todayMusclePainEntry)
             todayMusclePainEntry.musclePainEntry.musclePainEntryId
         } else {
             null

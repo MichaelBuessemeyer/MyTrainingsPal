@@ -15,6 +15,8 @@ class MusclePainEntryMapRepository(private val musclePainEntryMapDao: MusclePain
 
     val allMusclePainEntryMaps: LiveData<List<MusclePainEntryMap>> =
         musclePainEntryMapDao.getAllSoreMuscleEntryMaps()
+    val allMusclePainEntriesWithMuscles: LiveData<List<MusclePainEntryWithMuscles>> =
+        musclePainEntryMapDao.getAllMusclePainEntriesWithMusclesAsLiveData()
     val searchResults = MutableLiveData<List<MusclePainEntryMap>>()
     val searchResult = MutableLiveData<MusclePainEntryWithMuscles>()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)

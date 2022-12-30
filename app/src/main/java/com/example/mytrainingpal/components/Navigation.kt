@@ -188,21 +188,20 @@ fun AppNavHost(
                             "WorkoutEntryViewModel",
                             factory
                         )
-                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
                             it,
-                            "MusclePainEntryViewModel",
+                            "MusclePainEntryMapViewModel",
                             factory
                         )
                         CalendarScreen(
                             navController,
                             workoutEntryViewModel,
-                            musclePainEntryViewModel
+                            musclePainEntryMapViewModel
                         )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
-
             }
             // TODO: Add CalendarDetailsScreen and so on
         }
