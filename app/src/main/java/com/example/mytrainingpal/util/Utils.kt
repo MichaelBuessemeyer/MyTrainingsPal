@@ -30,9 +30,3 @@ fun dateToLocalDate(date: Date): LocalDate {
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 }
-
-data class TrainingStats(
-    val durationInMinutes: Int,
-    val totalWeightLifted: Int,
-    val date: Date?
-)

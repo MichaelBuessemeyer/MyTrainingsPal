@@ -20,9 +20,9 @@ fun BottomNavBar(navController: NavController) {
                 icon = { Icon(screen.icon, "") },
                 label = { Text(screen.label) },
                 alwaysShowLabel = false,
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                selected = currentDestination?.hierarchy?.any { it.route == screen.group } == true,
                 onClick = {
-                    navController.navigate(screen.route) { }
+                    navController.navigate(screen.group) { }
                 }
             )
         }
