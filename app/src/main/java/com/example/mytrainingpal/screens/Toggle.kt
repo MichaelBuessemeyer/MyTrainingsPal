@@ -19,10 +19,10 @@ fun ToggleScreen(
     var breakRunning: Boolean by remember { mutableStateOf(false) }
     // TODO: get break duration from settings and pass it to Break composable
     var currentExerciseCounter: Int by remember { mutableStateOf(0) }
-    var currentSetCounter: Int by remember { mutableStateOf(1) }
+    //var currentSetCounter: Int by remember { mutableStateOf(0) }
 
     if (currentExerciseCounter == exerciseList.size) {
-        LaunchedEffect(key1 = breakDuration) {
+        LaunchedEffect(key1 = 0) {
             delay(0)
             navController.navigate(Screen.Settings.route)
         }
@@ -34,14 +34,18 @@ fun ToggleScreen(
         }
     } else {
         CurrentExercise(
-            currentExercise = exerciseList[currentExerciseCounter].first
+            exerciseList = exerciseList,
+            currentExerciseIndex = currentExerciseCounter,
+            //currentSetIndex = 999
         ) {
             breakRunning = !breakRunning
-            if (currentSetCounter == exerciseList[currentExerciseCounter].second.sets) {
-                currentSetCounter = 0
-                currentExerciseCounter++
-            }
-            currentSetCounter++
+            currentExerciseCounter++
+            //if (currentSetCounter == exerciseList[currentExerciseCounter].second.sets) {
+              //  currentSetCounter = 0
+
+            //}
+            //currentSetCounter++
         }
+
     }
 }
