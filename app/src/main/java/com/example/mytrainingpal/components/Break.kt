@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.GifImage
+import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.util.ExerciseDetails
 
 import kotlinx.coroutines.delay
 
@@ -28,7 +30,11 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Break(navController: NavController) {
+fun Break(
+    navController: NavController,
+    exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
+    currentExerciseIndex: Int
+) {
     var currentExercise: Int = 4;
     var totalExercises: Int = 10;
     var totalBreakTimeInSeconds: Int = 5
@@ -45,7 +51,7 @@ fun Break(navController: NavController) {
                 .padding(5.dp)
         ) {
             Text(
-                text = "Exercise $currentExercise / $totalExercises"
+                text = "Exercise $currentExerciseIndex / ${exerciseList.size.toString()}"
             )
             Text(
                 text = "Break",

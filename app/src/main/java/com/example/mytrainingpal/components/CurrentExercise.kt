@@ -21,15 +21,17 @@ import com.example.mytrainingpal.util.ExerciseDetails
 fun CurrentExercise(
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     currentExerciseIndex: Int,
-    //currentSetIndex: Int,
+    currentExerciseSet: Int,
+    totalSets: Int,
+    currentSet: Int,
     goToBreak: () -> Unit,
-    ){
 
-    var currentExercise : Exercise = exerciseList[currentExerciseIndex].first
-    //var nextExercise: Exercise = exerciseList[currentExerciseIndex + 1].first
-    //var currentSetIndexDisplay: Int = currentSetIndex
-    var currentExerciseIndexDisplay = currentExerciseIndex + 1
-    var totalExercisesInList : Int = exerciseList.size
+
+    ) {
+
+    // exercises that make up an exercise screen on a list size 3: currentExerciseCounter 0,1,2
+
+    var currentExercise: Exercise = exerciseList[currentExerciseIndex].first
     //var totalSetsforExerciseInList: Int = exerciseList[currentExerciseIndex].second.sets
 
     Scaffold(
@@ -47,50 +49,75 @@ fun CurrentExercise(
             }
         }
     ) {
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(15.dp)
+                .padding(10.dp)
         ) {
-         Text(text = "Exercise $currentExerciseIndexDisplay/$totalExercisesInList", fontSize = 15.sp)
-         Text(text = currentExercise.name, fontSize = 30.sp, fontWeight = FontWeight.Bold)
-         GifImage(currentExercise.pathToGif, 1500)
-         Text(text = "Link to youtube video that should be the instructions")
-         CustomNumberInput(
-             value = 1,
-             onValueChange = { },
-             possibleValues = (1..30).toList()
-         )
-         //Text(text = "Set $currentSetIndexDisplay/$totalSetsforExerciseInList", fontSize = 15.sp)
-         LinearProgressIndicator(
-             progress = currentExerciseIndex / totalExercisesInList.toFloat(),
-             backgroundColor = MaterialTheme.colors.primary,
-             color = MaterialTheme.colors.secondary,
-             modifier = Modifier
-                 .fillMaxWidth()
-         )
-         // TODO: Make the following a composable with parameters:
-         Row(
-             horizontalArrangement = Arrangement.SpaceAround,
-             modifier = Modifier.fillMaxWidth()
-         ) {
-             Column {
-                 Text(text = "Next Up:")
-                 // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-                 GifImage("exercise_4", 200)
-             }
-             Text(
-                 text = "Exercise Name",
-                 fontSize = 18.sp,
-                 fontWeight = FontWeight.Bold
-             )
-             Column {
-                 Text(text = "20 REPS")
-                 Text(text = "30 SETS")
-             }
-         }
+            Row(
+                modifier = Modifier
+                    .weight(4F, true)
+                    .fillMaxSize(),
+
+                ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Text(
+                        text = "Exercise ${currentExerciseIndex + 1}/${exerciseList.size}",
+                        fontSize = 15.sp
+                    )
+                    Text(
+                        text = currentExercise.name,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    GifImage(currentExercise.pathToGif, 100)
+                    Text(text = "Link to youtube video that should be the instructions")
+                    CustomNumberInput(
+                        value = 1,
+                        onValueChange = { },
+                        possibleValues = (1..30).toList()
+                    )
+                    Text(
+                        text = "Set ${currentExerciseSet + 1}/${exerciseList[currentExerciseIndex].second.sets}",
+                        fontSize = 15.sp
+                    )
+                    LinearProgressIndicator(
+                        progress = currentSet / totalSets.toFloat(),
+                        backgroundColor = MaterialTheme.colors.primary,
+                        color = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+            }
+            // TODO: Make the following a composable with parameters:
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1F)
+            ) {
+                Column {
+                    Text(text = "Next Up:")
+                    // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
+                    GifImage("exercise_4", 100)
+                }
+                Text(
+                    text = "Exercise Name",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Column {
+                    Text(text = "20 REPS")
+                    Text(text = "30 SETS")
+                }
+            }
 
 
         }
