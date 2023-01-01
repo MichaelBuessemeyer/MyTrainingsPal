@@ -56,7 +56,6 @@ fun ToggleScreen(
                 currentExerciseSetCounter++
             }
             currentSetCounter++
-
         }
     }
 }

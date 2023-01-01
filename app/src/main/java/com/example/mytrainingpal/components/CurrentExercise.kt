@@ -1,18 +1,22 @@
 package com.example.mytrainingpal.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FastForward
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mytrainingpal.components.CustomNumberInput
-import com.example.mytrainingpal.components.GifImage
+import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
 
@@ -25,14 +29,9 @@ fun CurrentExercise(
     totalSets: Int,
     currentSet: Int,
     goToBreak: () -> Unit,
-
-
-    ) {
-
-    // exercises that make up an exercise screen on a list size 3: currentExerciseCounter 0,1,2
-
+) {
+    // exercises that make up an exercise screen on a list size 3: currentExerciseCounter 0,1,
     var currentExercise: Exercise = exerciseList[currentExerciseIndex].first
-    //var totalSetsforExerciseInList: Int = exerciseList[currentExerciseIndex].second.sets
 
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
@@ -63,7 +62,7 @@ fun CurrentExercise(
                 ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceAround,
+                    verticalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
@@ -76,12 +75,19 @@ fun CurrentExercise(
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    GifImage(currentExercise.pathToGif, 100)
-                    Text(text = "Link to youtube video that should be the instructions")
-                    CustomNumberInput(
-                        value = 1,
-                        onValueChange = { },
-                        possibleValues = (1..30).toList()
+                    GifImage(currentExercise.pathToGif, 300)
+                    val dialogShowing = remember { mutableStateOf(false)  }
+                    if(dialogShowing.value){
+                        CustomDialog(dialogShowing.value)
+                    }
+                    ClickableText(
+                        text = AnnotatedString("See Instructions on Youtube") ,
+                        onClick = {
+                            dialogShowing.value = true
+                        })
+                    IncreaseDecreaseNumberInput(
+                        value = exerciseList[currentExerciseIndex].second.reps,
+                        onValueChange = {}
                     )
                     Text(
                         text = "Set ${currentExerciseSet + 1}/${exerciseList[currentExerciseIndex].second.sets}",
@@ -97,32 +103,47 @@ fun CurrentExercise(
                 }
             }
             // TODO: Make the following a composable with parameters:
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1F)
-            ) {
-                Column {
-                    Text(text = "Next Up:")
-                    // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-                    GifImage("exercise_4", 100)
+            if (currentExerciseIndex < exerciseList.size - 1) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1F)
+                ) {
+                    Column {
+                        Text(text = "Next Up:")
+                        // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
+                        GifImage(exerciseList[currentExerciseIndex].first.pathToGif, 100)
+                    }
+                    Text(
+                        text = exerciseList[currentExerciseIndex].first.name,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Column {
+                        Text(text = "XXXX REPS")
+                        Text(text = "${totalSets.toString()} SETS")
+                    }
                 }
-                Text(
-                    text = "Exercise Name",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Column {
-                    Text(text = "20 REPS")
-                    Text(text = "30 SETS")
+
+            } else {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1F)
+                ) {
+                    Text(
+                        text = "You are almost done!",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
-
-
         }
     }
 }
+
 
 
 
