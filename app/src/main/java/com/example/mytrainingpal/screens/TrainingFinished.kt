@@ -1,7 +1,5 @@
 package com.example.mytrainingpal.screens
 
-import android.graphics.Color
-import android.widget.Space
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,23 +11,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.Greeting
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.StatRow
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.components.WidgetCard
 
 @Composable
-fun WorkoutFinishedScreen(navController: NavController) {
+fun TrainingFinishedScreen(navController: NavController) {
+
+
+
     TabScreen(
         tabContent = {
-            WorkoutFinishedContent()
+            TrainingFinishedContent()
         },
         topBarTitle = Screen.TrainingFinished.label,
         topBarIcon = Screen.TrainingFinished.icon,
         navController = navController,
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {
+                navController.navigate((Screen.Home.route))
+            }) {
                 Icon(
                     imageVector = Icons.Default.Check,
                     tint = MaterialTheme.colors.onSecondary,
@@ -41,7 +43,7 @@ fun WorkoutFinishedScreen(navController: NavController) {
 }
 
 @Composable
-fun WorkoutFinishedContent() {
+fun TrainingFinishedContent() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -74,10 +76,9 @@ fun WorkoutFinishedContent() {
                             imageVector = Icons.Default.FitnessCenter
                         )
                         StatRow(
-                            title = "Time",
+                            title = "minutes",
                             stat = 20,
-                            imageVector = Icons.Default.AccessTime,
-                            showTitle = false
+                            imageVector = Icons.Default.AccessTime
                         )
                         StatRow(
                             title = "total reps",

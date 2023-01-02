@@ -243,7 +243,7 @@ fun AppNavHost(
                 }
             }
             composable(Screen.TrainingFinished.route) {
-                WorkoutFinishedScreen(
+                TrainingFinishedScreen(
                     navController
                 )
             }
