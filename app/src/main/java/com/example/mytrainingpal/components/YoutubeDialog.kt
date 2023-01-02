@@ -9,8 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
+
+//Adapted from https://foso.github.io/Jetpack-Compose-Playground/material/alertdialog/
+
 @Composable
-fun CustomDialog(openDialog: Boolean) {
+fun YoutubeDialog(openDialog: Boolean, dismissClick: () -> Unit) {
     MaterialTheme {
         Column {
             val openDialog = remember { mutableStateOf(openDialog) }
@@ -25,9 +28,7 @@ fun CustomDialog(openDialog: Boolean) {
                     title = {
                         Text(text = "Dialog Title")
                     },
-                    text = {
-                        Text("Here is a text ")
-                    },
+
                     confirmButton = {
                         Button(
 
@@ -38,8 +39,7 @@ fun CustomDialog(openDialog: Boolean) {
                         }
                     },
                 )
-
             }
-
         }
-    }}
+    }
+}

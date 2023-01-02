@@ -71,7 +71,7 @@ fun TrainingsPreviewScreen(
         val defaultWeight = 20
         val defaultDetails = ExerciseDetails(
             sets = defaultSets,
-            reps = defaultReps,
+            reps = List<String>(size = defaultSets) { "$defaultReps" }.joinToString(separator = ","),
             weight = defaultWeight
         )
 
@@ -156,7 +156,7 @@ fun TrainingsPreviewScreenContent(
         )
         // no lazyColumn here, because we know there won't be that many entries ;)
         exercises.forEach() { (exercise, details) ->
-            var reps by remember { mutableStateOf(details.reps) }
+            var reps by remember { mutableStateOf(details.reps.split(",")[0].toInt()) }
             var sets by remember { mutableStateOf(details.sets) }
             ExerciseWidget(
                 exercise = exercise,
@@ -165,11 +165,12 @@ fun TrainingsPreviewScreenContent(
                 sets = sets,
                 onRepsChanged = {
                     reps = it
-                    details.reps = it
+                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
                 },
                 onSetsChanged = {
                     sets = it
                     details.sets = it
+                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
                 },
             )
         }

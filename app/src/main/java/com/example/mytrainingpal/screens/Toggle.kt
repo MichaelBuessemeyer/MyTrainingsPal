@@ -18,10 +18,17 @@ fun ToggleScreen(
     var breakDuration: Long = 500L
     var breakRunning: Boolean by remember { mutableStateOf(false) }
     // TODO: get break duration from settings and pass it to Break composable
+    // how many exercise types in the list
     var currentExerciseCounter: Int by remember { mutableStateOf(0) }
+    // counter of completed set for a given exercise
     var currentExerciseSetCounter: Int by remember { mutableStateOf(0) }
+    // sum of all sets of all exercise types
     var totalSets: Int by remember { mutableStateOf(calculateTotalSets(exerciseList)) }
-    var currentSetCounter: Int by remember { mutableStateOf(0) }
+    // counter of completed set for all exercises
+    var setCounter: Int by remember { mutableStateOf(0) }
+    // format
+    var updatedReps: MutableList<String> by remember { mutableStateOf(mutableListOf<String>()) }
+
 
     // each exercise screen should be shown a "exerciseSet" amount of times
     if (currentExerciseCounter == exerciseList.size) {
@@ -40,23 +47,32 @@ fun ToggleScreen(
             breakRunning = !breakRunning
         }
     } else {
-
+        // TODO: Standing Calf exercise complete bugs the ExerciseScreen!
         CurrentExercise(
             exerciseList = exerciseList,
             currentExerciseIndex = currentExerciseCounter,
             currentExerciseSet = currentExerciseSetCounter,
             totalSets = totalSets,
-            currentSet = currentSetCounter
-        ) {
-            breakRunning = !breakRunning
-            if (currentExerciseSetCounter == exerciseList[currentExerciseCounter].second.sets - 1) {
-                currentExerciseSetCounter = 0
-                currentExerciseCounter++
-            } else {
-                currentExerciseSetCounter++
-            }
-            currentSetCounter++
-        }
+            currentExerciseSetCounter = currentExerciseSetCounter,
+            currentSet = setCounter,
+            goToBreak = {
+                breakRunning = !breakRunning
+                if (currentExerciseSetCounter == exerciseList[currentExerciseCounter].second.sets - 1) {
+                    exerciseList[currentExerciseCounter].second.reps = updatedReps.joinToString(",")
+                    updatedReps.clear()
+                    currentExerciseSetCounter = 0
+                    currentExerciseCounter++
+                } else {
+                    currentExerciseSetCounter++
+                }
+                updatedReps.add(it.toString())
+                setCounter++
+            },
+
+            //onRepUpdate = {
+            //  updatedRepsAsInt.add(it)
+            //}
+        )
     }
 }
 
@@ -67,3 +83,5 @@ fun calculateTotalSets(exerciseList: MutableList<Pair<Exercise, ExerciseDetails>
     }
     return totalSets
 }
+
+
