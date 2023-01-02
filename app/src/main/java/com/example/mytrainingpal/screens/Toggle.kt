@@ -34,6 +34,7 @@ fun ToggleScreen(
     if (currentExerciseCounter == exerciseList.size) {
         LaunchedEffect(key1 = 0) {
             delay(0)
+            println(exerciseList)
             navController.navigate(Screen.Settings.route)
         }
     } else if (breakRunning) {

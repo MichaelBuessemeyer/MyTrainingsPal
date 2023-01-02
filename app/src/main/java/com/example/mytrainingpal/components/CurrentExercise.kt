@@ -103,15 +103,9 @@ fun CurrentExercise(
                     //var myRepsInt by remember { mutableStateOf(0) }
                     val interactionSource = remember { MutableInteractionSource() }
 
-
-
-                    Text(text = myReps.toString())
-
                     Row() {
                         IconButton(onClick = {
-                            //myRepsInt = myReps.toInt()
-                            //exerciseList[currentExerciseIndex].second.reps = List<String>(exerciseList[currentExerciseIndex].second.sets) { "$myRepsInt" }.joinToString(",")
-                            //myRepsInt--
+                            myReps--
                         }) {
                             Icon(
                                 imageVector = Icons.Default.RemoveCircle,
@@ -153,7 +147,7 @@ fun CurrentExercise(
 
 
                         IconButton(onClick = {
-
+                            myReps++
                         }) {
                             Icon(
                                 imageVector = Icons.Default.AddCircle,
