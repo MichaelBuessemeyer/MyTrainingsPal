@@ -5,25 +5,25 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.Screen
-import com.example.mytrainingpal.components.StatRow
-import com.example.mytrainingpal.components.TabScreen
-import com.example.mytrainingpal.components.WidgetCard
+import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.util.ExerciseDetails
 
 @Composable
-fun TrainingFinishedScreen(navController: NavController) {
-
-
-
+fun TrainingFinishedScreen(
+    navController: NavController,
+    //immutable List?
+    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>
+) {
     TabScreen(
         tabContent = {
-            TrainingFinishedContent()
+            TrainingFinishedContent(doneExercises)
         },
         topBarTitle = Screen.TrainingFinished.label,
         topBarIcon = Screen.TrainingFinished.icon,
@@ -43,7 +43,9 @@ fun TrainingFinishedScreen(navController: NavController) {
 }
 
 @Composable
-fun TrainingFinishedContent() {
+fun TrainingFinishedContent(
+    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -117,6 +119,29 @@ fun TrainingFinishedContent() {
         ) {
             Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take progress picture")
             Text("Take a progress picture")
+        }
+        /*doneExercises.forEach() { (exercise, details) ->
+            ExerciseWidget(
+                exercise = exercise,
+                weight = details.weight,
+                reps = reps,
+                sets = sets,
+                onRepsChanged = {
+                    reps = it
+                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
+                },
+                onSetsChanged = {
+                    sets = it
+                    details.sets = it
+                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
+                }
+            )
+        }*/
+        doneExercises.forEach() { (exercise, details) ->
+            Text("exersise: ${exercise.name}")
+            Text("weight: ${details.weight}")
+            Text("reps: ${details.reps}")
+            Text("sets: ${details.sets}")
         }
     }
 }

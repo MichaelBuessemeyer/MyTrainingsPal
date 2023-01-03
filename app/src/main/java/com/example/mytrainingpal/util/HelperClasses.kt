@@ -2,7 +2,7 @@ package com.example.mytrainingpal.util
 
 import java.util.*
 
-class ExerciseDetails(var sets: Int, var reps: Int, var weight: Int)
+class ExerciseDetails(var sets: Int, var reps: String, var weight: Int)
 
 data class TrainingStats(
     val durationInMinutes: Int,

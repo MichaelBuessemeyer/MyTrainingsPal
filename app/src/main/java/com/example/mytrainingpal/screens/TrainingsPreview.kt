@@ -71,7 +71,7 @@ fun TrainingsPreviewScreen(
         val defaultWeight = 20
         val defaultDetails = ExerciseDetails(
             sets = defaultSets,
-            reps = defaultReps,
+            reps = List<String>(size = defaultSets) { "$defaultReps" }.joinToString(separator = ","),
             weight = defaultWeight
         )
 
@@ -104,7 +104,7 @@ fun TrainingsPreviewScreen(
                 selectedExercises[i] = Pair(
                     selectedExercises[i].first, ExerciseDetails(
                         sets = selectedExercises[i].second.sets + 1,
-                        reps = selectedExercises[i].second.reps,
+                        reps = selectedExercises[i].second.reps + ",$defaultReps",
                         weight = selectedExercises[i].second.weight
                     )
                 )
@@ -132,7 +132,6 @@ fun TrainingsPreviewScreen(
         navController = navController,
         floatingActionButton = {
             StartExerciseFloatingButton {
-                //TODO changed for testing
                 navController.navigate(Screen.TrainingFinished.route)
             }
         }
@@ -157,7 +156,7 @@ fun TrainingsPreviewScreenContent(
         )
         // no lazyColumn here, because we know there won't be that many entries ;)
         exercises.forEach() { (exercise, details) ->
-            var reps by remember { mutableStateOf(details.reps) }
+            var reps by remember { mutableStateOf(details.reps.split(",")[0].toInt()) }
             var sets by remember { mutableStateOf(details.sets) }
             ExerciseWidget(
                 exercise = exercise,
@@ -166,11 +165,12 @@ fun TrainingsPreviewScreenContent(
                 sets = sets,
                 onRepsChanged = {
                     reps = it
-                    details.reps = it
+                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
                 },
                 onSetsChanged = {
                     sets = it
                     details.sets = it
+                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
                 },
             )
         }

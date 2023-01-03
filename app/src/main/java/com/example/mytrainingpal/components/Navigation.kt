@@ -242,9 +242,11 @@ fun AppNavHost(
                     Text("Still Loading View Model")
                 }
             }
+            // TODO add if for owner!
             composable(Screen.TrainingFinished.route) {
                 TrainingFinishedScreen(
-                    navController
+                    navController,
+                    exercises
                 )
             }
             // TODO: Add further Trainings Screens
