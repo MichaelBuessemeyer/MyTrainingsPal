@@ -2,7 +2,10 @@ package com.example.mytrainingpal.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -13,7 +16,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
@@ -180,17 +182,25 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
-                        val exerciseViewModel: ExerciseViewModel = viewModel(
+                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
                             it,
-                            "ExerciseViewModel",
+                            "WorkoutEntryViewModel",
                             factory
                         )
-                        CalendarScreen(navController, exerciseViewModel)
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
+                        CalendarScreen(
+                            navController,
+                            workoutEntryViewModel,
+                            musclePainEntryMapViewModel
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
-
             }
             // TODO: Add CalendarDetailsScreen and so on
         }
