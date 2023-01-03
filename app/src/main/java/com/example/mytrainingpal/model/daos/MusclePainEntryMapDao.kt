@@ -22,6 +22,10 @@ abstract class MusclePainEntryMapDao {
     abstract fun getAllMusclePainEntriesWithMuscles(): List<MusclePainEntryWithMuscles>
 
     @Transaction
+    @Query("SELECT * FROM MusclePainEntry")
+    abstract fun getAllMusclePainEntriesWithMusclesAsLiveData(): LiveData<List<MusclePainEntryWithMuscles>>
+
+    @Transaction
     @Query("SELECT * FROM MusclePainEntry where musclePainEntryId=:musclePainEntryId")
     abstract fun getMusclePainEntryByIdWithMuscles(musclePainEntryId: Long): MusclePainEntryWithMuscles
 
