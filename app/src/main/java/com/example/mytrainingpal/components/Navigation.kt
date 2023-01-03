@@ -13,7 +13,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
@@ -183,17 +182,25 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
-                        val exerciseViewModel: ExerciseViewModel = viewModel(
+                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
                             it,
-                            "ExerciseViewModel",
+                            "WorkoutEntryViewModel",
                             factory
                         )
-                        CalendarScreen(navController, exerciseViewModel)
+                        val musclePainEntryMapViewModel: MusclePainEntryMapViewModel = viewModel(
+                            it,
+                            "MusclePainEntryMapViewModel",
+                            factory
+                        )
+                        CalendarScreen(
+                            navController,
+                            workoutEntryViewModel,
+                            musclePainEntryMapViewModel
+                        )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
-
             }
             // TODO: Add CalendarDetailsScreen and so on
         }

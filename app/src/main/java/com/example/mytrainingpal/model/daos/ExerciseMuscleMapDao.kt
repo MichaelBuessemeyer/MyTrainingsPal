@@ -13,6 +13,7 @@ abstract class ExerciseMuscleMapDao {
     @Query("SELECT * FROM ExerciseMuscleMap")
     abstract fun getAllExerciseMuscleMaps(): LiveData<List<ExerciseMuscleMap>>
 
+    @Transaction
     @Query("SELECT * FROM Exercise")
     abstract fun getAllExercisesWithMuscles(): LiveData<List<ExerciseWithMuscles>>
 
