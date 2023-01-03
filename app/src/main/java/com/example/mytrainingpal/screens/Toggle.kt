@@ -15,7 +15,7 @@ fun ToggleScreen(
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     //breakDurationFromSettings: Long
 ) {
-    var breakDuration: Long = 500 //6500L
+    var breakDuration: Long = 6500L
     var breakRunning: Boolean by remember { mutableStateOf(false) }
     // TODO: get break duration from settings and pass it to Break composable
     // how many exercise types in the list

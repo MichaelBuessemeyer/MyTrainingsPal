@@ -85,65 +85,77 @@ fun CurrentExercise(
                 ) {
                     Text(
                         text = "Exercise ${currentExerciseIndex + 1}/${exerciseList.size}",
-                        fontSize = 15.sp
-                    )
-                    Text(
-                        text = currentExercise.name,
-                        fontSize = 30.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    GifImage(currentExercise.pathToGif, 300)
-                    val dialogShowing = remember { mutableStateOf(false) }
-                    if (dialogShowing.value) {
-                        YoutubeDialog(dialogShowing.value, dismissClick = {
-                            dialogShowing.value = !dialogShowing.value
-                        })
-                    }
-                    // Taken from Thracian's answer on Github: https://stackoverflow.com/questions/65567412/jetpack-compose-text-hyperlink-some-section-of-the-text
-                    val annotatedLinkString: AnnotatedString = buildAnnotatedString {
+                    WidgetCard(hasBorder = false) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.padding(5.dp)
+                        ) {
+                            Text(
+                                text = currentExercise.name,
+                                fontSize = 30.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(10.dp)
+                            )
+                            GifImage(currentExercise.pathToGif, 500)
+                            val dialogShowing = remember { mutableStateOf(false) }
+                            if (dialogShowing.value) {
+                                YoutubeDialog(dialogShowing.value, dismissClick = {
+                                    dialogShowing.value = !dialogShowing.value
+                                })
+                            }
+                            // Taken from Thracian's answer on Github: https://stackoverflow.com/questions/65567412/jetpack-compose-text-hyperlink-some-section-of-the-text
+                            val annotatedLinkString: AnnotatedString = buildAnnotatedString {
 
-                        val str = "See Instructions on Youtube"
-                        val startIndex = str.indexOf("See")
-                        val endIndex = startIndex + 27
-                        append(str)
-                        addStyle(
-                            style = SpanStyle(
-                                color = Color(0xff64B5F6),
-                                fontSize = 18.sp,
-                                textDecoration = TextDecoration.Underline
-                            ), start = startIndex, end = endIndex
-                        )
+                                val str = "See Instructions on Youtube"
+                                val startIndex = str.indexOf("See")
+                                val endIndex = startIndex + 27
+                                append(str)
+                                addStyle(
+                                    style = SpanStyle(
+                                        color = Color(0xff64B5F6),
+                                        fontSize = 18.sp,
+                                        textDecoration = TextDecoration.Underline
+                                    ), start = startIndex, end = endIndex
+                                )
 
-                        // attach a string annotation that stores a URL to the text "link"
-                        addStringAnnotation(
-                            tag = "URL",
-                            annotation = "https://www.youtube.com/watch?v=1Tq3QdYUuHs",
-                            start = startIndex,
-                            end = endIndex
-                        )
+                                // attach a string annotation that stores a URL to the text "link"
+                                addStringAnnotation(
+                                    tag = "URL",
+                                    annotation = "https://www.youtube.com/watch?v=1Tq3QdYUuHs",
+                                    start = startIndex,
+                                    end = endIndex
+                                )
 
-                    }
+                            }
 
-                    // comment from Github: "UriHandler parse and opens URI inside AnnotatedString Item in Browse"
-                    val uriHandler = LocalUriHandler.current
+                            // comment from Github: "UriHandler parse and opens URI inside AnnotatedString Item in Browse"
+                            val uriHandler = LocalUriHandler.current
 
-                    // comment from Github: "Clickable text returns position of text that is clicked in onClick callback"
-                    ClickableText(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        text = annotatedLinkString,
-                        style = TextStyle(
-                            textAlign = TextAlign.Center
-                        ),
-                        onClick = {
-                            annotatedLinkString
-                                .getStringAnnotations("URL", it, it)
-                                .firstOrNull()?.let { stringAnnotation ->
-                                    uriHandler.openUri(stringAnnotation.item)
+                            // comment from Github: "Clickable text returns position of text that is clicked in onClick callback"
+                            ClickableText(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth(),
+                                text = annotatedLinkString,
+                                style = TextStyle(
+                                    textAlign = TextAlign.Center
+                                ),
+                                onClick = {
+                                    annotatedLinkString
+                                        .getStringAnnotations("URL", it, it)
+                                        .firstOrNull()?.let { stringAnnotation ->
+                                            uriHandler.openUri(stringAnnotation.item)
+                                        }
                                 }
+                            )
+
                         }
-                    )
+                    }
+
+
                     // CLEAN ATTEMPT --------------------
                     // number of reps that should done in one of the n sets of a particular exercise type
                     //var myReps by remember { mutableStateOf(exerciseList[currentExerciseIndex].second.reps[currentExerciseSet]).toString()}
@@ -239,6 +251,8 @@ fun CurrentExercise(
                 }
             }
             // TODO: Make the following a composable with parameters:
+
+
             if (currentExerciseIndex < exerciseList.size - 1) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceAround,
@@ -257,8 +271,8 @@ fun CurrentExercise(
                         fontWeight = FontWeight.Bold
                     )
                     Column {
-                        Text(text = "XXXX REPS")
-                        Text(text = "${totalSets.toString()} SETS")
+                        Text(text = "${exerciseList[currentExerciseIndex].second.reps.split(",")[currentExerciseIndex].toInt()} REPS")
+                        Text(text = "${exerciseList[currentExerciseIndex].second.sets} SETS")
                     }
                 }
 

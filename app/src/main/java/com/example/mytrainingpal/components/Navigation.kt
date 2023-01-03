@@ -34,7 +34,7 @@ sealed class Screen(
         Screen(
             "musclePainMain",
             "Muscle Pain",
-            Icons.Default.SentimentVeryDissatisfied,
+            ShoulderPainIcon(),
             RouteGroups.MUSCLE_PAIN.route
         )
 
