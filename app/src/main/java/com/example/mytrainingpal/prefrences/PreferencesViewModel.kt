@@ -23,6 +23,7 @@ class PreferencesViewModel(context: Context) : ViewModel() {
                 USERNAME_KEY,
                 "init view model"
             )
+            println("HERE $userName")
         }
     }
 

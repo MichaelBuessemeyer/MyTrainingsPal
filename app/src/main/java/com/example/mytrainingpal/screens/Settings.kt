@@ -1,6 +1,5 @@
 package com.example.mytrainingpal.screens
 
-import android.content.Context
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,9 +15,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.NavController
 import com.example.mytrainingpal.R
 import com.example.mytrainingpal.components.CustomNumberInput
@@ -27,8 +23,6 @@ import com.example.mytrainingpal.components.SlimTextInput
 import com.example.mytrainingpal.components.TabScreen
 import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import java.io.File
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "PreferenceDataStore")
 
 @Composable
 fun SettingsScreen(
@@ -41,6 +35,8 @@ fun SettingsScreen(
     var defaultBreak by remember { mutableStateOf(10) }
     // preferencesViewModel.setName("Kalus")
     // val userName by  preferencesViewModel.userNameFlow.collectAsState(initial = "init name")
+
+    //FIXME: remember does not work as i intended. the correct value is in the datastore :/
     var userName by remember {
         mutableStateOf<String>(preferencesViewModel.userName)
     }

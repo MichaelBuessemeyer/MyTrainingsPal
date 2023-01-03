@@ -1,6 +1,7 @@
 package com.example.mytrainingpal.prefrences
 
 import android.content.Context
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
@@ -13,7 +14,7 @@ import java.io.IOException
 
 // see https://proandroiddev.com/preference-datastore-the-generic-way-d26b11f1075f
 
-private val Context.dataStore by preferencesDataStore(
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "PreferenceDataStore"
 )
 
