@@ -1,8 +1,8 @@
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android") version "2.44" apply false
 }
 
 android {
@@ -100,5 +100,12 @@ dependencies {
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-
-    }
+    //For Coroutines if not added earlier
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    //For lifecycle mybe unnecessary
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha03"
+}
+kapt {
+    correctErrorTypes = true
+}

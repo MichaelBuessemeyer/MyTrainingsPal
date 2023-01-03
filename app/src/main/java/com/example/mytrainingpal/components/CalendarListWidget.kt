@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.mytrainingpal.components.myiconpack.ShoulderPainIcon
 import com.example.mytrainingpal.util.CalendarEntry
 import java.util.*
 
@@ -23,7 +22,12 @@ fun CalendarListWidget(
     val soreMuscleCount = calendarEntry.musclePainEntry?.soreMusclesConnections?.size ?: 0
     val hasHighSoreness = soreMuscleCount > 20
     WidgetCard(hasBorder = false) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp).height(72.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(5.dp)
+                .height(72.dp)
+        ) {
             Text(
                 text = SimpleDateFormat("dd/MM", Locale.US).format(calendarEntry.date),
                 style = MaterialTheme.typography.h2,
@@ -31,7 +35,10 @@ fun CalendarListWidget(
             )
 
             calendarEntry.workout?.let { workout ->
-                Column(modifier = Modifier.padding(horizontal = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Icon(
                         imageVector = Icons.Default.FitnessCenter,
                         contentDescription = "exercise icon",
@@ -44,13 +51,16 @@ fun CalendarListWidget(
             }
 
             calendarEntry.musclePainEntry?.let { musclePainWithMuscles ->
-                Column(modifier = Modifier.padding(horizontal = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Icon(
                         imageVector = ShoulderPainIcon(),
                         contentDescription = "muscle pain icon",
                         modifier = Modifier.size(50.dp)
                     )
-                    Text(if(hasHighSoreness) "High Soreness" else "Low Soreness")
+                    Text(if (hasHighSoreness) "High Soreness" else "Low Soreness")
                 }
             }
         }

@@ -3,9 +3,11 @@ package com.example.mytrainingpal.screens
 import android.content.Context
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Portrait
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,22 +25,33 @@ import com.example.mytrainingpal.components.CustomNumberInput
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.components.SlimTextInput
 import com.example.mytrainingpal.components.TabScreen
+import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import java.io.File
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "UserData")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "PreferenceDataStore")
 
 @Composable
 fun SettingsScreen(
-    navController: NavController
+    navController: NavController,
+    preferencesViewModel: PreferencesViewModel
 ) {
-    var nameOfUser by remember { mutableStateOf("Klaus Kiste") }
+    //var nameOfUser by remember { mutableStateOf("Klaus Kiste") }
     var ageOfUser by remember { mutableStateOf(21) }
     var timeToTrainUser by remember { mutableStateOf(7) }
     var defaultBreak by remember { mutableStateOf(10) }
+    // preferencesViewModel.setName("Kalus")
+    // val userName by  preferencesViewModel.userNameFlow.collectAsState(initial = "init name")
+    var userName by remember {
+        mutableStateOf<String>(preferencesViewModel.userName)
+    }
+
     TabScreen(
         tabContent = {
-            MainSettingsScreenContent(nameOfUser = nameOfUser,
-                updateName = { inputValue: String -> nameOfUser = inputValue },
+            MainSettingsScreenContent(nameOfUser = userName,
+                updateName = {
+                    //preferencesViewModel.setName(it)
+                    userName = it
+                },
                 ageOfUser = ageOfUser,
                 updateAge = { inputValue: Int -> ageOfUser = inputValue },
                 timeToTrainUser = timeToTrainUser,
@@ -46,6 +59,16 @@ fun SettingsScreen(
                 defaultBreak = defaultBreak,
                 updateDefaultBreak = { inputValue: Int -> defaultBreak = inputValue })
         },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { preferencesViewModel.setName(userName) }) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    tint = MaterialTheme.colors.onSecondary,
+                    contentDescription = "Save"
+                )
+            }
+        },
+        withNavBar = false,
         topBarTitle = Screen.Settings.label,
         topBarIcon = Screen.Settings.icon,
         navController = navController
@@ -65,13 +88,17 @@ fun MainSettingsScreenContent(
 ) {
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     val image = painterResource(R.drawable.klauskiste)
+    val days: List<String> = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
+
+    var daySelection: MutableList<Pair<String, Boolean>> =
+        MutableList<Pair<String, Boolean>>(7) { index -> Pair(days[index], false) }
     Row(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxWidth()
     ) {
 
-        //TODO Does not work jet. It doesn't find the file even though it exists
+        //TODO Does not work yet. It doesn't find the file even though it exists
         if (File("/src/main/res/drawable/klauskiste.jpeg").exists()) {
             Box {
                 Image(
@@ -100,7 +127,7 @@ fun MainSettingsScreenContent(
     ) {
         Button(
             border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-            onClick = { },
+            onClick = { }, //TODO: promt to change profile picture
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = MaterialTheme.colors.background,
                 contentColor = MaterialTheme.colors.secondary
@@ -110,44 +137,34 @@ fun MainSettingsScreenContent(
         }
     }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier
         ) {
-
-
             Text(text = "My Name:")
+            Spacer(modifier = Modifier.size(12.dp))
+            Text(text = "My Age:")
         }
         Column(
-            horizontalAlignment = Alignment.End,
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
         ) {
-
-
             SlimTextInput(
                 value = nameOfUser,
                 onValueChange = updateName,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                modifier = Modifier.background(MaterialTheme.colors.primary)
+                modifier = Modifier.background(
+                    MaterialTheme.colors.primary,
+                    shape = RoundedCornerShape(5.dp)
+                )
             )
-        }
-    }
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-        ) {
-            Text(text = "My Age:")
-        }
-        Column(
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
             CustomNumberInput(
                 value = ageOfUser,
                 onValueChange = updateAge,

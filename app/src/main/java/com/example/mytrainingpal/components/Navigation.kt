@@ -19,6 +19,7 @@ import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
+import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import com.example.mytrainingpal.screens.*
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
@@ -135,7 +136,28 @@ fun AppNavHost(
             route = RouteGroups.SETTINGS.route,
             startDestination = Screen.Settings.route
         ) {
-            composable(Screen.Settings.route) { SettingsScreen(navController) }
+            composable(Screen.Settings.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
+                        SettingsScreen(
+                            navController,
+                            preferencesViewModel,
+                        )
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+            }
         }
         // Use those to maintain several back stacks for navigation
         navigation(
