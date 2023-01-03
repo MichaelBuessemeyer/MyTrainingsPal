@@ -7,15 +7,15 @@ import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
 import kotlinx.coroutines.delay
 
-// Reference https://stackoverflow.com/questions/69230364/how-can-i-make-my-composable-recompose-with-a-for-loop-update
+// Inspired by: https://stackoverflow.com/questions/69230364/how-can-i-make-my-composable-recompose-with-a-for-loop-update
 
 @Composable
 fun ToggleScreen(
     navController: NavController,
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
-    breakDurationFromSettings: Long = 1000L
+    //breakDurationFromSettings: Long
 ) {
-    var breakDuration: Long = 500L
+    var breakDuration: Long = 500 //6500L
     var breakRunning: Boolean by remember { mutableStateOf(false) }
     // TODO: get break duration from settings and pass it to Break composable
     // how many exercise types in the list
@@ -42,10 +42,13 @@ fun ToggleScreen(
             navController,
             exerciseList = exerciseList,
             currentExerciseIndex = currentExerciseCounter,
+            totalSets = totalSets,
+            currentSet = setCounter,
         )
         LaunchedEffect(key1 = breakDuration) {
             delay(breakDuration)
             breakRunning = !breakRunning
+
         }
     } else {
         // TODO: Standing Calf exercise complete bugs the ExerciseScreen!
@@ -59,6 +62,7 @@ fun ToggleScreen(
             goToBreak = {
                 breakRunning = !breakRunning
                 if (currentExerciseSetCounter == exerciseList[currentExerciseCounter].second.sets - 1) {
+                    updatedReps.add(it.toString())
                     exerciseList[currentExerciseCounter].second.reps = updatedReps.joinToString(",")
                     updatedReps.clear()
                     currentExerciseSetCounter = 0

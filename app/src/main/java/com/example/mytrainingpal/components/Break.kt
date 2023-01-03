@@ -33,9 +33,11 @@ import kotlinx.coroutines.delay
 fun Break(
     navController: NavController,
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
-    currentExerciseIndex: Int
+    currentExerciseIndex: Int,
+    totalSets: Int,
+    currentSet: Int
 ) {
-    var currentExercise: Int = 4;
+    var currentExercise = currentExerciseIndex;
     var totalExercises: Int = 10;
     var totalBreakTimeInSeconds: Int = 5
 
@@ -43,6 +45,17 @@ fun Break(
         backgroundColor = MaterialTheme.colors.background
     ) {
         Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(10.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .weight(4F, true)
+                    .fillMaxSize(),
+
+                ) {
+                Column(
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -51,7 +64,7 @@ fun Break(
                 .padding(5.dp)
         ) {
             Text(
-                text = "Exercise $currentExerciseIndex / ${exerciseList.size.toString()}"
+                text = "Exercise ${currentExerciseIndex + 1} / ${exerciseList.size.toString()}"
             )
             Text(
                 text = "Break",
@@ -71,35 +84,54 @@ fun Break(
             }
 
             LinearProgressIndicator(
-                progress = currentExercise / totalExercises.toFloat(),
+                progress = currentSet / totalSets.toFloat(),
                 backgroundColor = MaterialTheme.colors.primary,
                 color = MaterialTheme.colors.secondary,
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column {
-                    Text(text = "Next Up:")
-                    // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-                    GifImage("exercise_4", 200)
+            // TODO: Make the following a composable with parameters:
+            if (currentExerciseIndex < exerciseList.size - 1) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1F)
+                ) {
+                    Column {
+                        Text(text = "Next Up:")
+                        // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
+                        GifImage(exerciseList[currentExerciseIndex].first.pathToGif, 100)
+                    }
+                    Text(
+                        text = exerciseList[currentExerciseIndex].first.name,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Column {
+                        Text(text = "XXXX REPS")
+                        Text(text = "${totalSets.toString()} SETS")
+                    }
                 }
-                Text(
-                    text = "Exercise Name",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Column {
-                    Text(text = "20 REPS")
-                    Text(text = "30 SETS")
+
+            } else {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1F)
+                ) {
+                    Text(
+                        text = "You are almost done!",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
     }
-}
+}}}
 
 
 @Composable
@@ -172,6 +204,7 @@ fun BreakTimer(
         )
     }
 }
+
 
 
 
