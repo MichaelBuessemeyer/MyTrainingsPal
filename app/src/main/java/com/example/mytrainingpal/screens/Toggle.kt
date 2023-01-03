@@ -15,7 +15,7 @@ fun ToggleScreen(
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     //breakDurationFromSettings: Long
 ) {
-    var breakDuration: Long = 6500L
+    var breakDuration: Long = 2500L
     var breakRunning: Boolean by remember { mutableStateOf(false) }
     // TODO: get break duration from settings and pass it to Break composable
     // how many exercise types in the list
@@ -44,6 +44,7 @@ fun ToggleScreen(
             currentExerciseIndex = currentExerciseCounter,
             totalSets = totalSets,
             currentSet = setCounter,
+            currentExerciseSetCounter = currentExerciseSetCounter
         )
         LaunchedEffect(key1 = breakDuration) {
             delay(breakDuration)
@@ -55,7 +56,6 @@ fun ToggleScreen(
         CurrentExercise(
             exerciseList = exerciseList,
             currentExerciseIndex = currentExerciseCounter,
-            currentExerciseSet = currentExerciseSetCounter,
             totalSets = totalSets,
             currentExerciseSetCounter = currentExerciseSetCounter,
             currentSet = setCounter,

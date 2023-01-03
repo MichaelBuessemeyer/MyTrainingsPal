@@ -2,18 +2,8 @@ package com.example.mytrainingpal.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.FastForward
-import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
@@ -22,30 +12,18 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.GifImage
-import com.example.mytrainingpal.components.WidgetCard
-import com.example.mytrainingpal.components.YoutubeDialog
+import com.example.mytrainingpal.components.nextExerciseUp
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
 
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalMaterialApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Break(
@@ -53,7 +31,8 @@ fun Break(
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     currentExerciseIndex: Int,
     totalSets: Int,
-    currentSet: Int
+    currentSet: Int,
+    currentExerciseSetCounter: Int
 ) {
     var currentExercise = currentExerciseIndex;
     var totalBreakTimeInSeconds: Int = 5
@@ -61,13 +40,13 @@ fun Break(
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
     ) {
-        Column{
+        Column {
             Row(
                 modifier = Modifier
                     .weight(4F, true)
                     .fillMaxSize(),
 
-                ){
+                ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly,
@@ -101,59 +80,44 @@ fun Break(
                         modifier = Modifier
                             .fillMaxWidth()
                     )
-                    // -------------------------------------------------------------------------------------
                 }
 
-                }
-                Row(
-                    modifier = Modifier
-                        .weight(1F, true)
-                        .fillMaxSize(),
-
-                    ){
-                    // TODO: Make the following a composable with parameters:
-                    if (currentExerciseIndex < exerciseList.size - 1) {
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceAround,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1F)
-                        ) {
-                            Column {
-                                Text(text = "Next Up:")
-                                // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-                                GifImage(exerciseList[currentExerciseIndex].first.pathToGif, 100)
-                            }
-                            Text(
-                                text = exerciseList[currentExerciseIndex].first.name,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Column {
-                                Text(text = "XXXX REPS")
-                                Text(text = "${totalSets.toString()} SETS")
-                            }
-                        }
-
-                    } else {
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceAround,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1F)
-                        ) {
-                            Text(
-                                text = "You are almost done!",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier
+                    .weight(1F, true)
+                    .fillMaxSize(),
+            ) {
+                if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets && currentExerciseIndex  == exerciseList.size ) {
+                    Text(
+                        text = "You are almost done!",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                } else if (currentExerciseSetCounter  == exerciseList[currentExerciseIndex].second.sets) {
+                    nextExerciseUp(
+                        gifPath = exerciseList[currentExerciseIndex + 1].first.pathToGif,
+                        exerciseName = exerciseList[currentExerciseIndex + 1].first.name,
+                        suggestedRepsForThatExercise = exerciseList[currentExerciseIndex].second.reps.split(
+                            ","
+                        )[0].toInt(),
+                        setsLeft = exerciseList[currentExerciseIndex].second.sets
+                    )
+                } else {
+                    nextExerciseUp(
+                        gifPath = exerciseList[currentExerciseIndex].first.pathToGif,
+                        exerciseName = exerciseList[currentExerciseIndex].first.name,
+                        suggestedRepsForThatExercise = exerciseList[currentExerciseIndex].second.reps.split(
+                            ","
+                        )[0].toInt(),
+                        setsLeft = exerciseList[currentExerciseIndex].second.sets - (currentExerciseSetCounter + 1)
+                    )
                 }
             }
         }
+    }
 }
-
 
 
 // Timer composable adapted from Phillip Lackners' open source code available on Github:

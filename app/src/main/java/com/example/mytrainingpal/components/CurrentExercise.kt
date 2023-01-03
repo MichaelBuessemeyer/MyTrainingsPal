@@ -39,7 +39,6 @@ import com.example.mytrainingpal.util.ExerciseDetails
 fun CurrentExercise(
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     currentExerciseIndex: Int,
-    currentExerciseSet: Int,
     currentExerciseSetCounter: Int, // if an exercise has 4 sets: 0, 1, 2, 3
     totalSets: Int,
     currentSet: Int,
@@ -238,7 +237,7 @@ fun CurrentExercise(
                     */
                     // --------------------
                     Text(
-                        text = "Set ${currentExerciseSet + 1}/${exerciseList[currentExerciseIndex].second.sets}",
+                        text = "Set ${currentExerciseSetCounter + 1}/${exerciseList[currentExerciseIndex].second.sets}",
                         fontSize = 15.sp
                     )
                     LinearProgressIndicator(
@@ -250,49 +249,43 @@ fun CurrentExercise(
                     )
                 }
             }
-            // TODO: Make the following a composable with parameters:
-
-
-            if (currentExerciseIndex < exerciseList.size - 1) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1F)
-                ) {
-                    Column {
-                        Text(text = "Next Up:")
-                        // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
-                        GifImage(exerciseList[currentExerciseIndex].first.pathToGif, 100)
-                    }
-                    Text(
-                        text = exerciseList[currentExerciseIndex].first.name,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Column {
-                        Text(text = "${exerciseList[currentExerciseIndex].second.reps.split(",")[currentExerciseIndex].toInt()} REPS")
-                        Text(text = "${exerciseList[currentExerciseIndex].second.sets} SETS")
-                    }
-                }
-
-            } else {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1F)
-                ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier
+                    .weight(1F, true)
+                    .fillMaxSize(),
+            ) {
+                if (currentExerciseSetCounter + 1 == exerciseList[currentExerciseIndex].second.sets && currentExerciseIndex + 1 == exerciseList.size) {
                     Text(
                         text = "You are almost done!",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
+                    )
+                } else if (currentExerciseSetCounter + 1 == exerciseList[currentExerciseIndex].second.sets) {
+                    nextExerciseUp(
+                        gifPath = exerciseList[currentExerciseIndex + 1].first.pathToGif,
+                        exerciseName = exerciseList[currentExerciseIndex + 1].first.name,
+                        suggestedRepsForThatExercise = exerciseList[currentExerciseIndex].second.reps.split(
+                            ","
+                        )[0].toInt(),
+                        setsLeft = exerciseList[currentExerciseIndex].second.sets
+                    )
+                } else {
+                    nextExerciseUp(
+                        gifPath = exerciseList[currentExerciseIndex].first.pathToGif,
+                        exerciseName = exerciseList[currentExerciseIndex].first.name,
+                        suggestedRepsForThatExercise = exerciseList[currentExerciseIndex].second.reps.split(
+                            ","
+                        )[0].toInt(),
+                        setsLeft = exerciseList[currentExerciseIndex].second.sets - (currentExerciseSetCounter + 1)
                     )
                 }
             }
         }
     }
 }
+
+
 
 
 
