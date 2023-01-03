@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components.myiconpack
+package com.example.mytrainingpal.components
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType

@@ -71,7 +71,7 @@ fun TrainingsPreviewScreen(
         val defaultWeight = 20
         val defaultDetails = ExerciseDetails(
             sets = defaultSets,
-            reps = List<String>(size = defaultSets) { "$defaultReps" }.joinToString(separator = ","),
+            reps = List<String>(defaultSets) { "$defaultReps" }.joinToString(",") ,
             weight = defaultWeight
         )
 
@@ -104,7 +104,7 @@ fun TrainingsPreviewScreen(
                 selectedExercises[i] = Pair(
                     selectedExercises[i].first, ExerciseDetails(
                         sets = selectedExercises[i].second.sets + 1,
-                        reps = selectedExercises[i].second.reps,
+                        reps = selectedExercises[i].second.reps + ",$defaultReps",
                         weight = selectedExercises[i].second.weight
                     )
                 )
