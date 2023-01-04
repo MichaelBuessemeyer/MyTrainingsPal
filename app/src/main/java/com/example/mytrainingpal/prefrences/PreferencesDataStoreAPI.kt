@@ -11,5 +11,5 @@ interface PreferencesDataStoreAPI {
     suspend fun <T> getFirstPreference(key: Preferences.Key<T>,defaultValue: T):T
     suspend fun <T> putPreference(key: Preferences.Key<T>, value:T)
     suspend fun <T> removePreference(key: Preferences.Key<T>)
-    suspend fun <T> clearAllPreference()
+    suspend fun clearAllPreference()
 }

@@ -1,9 +1,12 @@
 package com.example.mytrainingpal.components
 
 import android.app.TimePickerDialog
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -27,9 +30,6 @@ fun CustomTimeInput(
     postText: String? = null,
     backgroundColor: Color = MaterialTheme.colors.background
 ) {
-    val topBottomPadding = 8.dp
-    val inputWidth = 80.dp
-    val maxChars = 5
     // https://medium.com/@daniel.atitienei/date-and-time-pickers-in-jetpack-compose-f641b1d72dd5
     val selectedTimeText: MutableState<String> = remember { mutableStateOf(value) }
     // Fetching current hour, and minute
@@ -40,7 +40,9 @@ fun CustomTimeInput(
     val timePicker = TimePickerDialog(
         LocalContext.current,
         { _, selectedHour: Int, selectedMinute: Int ->
-            selectedTimeText.value = "$selectedHour:$selectedMinute"
+            selectedTimeText.value = listOf<Int>(selectedHour, selectedMinute).joinToString(":") {
+                it.toString().padStart(2, '0')
+            }
             onValueChange(selectedTimeText.value)
         }, hour, minute, true
     )
@@ -48,7 +50,12 @@ fun CustomTimeInput(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(0.dp),
     ) {
-        Text(value)
+        Text(value,
+            Modifier
+                .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
+                .padding(vertical = 5.dp, horizontal = 12.dp)
+                .clickable { timePicker.show() }
+        )
         IconButton(onClick = { timePicker.show() }, modifier = Modifier.padding(0.dp)) {
             // TODO: open numberSlider on click. And make this an own component to be reusable
             Icon(

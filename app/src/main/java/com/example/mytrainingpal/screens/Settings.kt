@@ -1,6 +1,9 @@
 package com.example.mytrainingpal.screens
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.R
 import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.prefrences.PreferencesConstants
-import com.example.mytrainingpal.prefrences.PreferencesConstants.DAYS
 import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import java.io.File
 
@@ -54,9 +57,11 @@ fun SettingsScreen(
         preferences = preferencesState
         userName = preferences[PreferencesConstants.USERNAME_KEY.name].toString()
         age = (preferences[PreferencesConstants.AGE_KEY.name] ?: 20) as Int
+        println("notifyDays ${preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]}")
         notifyDays = (preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]
             ?: setOf<String>()) as Set<*>
-        notifyTime = (preferences[PreferencesConstants.NOTIFICATION_TIME_KEY.name] ?: "12:00") as String
+        notifyTime =
+            (preferences[PreferencesConstants.NOTIFICATION_TIME_KEY.name] ?: "12:00") as String
         defaultBreak = (preferences[PreferencesConstants.DEFAULT_BREAK_KEY.name] ?: 30) as Int
         preferences
     }
@@ -72,8 +77,12 @@ fun SettingsScreen(
                 updateAge = { age = it },
                 notificationTime = notifyTime,
                 updateNotificationTime = { notifyTime = it },
+                notificationDays = notifyDays,
+                updateNotificationDays = { notifyDays = it },
                 defaultBreak = defaultBreak,
-                updateDefaultBreak = { defaultBreak = it })
+                updateDefaultBreak = { defaultBreak = it },
+                deleteAllData = { preferencesViewModel.deleteAllData() },
+                navigateToHome = { navController.navigate(RouteGroups.HOME.route) })
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
@@ -82,6 +91,7 @@ fun SettingsScreen(
                 preferencesViewModel.setNotificationDays(notifyDays.map { it.toString() }.toSet())
                 preferencesViewModel.setNotificationTime(notifyTime)
                 preferencesViewModel.setDefaultBreak(defaultBreak)
+                navController.navigate(RouteGroups.HOME.route)
             }) {
                 Icon(
                     imageVector = Icons.Default.Check,
@@ -103,24 +113,25 @@ fun MainSettingsScreenContent(
     updateName: (String) -> Unit,
     age: Int,
     updateAge: (Int) -> Unit,
+    notificationDays: Set<*>,
+    updateNotificationDays: (Set<String>) -> Unit,
     notificationTime: String,
     updateNotificationTime: (String) -> Unit,
     defaultBreak: Int,
-    updateDefaultBreak: (Int) -> Unit
+    updateDefaultBreak: (Int) -> Unit,
+    deleteAllData: () -> Unit = {},
+    navigateToHome: () -> Unit = {}
 ) {
-    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     val image = painterResource(R.drawable.klauskiste)
-    val days: List<String> = DAYS
+    val horizontalPaddingModifier = Modifier.padding(horizontal = 10.dp)
 
-    var daySelection: MutableList<Pair<String, Boolean>> =
-        MutableList<Pair<String, Boolean>>(7) { index -> Pair(days[index], false) }
     Row(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxWidth()
     ) {
 
-        //TODO Does not work yet. It doesn't find the file even though it exists
+        // TODO Does not work yet. It doesn't find the file even though it exists
         if (File("/src/main/res/drawable/klauskiste.jpeg").exists()) {
             Box {
                 Image(
@@ -161,9 +172,8 @@ fun MainSettingsScreenContent(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+        modifier = horizontalPaddingModifier
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
@@ -171,8 +181,10 @@ fun MainSettingsScreenContent(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(text = "My Name:")
-            Spacer(modifier = Modifier.size(12.dp))
+            Spacer(modifier = Modifier.size(17.dp))
             Text(text = "My Age:")
+            Spacer(modifier = Modifier.size(22.dp))
+            Text(text = "Default Break Time:")
         }
         Column(
             horizontalAlignment = Alignment.Start,
@@ -193,131 +205,30 @@ fun MainSettingsScreenContent(
                 possibleValues = (1..90).toList(),
                 backgroundColor = MaterialTheme.colors.primary
             )
-        }
-    }
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(text = "Notify me on")
-    }
-    Row(
-        verticalAlignment = Alignment.Top,
-        modifier = Modifier.horizontalScroll(rememberScrollState())
-    ) {
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.surface),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.surface
-            ),
-        ) {
-            Text("Mo")
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.secondary
-            ),
-        ) {
-            Text("Tu")
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.surface),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.surface
-            ),
-        ) {
-            Text("We")
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.secondary
-            ),
-        ) {
-            Text("Th")
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.surface),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.surface
-            ),
-        ) {
-            Text("Fr")
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.secondary
-            ),
-        ) {
-            Text("Sa")
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.surface),
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.surface
-            ),
-        ) {
-            Text("Su")
-        }
-    }
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-        ) {
-            Text(text = "at")
-        }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            CustomTimeInput(value = notificationTime, onValueChange = updateNotificationTime)
-            /*CustomNumberInput(
-                value = notificationTime,
-                onValueChange = updateNotificationTime,
-                possibleValues = (1..25).toList(),
-                backgroundColor = MaterialTheme.colors.primary,
-                postText = "o'Clock"
-            )*/
-        }
-    }
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-        ) {
-            Text(text = "Default break:")
-        }
-        Column(
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
             CustomNumberInput(
                 value = defaultBreak,
                 onValueChange = updateDefaultBreak,
-                possibleValues = (1..25).toList(),
+                possibleValues = (15..90).toList(),
                 backgroundColor = MaterialTheme.colors.primary,
-                postText = "Minutes"
+                postText = "Seconds"
             )
         }
     }
+    NotificationSetting(
+        time = notificationTime,
+        onTimeChange = updateNotificationTime,
+        days = notificationDays as Set<String>, // TODO: safe cast
+        onDaysChange = updateNotificationDays
+    )
+    // TODO: warn before deleting everything
+    Text(
+        text = "Delete all my data!",
+        color = MaterialTheme.colors.secondary,
+        textDecoration = TextDecoration.Underline,
+        modifier = horizontalPaddingModifier.clickable {
+            deleteAllData()
+            navigateToHome()
+        })
 }
 
 

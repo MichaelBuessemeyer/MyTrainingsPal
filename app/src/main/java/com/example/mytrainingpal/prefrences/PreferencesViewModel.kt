@@ -34,6 +34,12 @@ class PreferencesViewModel(context: Context) : ViewModel() {
         }
     }
 
+    fun deleteAllData() {
+        viewModelScope.launch {
+            preferencesDataStoreHelper.clearAllPreference()
+        }
+    }
+
     fun setName(newName: String) {
         viewModelScope.launch { preferencesDataStoreHelper.putPreference(USERNAME_KEY, newName) }
     }
@@ -66,6 +72,7 @@ class PreferencesViewModel(context: Context) : ViewModel() {
     }
 
     fun setNotificationDays(newNotificationDays: Set<String>) {
+        println(newNotificationDays.toString())
         viewModelScope.launch {
             preferencesDataStoreHelper.putPreference(
                 NOTIFICATION_DAYS_KEY,

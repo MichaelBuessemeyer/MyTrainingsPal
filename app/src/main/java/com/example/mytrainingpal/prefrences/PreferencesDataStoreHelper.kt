@@ -37,7 +37,7 @@ class PreferencesDataStoreHelper(context: Context) : PreferencesDataStoreAPI {
         result
     }
 
-    override suspend fun  getPreferences():
+    override suspend fun getPreferences():
             Flow<Map<String, Any>> = dataSource.data.catch { exception ->
         if (exception is IOException) {
             emit(emptyPreferences())
@@ -72,7 +72,7 @@ class PreferencesDataStoreHelper(context: Context) : PreferencesDataStoreAPI {
     }
 
     // This function clears the entire Preference Datastore.
-    override suspend fun <T> clearAllPreference() {
+    override suspend fun clearAllPreference() {
         dataSource.edit { preferences ->
             preferences.clear()
         }
