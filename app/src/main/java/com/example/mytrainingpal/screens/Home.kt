@@ -90,6 +90,7 @@ fun HomeScreenContent(
             navigateToMusclePain = navigateToMusclePain,
             soreMuscles = soreMuscles,
             showEditButton = true,
+            onClick = { navigateToMusclePain() }
         )
         OverallRecordsCard(workoutEntryExerciseMapViewModel)
         LastTrainingStatCard(workoutEntryExerciseMapViewModel)

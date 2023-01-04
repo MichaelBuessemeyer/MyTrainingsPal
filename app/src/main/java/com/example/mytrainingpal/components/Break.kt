@@ -49,7 +49,7 @@ fun Break(
                         .fillMaxSize()
                 ) {
                     Text(
-                        text = "Exercise ${currentExerciseIndex + 1} / ${exerciseList.size.toString()}"
+                        text = "Exercise ${currentExerciseIndex + 1} / ${exerciseList.size}"
                     )
                     Text(
                         text = "Break",
@@ -83,13 +83,13 @@ fun Break(
                     .weight(1F, true)
                     .fillMaxSize(),
             ) {
-                if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets && currentExerciseIndex  == exerciseList.size ) {
+                if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets && currentExerciseIndex == exerciseList.size) {
                     Text(
                         text = "You are almost done!",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
-                } else if (currentExerciseSetCounter  == exerciseList[currentExerciseIndex].second.sets) {
+                } else if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets) {
                     nextExerciseUp(
                         gifPath = exerciseList[currentExerciseIndex + 1].first.pathToGif,
                         exerciseName = exerciseList[currentExerciseIndex + 1].first.name,
