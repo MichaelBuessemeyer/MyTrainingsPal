@@ -17,11 +17,15 @@ class WorkoutEntryRepository(private val workoutEntryDao: WorkoutEntryDao) {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     fun insertWorkoutEntry(newWorkoutEntry: WorkoutEntry): Long {
-        var id:Long = 0
-         coroutineScope.launch(Dispatchers.IO) {
-             id = workoutEntryDao.insert(newWorkoutEntry)
+        var id: Long = 0
+        coroutineScope.launch(Dispatchers.IO) {
+            id = workoutEntryDao.insert(newWorkoutEntry)
         }
         return id
+    }
+
+    fun insertWorkoutEntryOnCurrentThread(newWorkoutEntry: WorkoutEntry): Long {
+        return workoutEntryDao.insert(newWorkoutEntry)
     }
 
     fun deleteWorkoutEntry(workoutEntry: WorkoutEntry) {

@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -19,6 +19,9 @@ import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewMo
 import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.TimeHolder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun TrainingFinishedScreen(
@@ -59,11 +62,12 @@ fun TrainingFinishedScreen(
 
                 // calculating how long the workout lasted with start and end time
                 // Calculating: https://stackoverflow.com/questions/1555262/calculating-the-difference-between-two-java-date-instances (04.01.23)
-                val totalWorkoutTime: Int = ((endTime.value.time - startTime.value.time)/6000).toInt()
+                val totalWorkoutTime: Int =
+                    ((endTime.value.time - startTime.value.time) / 6000).toInt()
 
 
                 WidgetCard(hasBorder = false) {
-                    Column (
+                    Column(
                         modifier = Modifier.padding(8.dp)
                     ) {
                         Text(text = "This Training:")
@@ -121,7 +125,10 @@ fun TrainingFinishedScreen(
                         contentColor = MaterialTheme.colors.secondary
                     ),
                 ) {
-                    Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take progress picture")
+                    Icon(
+                        imageVector = Icons.Default.PhotoCamera,
+                        contentDescription = "Take progress picture"
+                    )
                     Text("Take a progress picture")
                 }
                 doneExercises.forEach() { (exercise, details) ->
@@ -165,24 +172,26 @@ fun saveWorkoutToDatabase(
     endTime: TimeHolder,
     doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>,
     workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel
-){
-    val workoutEntryId: Long = workoutEntryViewModel.insertWorkoutEntry(
-        WorkoutEntry(
-            date = startTime.value,
-            startTime = startTime.value,
-            endTime = endTime.value
-        )
-    )
-
-    doneExercises.forEach() { (exercise, details) ->
-        workoutEntryExerciseMapViewModel.insertWorkoutEntryExerciseMap(
-            WorkoutEntryExerciseMap(
-                workoutIdMap = workoutEntryId,
-                exerciseIdMap = exercise.exerciseId ?:1L,
-                sets = details.sets.toLong(),
-                reps = details.reps,
-                weight = details.weight.toLong()
+) {
+    val coroutineScope = CoroutineScope(Dispatchers.Main)
+    coroutineScope.launch(Dispatchers.IO) {
+        val workoutEntryId: Long = workoutEntryViewModel.insertWorkoutEntryOnCurrentThread(
+            WorkoutEntry(
+                date = startTime.value,
+                startTime = startTime.value,
+                endTime = endTime.value
             )
         )
+        doneExercises.forEach() { (exercise, details) ->
+            workoutEntryExerciseMapViewModel.insertWorkoutEntryExerciseMap(
+                WorkoutEntryExerciseMap(
+                    workoutIdMap = workoutEntryId,
+                    exerciseIdMap = exercise.exerciseId ?: 1L,
+                    sets = details.sets.toLong(),
+                    reps = details.reps,
+                    weight = details.weight.toLong()
+                )
+            )
+        }
     }
 }

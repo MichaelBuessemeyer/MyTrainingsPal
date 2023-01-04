@@ -27,6 +27,10 @@ class WorkoutEntryViewModel(context: Context) : ViewModel() {
         return repository.insertWorkoutEntry(workoutEntry)
     }
 
+    fun insertWorkoutEntryOnCurrentThread(workoutEntry: WorkoutEntry): Long {
+        return repository.insertWorkoutEntryOnCurrentThread(workoutEntry)
+    }
+
     fun findWorkoutEntryById(id: Long) {
         repository.findWorkoutEntryById(id)
     }
