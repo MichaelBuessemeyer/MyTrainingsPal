@@ -8,9 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Portrait
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +18,9 @@ import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
+import com.example.mytrainingpal.model.view_models.PreferencesViewModel
 import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
+import com.example.mytrainingpal.prefrences.PreferencesConstants
 import com.example.mytrainingpal.states.RememberAddingSoreMusclesToList
 import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
@@ -31,6 +31,7 @@ fun HomeScreen(
     musclePainEntryViewModel: MusclePainEntryViewModel,
     workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
+    preferencesViewModel: PreferencesViewModel
 ) {
     TabScreen(tabContent = {
         HomeScreenContent(navigateToMusclePain = {
@@ -44,7 +45,8 @@ fun HomeScreen(
         },
             musclePainEntryViewModel = musclePainEntryViewModel,
             workoutEntryExerciseMapViewModel = workoutEntryExerciseMapViewModel,
-            musclePainEntryMapViewModel = musclePainEntryMapViewModel
+            musclePainEntryMapViewModel = musclePainEntryMapViewModel,
+            preferencesViewModel = preferencesViewModel
         )
     }, topBarTitle = null, topBarIcon = null, navController = navController)
 }
@@ -56,6 +58,7 @@ fun HomeScreenContent(
     musclePainEntryViewModel: MusclePainEntryViewModel,
     workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
+    preferencesViewModel: PreferencesViewModel
 ) {
     val todaysMusclePainEntry = RememberTodaysMusclePainEntryState(musclePainEntryViewModel)
 
@@ -64,6 +67,10 @@ fun HomeScreenContent(
     // https://stackoverflow.com/questions/67252538/jetpack-compose-update-composable-when-list-changes.
     val soreMuscles: SnapshotStateList<Pair<Muscle, Long>> = remember { mutableStateListOf() }
     RememberAddingSoreMusclesToList(musclePainEntryMapViewModel, soreMuscles)
+
+    val preferencesState by preferencesViewModel.allPreferences.collectAsState(mapOf<String, Any>())
+    val userName: String = preferencesState[PreferencesConstants.USERNAME_KEY.name].toString()
+
     Column(
         Modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +82,7 @@ fun HomeScreenContent(
                 .padding(8.dp)
                 .size(120.dp)
         )
-        UserNameWithSettings(navigateToSettings)
+        UserNameWithSettings(userName, navigateToSettings)
         if (todaysMusclePainEntry == null) {
             EnterPainPrompt(navigateToMusclePain = navigateToMusclePain)
         }

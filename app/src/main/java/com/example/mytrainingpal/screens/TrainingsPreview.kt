@@ -75,6 +75,7 @@ fun TrainingsPreviewScreen(
             weight = defaultWeight
         )
 
+        // we assume one set takes 1 minute
         val setsNeeded = (duration.value / 2) + 1
         var setsLeftover = setsNeeded
         val selectedExercises: MutableList<Pair<Exercise, ExerciseDetails>> = mutableListOf()

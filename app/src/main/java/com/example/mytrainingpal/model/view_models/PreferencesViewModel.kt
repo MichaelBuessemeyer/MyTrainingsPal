@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.prefrences
+package com.example.mytrainingpal.model.view_models
 
 
 import android.content.Context
@@ -10,6 +10,7 @@ import com.example.mytrainingpal.prefrences.PreferencesConstants.DEFAULT_BREAK_K
 import com.example.mytrainingpal.prefrences.PreferencesConstants.NOTIFICATION_DAYS_KEY
 import com.example.mytrainingpal.prefrences.PreferencesConstants.NOTIFICATION_TIME_KEY
 import com.example.mytrainingpal.prefrences.PreferencesConstants.USERNAME_KEY
+import com.example.mytrainingpal.prefrences.PreferencesDataStoreHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch

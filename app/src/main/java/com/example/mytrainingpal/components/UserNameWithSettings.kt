@@ -12,13 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 
 @Composable
-fun UserNameWithSettings(navigateToSettings: () -> Unit) {
-    val userName = "Klaus Kiste" // TODO: get from preferences
+fun UserNameWithSettings(name: String, navigateToSettings: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = userName, style = MaterialTheme.typography.h2)
+        Text(text = name, style = MaterialTheme.typography.h2)
         IconButton(onClick = navigateToSettings) {
             Icon(
                 imageVector = Icons.Default.Settings,

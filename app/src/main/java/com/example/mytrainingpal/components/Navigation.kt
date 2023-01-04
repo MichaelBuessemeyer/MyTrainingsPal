@@ -19,7 +19,7 @@ import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
-import com.example.mytrainingpal.prefrences.PreferencesViewModel
+import com.example.mytrainingpal.model.view_models.PreferencesViewModel
 import com.example.mytrainingpal.screens.*
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
@@ -114,11 +114,17 @@ fun AppNavHost(
                                 "WorkoutEntryExerciseMapViewModel",
                                 factory
                             )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
                         HomeScreen(
                             navController,
                             musclePainEntryViewModel,
                             workoutEntryExerciseMapViewModel,
-                            musclePainEntryMapViewModel
+                            musclePainEntryMapViewModel,
+                            preferencesViewModel
                         )
                     }
                 } else {
