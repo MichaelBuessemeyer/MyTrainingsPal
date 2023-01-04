@@ -43,7 +43,6 @@ fun CurrentExercise(
     totalSets: Int,
     currentSet: Int,
     goToBreak: (Int) -> Unit,
-    //onRepUpdate: (Int) -> Unit
 ) {
     // exercises that make up an exercise screen on a list size 3: currentExerciseCounter 0,1,
     var currentExercise: Exercise = exerciseList[currentExerciseIndex].first
@@ -99,12 +98,7 @@ fun CurrentExercise(
                                 modifier = Modifier.padding(10.dp)
                             )
                             GifImage(currentExercise.pathToGif, 500)
-                            val dialogShowing = remember { mutableStateOf(false) }
-                            if (dialogShowing.value) {
-                                YoutubeDialog(dialogShowing.value, dismissClick = {
-                                    dialogShowing.value = !dialogShowing.value
-                                })
-                            }
+
                             // Taken from Thracian's answer on Github: https://stackoverflow.com/questions/65567412/jetpack-compose-text-hyperlink-some-section-of-the-text
                             val annotatedLinkString: AnnotatedString = buildAnnotatedString {
 
@@ -119,7 +113,6 @@ fun CurrentExercise(
                                         textDecoration = TextDecoration.Underline
                                     ), start = startIndex, end = endIndex
                                 )
-
                                 // attach a string annotation that stores a URL to the text "link"
                                 addStringAnnotation(
                                     tag = "URL",
@@ -127,12 +120,9 @@ fun CurrentExercise(
                                     start = startIndex,
                                     end = endIndex
                                 )
-
                             }
-
                             // comment from Github: "UriHandler parse and opens URI inside AnnotatedString Item in Browse"
                             val uriHandler = LocalUriHandler.current
-
                             // comment from Github: "Clickable text returns position of text that is clicked in onClick callback"
                             ClickableText(
                                 modifier = Modifier
@@ -220,22 +210,8 @@ fun CurrentExercise(
                             )
                         }
                     }
-
-
                     // --------------------
-                    /*
 
-                    // update workout list reps
-                    var reps by remember { mutableStateOf(exerciseList[currentExerciseIndex].second.reps.split(",")[0].toInt()) }
-                    IncreaseDecreaseNumberInput(
-                        value = 0,
-                        onValueChange = {
-                            reps = it
-                            exerciseList[currentExerciseIndex].second.reps = List<String>(exerciseList[currentExerciseIndex].second.sets) { "$reps" }.joinToString(",")
-                        }
-                    )
-                    */
-                    // --------------------
                     Text(
                         text = "Set ${currentExerciseSetCounter + 1}/${exerciseList[currentExerciseIndex].second.sets}",
                         fontSize = 15.sp

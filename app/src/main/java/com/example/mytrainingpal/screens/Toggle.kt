@@ -12,29 +12,27 @@ import kotlinx.coroutines.delay
 @Composable
 fun ToggleScreen(
     navController: NavController,
-    exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
-    //breakDurationFromSettings: Long
+    exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>
 ) {
+    // TODO: get break duration from settings and pass it to Break composable + plus adjust it with an offset
     var breakDuration: Long = 2600L
     var breakRunning: Boolean by remember { mutableStateOf(false) }
-    // TODO: get break duration from settings and pass it to Break composable
-    // how many exercise types in the list
+    // counts how many exercises out of the workout list are completed
     var currentExerciseCounter: Int by remember { mutableStateOf(0) }
-    // counter of completed set for a given exercise
+    // counts how many sets required for the current exercise are completed
     var currentExerciseSetCounter: Int by remember { mutableStateOf(0) }
-    // sum of all sets of all exercise types
+    // sum of all sets of all exercises in the list
     var totalSets: Int by remember { mutableStateOf(calculateTotalSets(exerciseList)) }
-    // counter of completed set for all exercises
+    // counts how many sets are completed of total sets
     var setCounter: Int by remember { mutableStateOf(0) }
-    // format
+    // updated list os reps for a given exercise
     var updatedReps: MutableList<String> by remember { mutableStateOf(mutableListOf<String>()) }
 
 
-    // each exercise screen should be shown a "exerciseSet" amount of times
+    // each given exercise screen should be shown a "exerciseSet" amount of times
     if (currentExerciseCounter == exerciseList.size) {
         LaunchedEffect(key1 = 0) {
             delay(0)
-            println(exerciseList)
             navController.navigate(Screen.Settings.route)
         }
     } else if (breakRunning) {
@@ -72,11 +70,7 @@ fun ToggleScreen(
                 }
                 updatedReps.add(it.toString())
                 setCounter++
-            },
-
-            //onRepUpdate = {
-            //  updatedRepsAsInt.add(it)
-            //}
+            }
         )
     }
 }

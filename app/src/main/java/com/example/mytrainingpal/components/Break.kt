@@ -34,6 +34,7 @@ fun Break(
     currentSet: Int,
     currentExerciseSetCounter: Int
 ) {
+    // TODO: get break duration from Toggle
     val totalBreakTimeInSeconds = 2
 
     Scaffold(
@@ -65,7 +66,6 @@ fun Break(
                     ) {
                         BreakTimer(
                             totalTime = totalBreakTimeInSeconds * 1000L,
-                            //handleColor = Color.Green,
                             inactiveBarColor = MaterialTheme.colors.primary,
                             activeBarColor = MaterialTheme.colors.secondary,
                             modifier = Modifier.size(180.dp)
@@ -110,7 +110,7 @@ fun Break(
                         suggestedRepsForThatExercise = exerciseList[currentExerciseIndex].second.reps.split(
                             ","
                         )[0].toInt(),
-                        setsLeft = exerciseList[currentExerciseIndex].second.sets - (currentExerciseSetCounter + 1)
+                        setsLeft = exerciseList[currentExerciseIndex].second.sets - currentExerciseSetCounter
                     )
                 }
             }
