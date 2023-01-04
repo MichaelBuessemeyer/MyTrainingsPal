@@ -69,15 +69,6 @@ enum class RouteGroups(val route: String) {
 val tabScreens =
     listOf(Screen.Home, Screen.MusclePainMain, Screen.TrainingMain, Screen.CalendarMain)
 
-/** Find the Navigator in a new Fragment/View with
-
-override fun onCreateView( /* ... */ ) {
-setContent {
-MyScreen(onNavigate = { dest -> findNavController().navigate(dest) })
-}
-}
- **/
-
 // Single source of truth for navigation. Should be instantiated only once!!!
 // navigate calls should happen only here. Expose them through passing functions to the Composable
 @Composable

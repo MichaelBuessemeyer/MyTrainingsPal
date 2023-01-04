@@ -37,6 +37,21 @@ class PreferencesDataStoreHelper(context: Context) : PreferencesDataStoreAPI {
         result
     }
 
+    override suspend fun  getPreferences():
+            Flow<Map<String, Any>> = dataSource.data.catch { exception ->
+        if (exception is IOException) {
+            emit(emptyPreferences())
+        } else {
+            throw exception
+        }
+    }.map { preferences ->
+        val result = mutableMapOf<String, Any>()
+        preferences.asMap().forEach { (key, value) ->
+            result[key.name] = value
+        }
+        result
+    }
+
     /* This returns the last saved value of the key. If we change the value,
         it wont effect the values produced by this function */
     override suspend fun <T> getFirstPreference(key: Preferences.Key<T>, defaultValue: T):

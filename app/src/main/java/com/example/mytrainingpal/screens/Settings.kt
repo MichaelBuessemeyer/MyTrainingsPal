@@ -17,10 +17,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.R
-import com.example.mytrainingpal.components.CustomNumberInput
-import com.example.mytrainingpal.components.Screen
-import com.example.mytrainingpal.components.SlimTextInput
-import com.example.mytrainingpal.components.TabScreen
+import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.prefrences.PreferencesConstants
+import com.example.mytrainingpal.prefrences.PreferencesConstants.DAYS
 import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import java.io.File
 
@@ -29,34 +28,61 @@ fun SettingsScreen(
     navController: NavController,
     preferencesViewModel: PreferencesViewModel
 ) {
-    //var nameOfUser by remember { mutableStateOf("Klaus Kiste") }
-    var ageOfUser by remember { mutableStateOf(21) }
-    var timeToTrainUser by remember { mutableStateOf(7) }
-    var defaultBreak by remember { mutableStateOf(10) }
-    // preferencesViewModel.setName("Kalus")
-    // val userName by  preferencesViewModel.userNameFlow.collectAsState(initial = "init name")
+    val preferencesState by preferencesViewModel.allPreferences.collectAsState(mapOf<String, Any>())
+    var preferences: Map<String, Any> by remember { mutableStateOf(preferencesState) }
 
-    //FIXME: remember does not work as i intended. the correct value is in the datastore :/
-    var userName by remember {
-        mutableStateOf<String>(preferencesViewModel.userName)
+    var userName: String by remember { mutableStateOf(preferencesState[PreferencesConstants.USERNAME_KEY.name].toString()) }
+    var age by remember {
+        mutableStateOf(
+            (preferencesState[PreferencesConstants.AGE_KEY.name] ?: 20) as Int
+        )
+    }
+    var notifyDays by remember {
+        mutableStateOf(
+            (preferencesState[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]
+                ?: setOf<String>()) as Set<*>
+        )
+    }
+    var notifyTime: String by remember { mutableStateOf(preferencesState[PreferencesConstants.NOTIFICATION_TIME_KEY.name].toString()) }
+    var defaultBreak by remember {
+        mutableStateOf(
+            (preferencesState[PreferencesConstants.DEFAULT_BREAK_KEY.name] ?: 30) as Int
+        )
+    }
+
+    remember(preferencesState) {
+        preferences = preferencesState
+        userName = preferences[PreferencesConstants.USERNAME_KEY.name].toString()
+        age = (preferences[PreferencesConstants.AGE_KEY.name] ?: 20) as Int
+        notifyDays = (preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]
+            ?: setOf<String>()) as Set<*>
+        notifyTime = (preferences[PreferencesConstants.NOTIFICATION_TIME_KEY.name] ?: "12:00") as String
+        defaultBreak = (preferences[PreferencesConstants.DEFAULT_BREAK_KEY.name] ?: 30) as Int
+        preferences
     }
 
     TabScreen(
         tabContent = {
-            MainSettingsScreenContent(nameOfUser = userName,
+            MainSettingsScreenContent(userName = userName,
                 updateName = {
                     //preferencesViewModel.setName(it)
                     userName = it
                 },
-                ageOfUser = ageOfUser,
-                updateAge = { inputValue: Int -> ageOfUser = inputValue },
-                timeToTrainUser = timeToTrainUser,
-                updateTimeToTrain = { inputValue: Int -> timeToTrainUser = inputValue },
+                age = age,
+                updateAge = { age = it },
+                notificationTime = notifyTime,
+                updateNotificationTime = { notifyTime = it },
                 defaultBreak = defaultBreak,
-                updateDefaultBreak = { inputValue: Int -> defaultBreak = inputValue })
+                updateDefaultBreak = { defaultBreak = it })
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { preferencesViewModel.setName(userName) }) {
+            FloatingActionButton(onClick = {
+                preferencesViewModel.setName(userName)
+                preferencesViewModel.setAge(age)
+                preferencesViewModel.setNotificationDays(notifyDays.map { it.toString() }.toSet())
+                preferencesViewModel.setNotificationTime(notifyTime)
+                preferencesViewModel.setDefaultBreak(defaultBreak)
+            }) {
                 Icon(
                     imageVector = Icons.Default.Check,
                     tint = MaterialTheme.colors.onSecondary,
@@ -73,18 +99,18 @@ fun SettingsScreen(
 
 @Composable
 fun MainSettingsScreenContent(
-    nameOfUser: String,
+    userName: String,
     updateName: (String) -> Unit,
-    ageOfUser: Int,
+    age: Int,
     updateAge: (Int) -> Unit,
-    timeToTrainUser: Int,
-    updateTimeToTrain: (Int) -> Unit,
+    notificationTime: String,
+    updateNotificationTime: (String) -> Unit,
     defaultBreak: Int,
     updateDefaultBreak: (Int) -> Unit
 ) {
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     val image = painterResource(R.drawable.klauskiste)
-    val days: List<String> = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
+    val days: List<String> = DAYS
 
     var daySelection: MutableList<Pair<String, Boolean>> =
         MutableList<Pair<String, Boolean>>(7) { index -> Pair(days[index], false) }
@@ -153,7 +179,7 @@ fun MainSettingsScreenContent(
             verticalArrangement = Arrangement.Center,
         ) {
             SlimTextInput(
-                value = nameOfUser,
+                value = userName,
                 onValueChange = updateName,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 modifier = Modifier.background(
@@ -162,7 +188,7 @@ fun MainSettingsScreenContent(
                 )
             )
             CustomNumberInput(
-                value = ageOfUser,
+                value = age,
                 onValueChange = updateAge,
                 possibleValues = (1..90).toList(),
                 backgroundColor = MaterialTheme.colors.primary
@@ -260,13 +286,14 @@ fun MainSettingsScreenContent(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            CustomNumberInput(
-                value = timeToTrainUser,
-                onValueChange = updateTimeToTrain,
+            CustomTimeInput(value = notificationTime, onValueChange = updateNotificationTime)
+            /*CustomNumberInput(
+                value = notificationTime,
+                onValueChange = updateNotificationTime,
                 possibleValues = (1..25).toList(),
                 backgroundColor = MaterialTheme.colors.primary,
                 postText = "o'Clock"
-            )
+            )*/
         }
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
