@@ -34,8 +34,7 @@ fun Break(
     currentSet: Int,
     currentExerciseSetCounter: Int
 ) {
-    var currentExercise = currentExerciseIndex;
-    var totalBreakTimeInSeconds: Int = 5
+    val totalBreakTimeInSeconds = 2
 
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,

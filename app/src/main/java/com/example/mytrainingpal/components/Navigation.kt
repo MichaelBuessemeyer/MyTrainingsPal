@@ -68,7 +68,7 @@ enum class RouteGroups(val route: String) {
 }
 
 val tabScreens =
-    listOf(Screen.Home, Screen.MusclePainMain, Screen.TrainingMain, Screen.CalendarMain, Screen.Toggle)
+    listOf(Screen.Home, Screen.MusclePainMain, Screen.TrainingMain, Screen.CalendarMain)
 
 /** Find the Navigator in a new Fragment/View with
 
