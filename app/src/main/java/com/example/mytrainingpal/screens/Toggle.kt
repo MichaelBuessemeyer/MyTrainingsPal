@@ -2,6 +2,8 @@ package com.example.mytrainingpal.screens
 
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
+import com.example.mytrainingpal.components.Break
+import com.example.mytrainingpal.components.CurrentExercise
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
@@ -15,7 +17,10 @@ fun ToggleScreen(
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     //breakDurationFromSettings: Long
 ) {
-    var breakDuration: Long = 2600L
+
+    // TODO: get break duration from settings and pass it to Break composable
+    val breakTime = 3
+    val breakDuration: Long = breakTime * 1000L
     var breakRunning: Boolean by remember { mutableStateOf(false) }
     // TODO: get break duration from settings and pass it to Break composable
     // how many exercise types in the list
@@ -23,11 +28,11 @@ fun ToggleScreen(
     // counter of completed set for a given exercise
     var currentExerciseSetCounter: Int by remember { mutableStateOf(0) }
     // sum of all sets of all exercise types
-    var totalSets: Int by remember { mutableStateOf(calculateTotalSets(exerciseList)) }
+    val totalSets: Int by remember { mutableStateOf(calculateTotalSets(exerciseList)) }
     // counter of completed set for all exercises
     var setCounter: Int by remember { mutableStateOf(0) }
     // format
-    var updatedReps: MutableList<String> by remember { mutableStateOf(mutableListOf<String>()) }
+    val updatedReps: MutableList<String> by remember { mutableStateOf(mutableListOf<String>()) }
 
 
     // each exercise screen should be shown a "exerciseSet" amount of times
@@ -39,12 +44,12 @@ fun ToggleScreen(
         }
     } else if (breakRunning) {
         Break(
-            navController,
             exerciseList = exerciseList,
             currentExerciseIndex = currentExerciseCounter,
             totalSets = totalSets,
             currentSet = setCounter,
-            currentExerciseSetCounter = currentExerciseSetCounter
+            currentExerciseSetCounter = currentExerciseSetCounter,
+            breakTime = breakTime
         )
         LaunchedEffect(key1 = breakDuration) {
             delay(breakDuration)
@@ -52,7 +57,7 @@ fun ToggleScreen(
 
         }
     } else {
-        // TODO: Standing Calf exercise complete bugs the ExerciseScreen!
+        // TODO: Standing Calf exercise completely bugs the ExerciseScreen!
         CurrentExercise(
             exerciseList = exerciseList,
             currentExerciseIndex = currentExerciseCounter,
@@ -73,10 +78,6 @@ fun ToggleScreen(
                 updatedReps.add(it.toString())
                 setCounter++
             },
-
-            //onRepUpdate = {
-            //  updatedRepsAsInt.add(it)
-            //}
         )
     }
 }

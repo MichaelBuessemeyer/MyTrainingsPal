@@ -1,11 +1,10 @@
-package com.example.mytrainingpal.screens
+package com.example.mytrainingpal.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -17,25 +16,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.mytrainingpal.components.nextExerciseUp
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
-
 import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Break(
-    navController: NavController,
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     currentExerciseIndex: Int,
     totalSets: Int,
     currentSet: Int,
-    currentExerciseSetCounter: Int
+    currentExerciseSetCounter: Int,
+    breakTime: Int
 ) {
-    val totalBreakTimeInSeconds = 2
-
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
     ) {
@@ -64,7 +58,7 @@ fun Break(
                         contentAlignment = Alignment.Center
                     ) {
                         BreakTimer(
-                            totalTime = totalBreakTimeInSeconds * 1000L,
+                            totalTime = breakTime * 1000L,
                             //handleColor = Color.Green,
                             inactiveBarColor = MaterialTheme.colors.primary,
                             activeBarColor = MaterialTheme.colors.secondary,
@@ -88,13 +82,13 @@ fun Break(
                     .weight(1F, true)
                     .fillMaxSize(),
             ) {
-                if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets && currentExerciseIndex  == exerciseList.size ) {
+                if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets && currentExerciseIndex == exerciseList.size) {
                     Text(
                         text = "You are almost done!",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
-                } else if (currentExerciseSetCounter  == exerciseList[currentExerciseIndex].second.sets) {
+                } else if (currentExerciseSetCounter == exerciseList[currentExerciseIndex].second.sets) {
                     nextExerciseUp(
                         gifPath = exerciseList[currentExerciseIndex + 1].first.pathToGif,
                         exerciseName = exerciseList[currentExerciseIndex + 1].first.name,
@@ -145,8 +139,8 @@ fun BreakTimer(
         mutableStateOf(totalTime)
     }
 
-    // this will make us have to star the timer manually
-    var isTimerRunning by remember {
+    // this will make us have to start the timer manually
+    val isTimerRunning by remember {
         mutableStateOf(true)
     }
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -164,7 +158,6 @@ fun BreakTimer(
                 size = it
             }
     ) {
-
         Canvas(modifier = modifier) {
             drawArc(
                 color = activeBarColor,
@@ -182,7 +175,6 @@ fun BreakTimer(
                 size = Size(size.width.toFloat(), size.height.toFloat()),
                 style = Stroke(strokeWidth.toPx())
             )
-
         }
         Text(
             text = (currentTime / 1000L).toString(),
