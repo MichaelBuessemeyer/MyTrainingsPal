@@ -1,10 +1,9 @@
 package com.example.mytrainingpal.util
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
-fun localDateToJavaDate(date: LocalDate): Date{
+fun localDateToJavaDate(date: LocalDate): Date {
     return GregorianCalendar(
         date.year,
         date.monthValue - 1,
@@ -22,10 +21,9 @@ fun dateToLocalDate(date: Date): LocalDate {
     )
 }
 
-fun calendarFromDate(date: Date): GregorianCalendar
-{
+fun calendarFromDate(date: Date): GregorianCalendar {
     val cal = GregorianCalendar()
-        cal.time = date
+    cal.time = date
     return cal
 }
 

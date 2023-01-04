@@ -55,6 +55,7 @@ private val muscleBounds = listOf(
     Triple(Pair(0.27, 0.38), Pair(0.753, 0.87), "Left Shin"),
     Triple(Pair(0.14, 0.25), Pair(0.87, 0.98), "Right Foot front"),
     Triple(Pair(0.25, 0.38), Pair(0.87, 0.98), "Left Foot front"),
+    // TODO: Add bounds for muscles on back side
 )
 
 // Circle taken from https://agarasul.medium.com/shapes-in-jetpack-compose-de740f5507f2
@@ -84,7 +85,8 @@ fun MusclePainWidget(
     removeSoreMuscle: (index: Int) -> Unit = {},
     editable: Boolean = false,
     showEditButton: Boolean = false,
-    soreMuscles: MutableList<Pair<Muscle, Long>>
+    soreMuscles: MutableList<Pair<Muscle, Long>>,
+    onClick: (() -> Unit)? = null,
 ) {
     val painter = rememberVectorPainter(image = getBodyMusclesWithPain(soreMuscles))
     val size = remember { mutableStateOf(IntSize.Zero) }
@@ -143,6 +145,9 @@ fun MusclePainWidget(
                     // https://stackoverflow.com/questions/70316606/jetpack-compose-get-click-position-in-custom-layout
                     Modifier.pointerInput(Unit) {
                         detectTapGestures { offset ->
+                            if (onClick != null) {
+                                onClick()
+                            }
                             if (editable) {
                                 handleMuscleTab(offset)
                             }

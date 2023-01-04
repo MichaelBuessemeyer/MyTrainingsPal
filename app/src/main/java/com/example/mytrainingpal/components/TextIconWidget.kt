@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TextIconWidget(text: String, imageVector: ImageVector) {
     WidgetCard(hasBorder = false) {
-        Row (modifier = Modifier.wrapContentWidth()){
+        Row(modifier = Modifier.wrapContentWidth()) {
             Text(text = text)
             Spacer(modifier = Modifier.width(5.dp))
             Icon(

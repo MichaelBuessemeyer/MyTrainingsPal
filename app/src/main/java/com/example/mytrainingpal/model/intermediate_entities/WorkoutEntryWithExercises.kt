@@ -5,7 +5,6 @@ import androidx.room.Relation
 import com.example.mytrainingpal.model.entities.WorkoutEntry
 import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
 import com.example.mytrainingpal.util.TrainingStats
-import java.util.concurrent.TimeUnit
 
 
 data class WorkoutEntryWithExercises(

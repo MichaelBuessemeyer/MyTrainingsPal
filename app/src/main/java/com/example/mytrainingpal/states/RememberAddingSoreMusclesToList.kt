@@ -10,7 +10,10 @@ import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWith
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 
 
-fun addSoreMusclesToList(soreMuscles: MutableList<Pair<Muscle, Long>>, todayMusclePainEntry: MusclePainEntryWithMuscles){
+fun addSoreMusclesToList(
+    soreMuscles: MutableList<Pair<Muscle, Long>>,
+    todayMusclePainEntry: MusclePainEntryWithMuscles
+) {
     soreMuscles.clear()
     for ((connection, soreMusclesList) in todayMusclePainEntry.soreMusclesConnections) {
         soreMuscles.add(Pair(soreMusclesList[0], connection.painIntensity))

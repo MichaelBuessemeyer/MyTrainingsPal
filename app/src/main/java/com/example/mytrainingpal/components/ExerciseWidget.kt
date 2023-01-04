@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mytrainingpal.model.entities.Exercise
@@ -21,10 +22,18 @@ fun ExerciseWidget(
     onSetsChanged: (Int) -> Unit
 ) {
     WidgetCard(hasBorder = false) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f)
             ) {
                 val gifWithInPxl = LocalDensity.current.run { 80.dp.toPx() }.toInt()
                 GifImage(gifPath = exercise.pathToGif, size = gifWithInPxl)
@@ -32,15 +41,23 @@ fun ExerciseWidget(
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(2f)
             ) {
-                Text(exercise.name)
-                Text("Weight: $weight")
+                Text(
+                    exercise.name,
+                    maxLines = 3,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text("Weight: $weight", textAlign = TextAlign.Center)
                 Text("TODO: Add see instructions", fontSize = 4.sp)
             }
-            Spacer(modifier = Modifier.weight(1.0F))
+            Spacer(modifier = Modifier.weight(.15f))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(.5f)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -53,7 +70,9 @@ fun ExerciseWidget(
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f)
             ) {
                 CustomNumberInput(
                     value = reps,
