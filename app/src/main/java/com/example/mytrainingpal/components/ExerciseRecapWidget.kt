@@ -19,14 +19,15 @@ fun ExerciseRecapWidget(
 ){
     WidgetCard(hasBorder = false) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
-            Column(
+
+            // This column is meant to contain the image at some point
+            /*Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(5.dp)
             ) {
-//                val gifWithInPxl = LocalDensity.current.run { 80.dp.toPx() }.toInt()
-//                GifImage(gifPath = exercise.pathToGif, size = gifWithInPxl)
-                Text(text = "Image!")
-            }
+                val gifWithInPxl = LocalDensity.current.run { 80.dp.toPx() }.toInt()
+                GifImage(gifPath = exercise.pathToGif, size = gifWithInPxl)
+            }*/
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,11 +43,11 @@ fun ExerciseRecapWidget(
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.height(48.dp)
-                ) { Text("Reps", textAlign = TextAlign.Center) }
+                ) { Text("Reps:", textAlign = TextAlign.Center) }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.height(48.dp)
-                ) { Text("Sets", textAlign = TextAlign.Center) }
+                ) { Text("Sets:", textAlign = TextAlign.Center) }
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
