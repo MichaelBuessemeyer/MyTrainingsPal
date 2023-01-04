@@ -66,7 +66,6 @@ enum class RouteGroups(val route: String) {
     TRAINING("training"),
     CALENDAR("calendar"),
     SETTINGS("settings"),
-    TOGGLE("toggle")
 }
 
 val tabScreens =
