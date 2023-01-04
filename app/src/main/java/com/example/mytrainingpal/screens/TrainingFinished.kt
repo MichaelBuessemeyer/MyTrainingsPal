@@ -61,18 +61,21 @@ fun TrainingFinishedContent(
         //TODO replace with TrainingRecapCard
         var totalSets: Int = 0
         var totalWeightLifted: Int = 0
-        var totalWorkoutTime: Int = 0
         var totalReps: Int = 0
         doneExercises.forEach() { (exercise, details) ->
             totalSets += details.sets
             totalWeightLifted += details.weight
-//            totalWorkoutTime += ???
-            // Array splitting: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin (visited 04.01.23)
-            val repsArray: List<String> = details.reps.split(",").map { it -> it.trim() }
-            repsArray.forEach { it ->
+            // Array splitting method: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin (visited 04.01.23)
+            val repsArray: Array<String> = details.reps.split(",").toTypedArray()
+            repsArray.forEach {
                 totalReps += it.toInt()
             }
         }
+
+        // TODO correct time!
+        val totalWorkoutTime: Int = (totalReps / 3)
+
+
         WidgetCard(hasBorder = false) {
             Column (
                 modifier = Modifier.padding(8.dp)
@@ -134,28 +137,19 @@ fun TrainingFinishedContent(
             Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take progress picture")
             Text("Take a progress picture")
         }
-        /*doneExercises.forEach() { (exercise, details) ->
-            ExerciseWidget(
+        doneExercises.forEach() { (exercise, details) ->
+            ExerciseRecapWidget(
                 exercise = exercise,
                 weight = details.weight,
-                reps = reps,
-                sets = sets,
-                onRepsChanged = {
-                    reps = it
-                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
-                },
-                onSetsChanged = {
-                    sets = it
-                    details.sets = it
-                    details.reps = List<String>(sets) { "$reps" }.joinToString(",")
-                }
+                reps = details.reps,
+                sets = details.sets
             )
-        }*/
-        doneExercises.forEach() { (exercise, details) ->
+        }
+/*        doneExercises.forEach() { (exercise, details) ->
             Text("exersise: ${exercise.name}")
             Text("weight: ${details.weight}")
             Text("reps: ${details.reps}")
             Text("sets: ${details.sets}")
-        }
+        }*/
     }
 }
