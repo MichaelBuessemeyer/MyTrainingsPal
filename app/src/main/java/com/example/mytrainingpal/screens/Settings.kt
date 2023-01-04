@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 import com.example.mytrainingpal.R
 import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.model.view_models.PreferencesViewModel
-import com.example.mytrainingpal.prefrences.PreferencesConstants
+import com.example.mytrainingpal.preferences.PreferencesConstants
 import java.io.File
 
 @Composable

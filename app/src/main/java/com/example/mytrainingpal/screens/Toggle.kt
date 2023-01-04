@@ -7,7 +7,7 @@ import com.example.mytrainingpal.components.CurrentExercise
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.PreferencesViewModel
-import com.example.mytrainingpal.prefrences.PreferencesConstants
+import com.example.mytrainingpal.preferences.PreferencesConstants
 import com.example.mytrainingpal.util.ExerciseDetails
 import kotlinx.coroutines.delay
 

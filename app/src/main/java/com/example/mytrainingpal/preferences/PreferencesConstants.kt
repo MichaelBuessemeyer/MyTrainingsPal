@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.prefrences
+package com.example.mytrainingpal.preferences
 
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey

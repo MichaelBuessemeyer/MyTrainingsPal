@@ -20,7 +20,7 @@ import com.example.mytrainingpal.model.view_models.ExerciseMuscleMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
 import com.example.mytrainingpal.model.view_models.PreferencesViewModel
-import com.example.mytrainingpal.prefrences.PreferencesConstants
+import com.example.mytrainingpal.preferences.PreferencesConstants
 import com.example.mytrainingpal.states.RememberAddingSoreMusclesToList
 import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
