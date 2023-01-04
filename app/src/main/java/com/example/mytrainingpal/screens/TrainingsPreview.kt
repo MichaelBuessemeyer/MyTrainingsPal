@@ -19,6 +19,8 @@ import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.view_models.ExerciseMuscleMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel
+import com.example.mytrainingpal.model.view_models.PreferencesViewModel
+import com.example.mytrainingpal.prefrences.PreferencesConstants
 import com.example.mytrainingpal.states.RememberAddingSoreMusclesToList
 import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
@@ -34,6 +36,7 @@ fun TrainingsPreviewScreen(
     musclePainEntryViewModel: MusclePainEntryViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
     exerciseMuscleMapViewModel: ExerciseMuscleMapViewModel,
+    preferencesViewModel: PreferencesViewModel
 ) {
     // get the current muscle pains
     val todaysMusclePainEntry = RememberTodaysMusclePainEntryState(musclePainEntryViewModel)
@@ -45,6 +48,9 @@ fun TrainingsPreviewScreen(
     RememberAddingSoreMusclesToList(musclePainEntryMapViewModel, soreMuscles)
 
     val allExercises by exerciseMuscleMapViewModel.allExercisesWithMuscles.observeAsState(listOf())
+    val preferencesState by preferencesViewModel.allPreferences.collectAsState(mapOf<String, Any>())
+    val breakTime: Int =
+        (preferencesState[PreferencesConstants.DEFAULT_BREAK_KEY.name] ?: 30) as Int
 
     remember(todaysMusclePainEntry, allExercises) {
         val slightlySoreMuscles: Set<Muscle> =
@@ -66,17 +72,19 @@ fun TrainingsPreviewScreen(
                         && exerciseMuscles.intersect(verySoreMuscles).isEmpty()
             }.map { (exercise) -> exercise }
 
+        // we assume one set takes 1 minute
+        val setDuration = 60 // TODO: do this properly and not with one default for all sets
         val defaultReps = 10
         val defaultSets = 3
         val defaultWeight = 20
         val defaultDetails = ExerciseDetails(
             sets = defaultSets,
-            reps = List<String>(defaultSets) { "$defaultReps" }.joinToString(",") ,
+            reps = List<String>(defaultSets) { "$defaultReps" }.joinToString(","),
             weight = defaultWeight
         )
 
-        // we assume one set takes 1 minute
-        val setsNeeded = (duration.value / 2) + 1
+        val durationSeconds = duration.value * 60
+        val setsNeeded = (durationSeconds + breakTime) / (setDuration + breakTime)
         var setsLeftover = setsNeeded
         val selectedExercises: MutableList<Pair<Exercise, ExerciseDetails>> = mutableListOf()
         if (unsoreExercises.isNotEmpty() || slightlySoreExercises.isNotEmpty()) {

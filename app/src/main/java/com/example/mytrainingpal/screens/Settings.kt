@@ -207,7 +207,7 @@ fun MainSettingsScreenContent(
             CustomNumberInput(
                 value = defaultBreak,
                 onValueChange = updateDefaultBreak,
-                possibleValues = (15..90).toList(),
+                possibleValues = (5..90).toList(),
                 backgroundColor = MaterialTheme.colors.primary,
                 postText = "Seconds"
             )

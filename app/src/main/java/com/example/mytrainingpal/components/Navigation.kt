@@ -19,7 +19,6 @@ import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
-import com.example.mytrainingpal.model.view_models.PreferencesViewModel
 import com.example.mytrainingpal.screens.*
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
@@ -56,6 +55,7 @@ sealed class Screen(
 
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+
     object Toggle :
         Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
 
@@ -258,6 +258,11 @@ fun AppNavHost(
                             "ExerciseMuscleMapViewModel",
                             factory
                         )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
                         TrainingsPreviewScreen(
                             navController,
                             duration,
@@ -265,13 +270,36 @@ fun AppNavHost(
                             musclePainEntryViewModel,
                             musclePainEntryMapViewModel,
                             exerciseMuscleMapViewModel,
+                            preferencesViewModel
                         )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
             }
-            composable(Screen.Toggle.route) { ToggleScreen(navController, exercises) }
+            composable(Screen.Toggle.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
+                        ToggleScreen(
+                            navController,
+                            exercises,
+                            preferencesViewModel,
+                        )
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+            }
             // TODO: Add further Trainings Screens
         }
     }
