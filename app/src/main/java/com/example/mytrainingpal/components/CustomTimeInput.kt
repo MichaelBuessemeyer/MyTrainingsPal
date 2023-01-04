@@ -30,7 +30,7 @@ fun CustomTimeInput(
     postText: String? = null,
     backgroundColor: Color = MaterialTheme.colors.background
 ) {
-    // https://medium.com/@daniel.atitienei/date-and-time-pickers-in-jetpack-compose-f641b1d72dd5
+    // usage learned from https://medium.com/@daniel.atitienei/date-and-time-pickers-in-jetpack-compose-f641b1d72dd5
     val selectedTimeText: MutableState<String> = remember { mutableStateOf(value) }
     // Fetching current hour, and minute
     // TODO: error handling for invalid input format (not hh:mm)
