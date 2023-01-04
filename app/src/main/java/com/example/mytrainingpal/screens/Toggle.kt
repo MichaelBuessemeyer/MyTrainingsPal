@@ -2,6 +2,7 @@ package com.example.mytrainingpal.screens
 
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
+import com.example.mytrainingpal.components.CurrentExercise
 import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
