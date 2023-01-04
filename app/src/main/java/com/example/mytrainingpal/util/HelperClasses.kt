@@ -4,7 +4,7 @@ import com.example.mytrainingpal.model.entities.WorkoutEntry
 import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
 import java.util.*
 
-class ExerciseDetails(var sets: Int, var reps: Int, var weight: Int)
+class ExerciseDetails(var sets: Int, var reps: String, var weight: Int)
 
 data class TrainingStats(
     val durationInMinutes: Int,
