@@ -56,7 +56,7 @@ sealed class Screen(
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
     object Toggle :
-        Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TOGGLE.route)
+        Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
 
 }
 
@@ -66,7 +66,6 @@ enum class RouteGroups(val route: String) {
     TRAINING("training"),
     CALENDAR("calendar"),
     SETTINGS("settings"),
-    TOGGLE("toggle")
 }
 
 val tabScreens =

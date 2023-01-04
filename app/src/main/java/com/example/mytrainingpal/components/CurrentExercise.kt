@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.screens
+package com.example.mytrainingpal.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -45,24 +45,20 @@ fun CurrentExercise(
     goToBreak: (Int) -> Unit,
 ) {
     // exercises that make up an exercise screen on a list size 3: currentExerciseCounter 0,1,
-    var currentExercise: Exercise = exerciseList[currentExerciseIndex].first
+    val currentExercise: Exercise = exerciseList[currentExerciseIndex].first
     var myReps by remember { mutableStateOf(exerciseList[currentExerciseIndex].second.reps.split(",")[0].toInt()) }
 
-    Scaffold(
-        backgroundColor = MaterialTheme.colors.background,
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                goToBreak(myReps)
-            })
-            {
-                Icon(
-                    imageVector = Icons.Default.FastForward,
-                    tint = MaterialTheme.colors.onSecondary,
-                    contentDescription = "Start Training"
-                )
-            }
+    Scaffold(backgroundColor = MaterialTheme.colors.background, floatingActionButton = {
+        FloatingActionButton(onClick = {
+            goToBreak(myReps)
+        }) {
+            Icon(
+                imageVector = Icons.Default.FastForward,
+                tint = MaterialTheme.colors.onSecondary,
+                contentDescription = "Start Training"
+            )
         }
-    ) {
+    }) {
 
         Column(
             modifier = Modifier
@@ -78,8 +74,7 @@ fun CurrentExercise(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier
-                        .fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
                         text = "Exercise ${currentExerciseIndex + 1}/${exerciseList.size}",
@@ -124,34 +119,26 @@ fun CurrentExercise(
                             // comment from Github: "UriHandler parse and opens URI inside AnnotatedString Item in Browse"
                             val uriHandler = LocalUriHandler.current
                             // comment from Github: "Clickable text returns position of text that is clicked in onClick callback"
-                            ClickableText(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth(),
+                            ClickableText(modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
                                 text = annotatedLinkString,
                                 style = TextStyle(
                                     textAlign = TextAlign.Center
                                 ),
                                 onClick = {
-                                    annotatedLinkString
-                                        .getStringAnnotations("URL", it, it)
+                                    annotatedLinkString.getStringAnnotations("URL", it, it)
                                         .firstOrNull()?.let { stringAnnotation ->
                                             uriHandler.openUri(stringAnnotation.item)
                                         }
-                                }
-                            )
+                                })
 
                         }
                     }
 
-
-                    // CLEAN ATTEMPT --------------------
-                    // number of reps that should done in one of the n sets of a particular exercise type
-                    //var myReps by remember { mutableStateOf(exerciseList[currentExerciseIndex].second.reps[currentExerciseSet]).toString()}
-                    //var myRepsInt by remember { mutableStateOf(0) }
                     val interactionSource = remember { MutableInteractionSource() }
 
-                    Row() {
+                    Row {
                         IconButton(onClick = {
                             myReps--
                         }) {
@@ -220,8 +207,7 @@ fun CurrentExercise(
                         progress = currentSet / totalSets.toFloat(),
                         backgroundColor = MaterialTheme.colors.primary,
                         color = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
