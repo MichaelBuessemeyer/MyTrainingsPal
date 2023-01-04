@@ -2,8 +2,6 @@ package com.example.mytrainingpal.util
 
 import com.example.mytrainingpal.model.entities.WorkoutEntry
 import com.example.mytrainingpal.model.intermediate_entities.MusclePainEntryWithMuscles
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class ExerciseDetails(var sets: Int, var reps: String, var weight: Int)
@@ -23,4 +21,4 @@ data class CalendarEntry(
 // used to pass ints by reference
 class IntHolder(var value: Int)
 
-class TimeHolder(var time: Date)
+class TimeHolder(var value: Date)

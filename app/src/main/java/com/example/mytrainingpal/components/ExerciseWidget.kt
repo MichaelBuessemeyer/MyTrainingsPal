@@ -36,7 +36,6 @@ fun   ExerciseWidget(
             ) {
                 Text(exercise.name)
                 Text("Weight: $weight")
-                Text("TODO: Add see instructions", fontSize = 4.sp)
             }
             Spacer(modifier = Modifier.weight(1.0F))
             Column(

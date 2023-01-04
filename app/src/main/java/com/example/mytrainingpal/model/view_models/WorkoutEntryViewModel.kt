@@ -23,8 +23,8 @@ class WorkoutEntryViewModel(context: Context) : ViewModel() {
         searchResults = repository.searchResults
     }
 
-    fun insertWorkoutEntry(workoutEntry: WorkoutEntry) {
-        repository.insertWorkoutEntry(workoutEntry)
+    fun insertWorkoutEntry(workoutEntry: WorkoutEntry): Long {
+        return repository.insertWorkoutEntry(workoutEntry)
     }
 
     fun findWorkoutEntryById(id: Long) {

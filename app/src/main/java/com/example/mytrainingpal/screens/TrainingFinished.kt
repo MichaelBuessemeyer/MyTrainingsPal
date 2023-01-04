@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.model.entities.WorkoutEntry
+import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap
 import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
 import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
 import com.example.mytrainingpal.util.ExerciseDetails
@@ -57,7 +59,7 @@ fun TrainingFinishedScreen(
 
                 // calculating how long the workout lasted with start and end time
                 // Calculating: https://stackoverflow.com/questions/1555262/calculating-the-difference-between-two-java-date-instances (04.01.23)
-                val totalWorkoutTime: Int = ((endTime.time.time - startTime.time.time)/6000).toInt()
+                val totalWorkoutTime: Int = ((endTime.value.time - startTime.value.time)/6000).toInt()
 
 
                 WidgetCard(hasBorder = false) {
@@ -138,6 +140,13 @@ fun TrainingFinishedScreen(
         navController = navController,
         floatingActionButton = {
             FloatingActionButton(onClick = {
+                saveWorkoutToDatabase(
+                    workoutEntryViewModel,
+                    startTime,
+                    endTime,
+                    doneExercises,
+                    workoutEntryExerciseMapViewModel
+                )
                 navController.navigate((Screen.Home.route))
             }) {
                 Icon(
@@ -148,4 +157,32 @@ fun TrainingFinishedScreen(
             }
         }
     )
+}
+
+fun saveWorkoutToDatabase(
+    workoutEntryViewModel: WorkoutEntryViewModel,
+    startTime: TimeHolder,
+    endTime: TimeHolder,
+    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>,
+    workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel
+){
+    val workoutEntryId: Long = workoutEntryViewModel.insertWorkoutEntry(
+        WorkoutEntry(
+            date = startTime.value,
+            startTime = startTime.value,
+            endTime = endTime.value
+        )
+    )
+
+    doneExercises.forEach() { (exercise, details) ->
+        workoutEntryExerciseMapViewModel.insertWorkoutEntryExerciseMap(
+            WorkoutEntryExerciseMap(
+                workoutIdMap = workoutEntryId,
+                exerciseIdMap = exercise.exerciseId ?:1L,
+                sets = details.sets.toLong(),
+                reps = details.reps,
+                weight = details.weight.toLong()
+            )
+        )
+    }
 }
