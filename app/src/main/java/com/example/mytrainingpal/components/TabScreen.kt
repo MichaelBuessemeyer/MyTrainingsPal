@@ -16,6 +16,7 @@ fun TabScreen(
     topBarTitle: String?,
     topBarIcon: ImageVector?,
     navController: NavController,
+    withNavBar: Boolean = true,
     floatingActionButton: @Composable () -> Unit = {
         StartExerciseFloatingButton {
             navController.navigate(
@@ -57,6 +58,10 @@ fun TabScreen(
             }
         },
         floatingActionButton = floatingActionButton,
-        bottomBar = { BottomNavBar(navController) }
+        bottomBar = {
+            if (withNavBar) {
+                BottomNavBar(navController)
+            }
+        }
     )
 }

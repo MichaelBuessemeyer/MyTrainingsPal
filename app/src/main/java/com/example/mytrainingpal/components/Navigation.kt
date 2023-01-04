@@ -16,6 +16,7 @@ import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
+import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import com.example.mytrainingpal.screens.*
 import com.example.mytrainingpal.util.TimeHolder
 import com.example.mytrainingpal.util.ExerciseDetails
@@ -57,6 +58,9 @@ sealed class Screen(
 
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+    object Toggle :
+        Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
+
 }
 
 enum class RouteGroups(val route: String) {
@@ -64,20 +68,11 @@ enum class RouteGroups(val route: String) {
     MUSCLE_PAIN("musclePain"),
     TRAINING("training"),
     CALENDAR("calendar"),
-    SETTINGS("settings")
+    SETTINGS("settings"),
 }
 
 val tabScreens =
     listOf(Screen.Home, Screen.MusclePainMain, Screen.TrainingMain, Screen.CalendarMain)
-
-/** Find the Navigator in a new Fragment/View with
-
-override fun onCreateView( /* ... */ ) {
-setContent {
-MyScreen(onNavigate = { dest -> findNavController().navigate(dest) })
-}
-}
- **/
 
 // Single source of truth for navigation. Should be instantiated only once!!!
 // navigate calls should happen only here. Expose them through passing functions to the Composable
@@ -137,7 +132,28 @@ fun AppNavHost(
             route = RouteGroups.SETTINGS.route,
             startDestination = Screen.Settings.route
         ) {
-            composable(Screen.Settings.route) { SettingsScreen(navController) }
+            composable(Screen.Settings.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
+                        SettingsScreen(
+                            navController,
+                            preferencesViewModel,
+                        )
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+            }
         }
         // Use those to maintain several back stacks for navigation
         navigation(
@@ -287,6 +303,7 @@ fun AppNavHost(
                     Text("Still Loading View Model")
                 }
             }
+            composable(Screen.Toggle.route) { ToggleScreen(navController, exercises) }
             // TODO: Add further Trainings Screens
         }
     }

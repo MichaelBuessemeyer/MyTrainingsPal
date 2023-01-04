@@ -1,8 +1,8 @@
-
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android") version "2.44" apply false
 }
 
 android {
@@ -97,5 +97,9 @@ dependencies {
     // coil gif library dependencies
     implementation "io.coil-kt:coil-compose:2.2.2"
     implementation "io.coil-kt:coil-gif:2.2.2"
-
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+}
+kapt {
+    correctErrorTypes = true
 }
