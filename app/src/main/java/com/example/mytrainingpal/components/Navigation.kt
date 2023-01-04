@@ -17,8 +17,12 @@ import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
 import com.example.mytrainingpal.screens.*
+import com.example.mytrainingpal.util.TimeHolder
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
 
@@ -212,6 +216,8 @@ fun AppNavHost(
             // list of exercises for current workout. gets updated by reference
             val exercises = mutableListOf<Pair<Exercise, ExerciseDetails>>()
             val duration = IntHolder(0)
+            val startTime = TimeHolder(LocalDateTime.now())
+            val endTime = TimeHolder(LocalDateTime.now())
             composable(Screen.TrainingMain.route) { TrainingScreen(navController, duration) }
             composable(Screen.TrainingsPreview.route) {
                 val owner = LocalViewModelStoreOwner.current
@@ -243,18 +249,38 @@ fun AppNavHost(
                             musclePainEntryViewModel,
                             musclePainEntryMapViewModel,
                             exerciseMuscleMapViewModel,
+                            startTime = startTime
                         )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
             }
-            // TODO add if for owner!
+
             composable(Screen.TrainingFinished.route) {
-                TrainingFinishedScreen(
-                    navController,
-                    exercises
-                )
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                            it,
+                            "MusclePainEntryViewModel",
+                            factory
+                        )
+
+                        TrainingFinishedScreen(
+                            navController,
+                            exercises,
+                            startTime,
+                            endTime = TimeHolder(LocalDateTime.now())
+                        )
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
             }
             // TODO: Add further Trainings Screens
         }

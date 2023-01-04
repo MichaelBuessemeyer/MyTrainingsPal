@@ -14,16 +14,20 @@ import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
+import com.example.mytrainingpal.util.TimeHolder
+import java.time.LocalTime
 
 @Composable
 fun TrainingFinishedScreen(
     navController: NavController,
     //immutable List?
-    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>
+    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>,
+    startTime: TimeHolder,
+    endTime: TimeHolder
 ) {
     TabScreen(
         tabContent = {
-            TrainingFinishedContent(doneExercises)
+            TrainingFinishedContent(doneExercises, startTime, endTime)
         },
         topBarTitle = Screen.TrainingFinished.label,
         topBarIcon = Screen.TrainingFinished.icon,
@@ -44,14 +48,16 @@ fun TrainingFinishedScreen(
 
 @Composable
 fun TrainingFinishedContent(
-    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>
+    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>,
+    startTime: TimeHolder,
+    endTime: TimeHolder
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WidgetCard(hasBorder = false) {
             Text(
-                text = "Congrats Klaus!", //TODO get from preferences
+                text = "Congrats Klaus!", //TODO get from preferences (look settings.kt)
                 style = MaterialTheme.typography.h1,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -104,6 +110,8 @@ fun TrainingFinishedContent(
                             stat = totalReps,
                             imageVector = Icons.Default.CalendarToday
                         )
+                        Text(text = startTime.time.toString())
+                        Text(text = endTime.time.toString())
                     }
                 }
             }
@@ -145,11 +153,5 @@ fun TrainingFinishedContent(
                 sets = details.sets
             )
         }
-/*        doneExercises.forEach() { (exercise, details) ->
-            Text("exersise: ${exercise.name}")
-            Text("weight: ${details.weight}")
-            Text("reps: ${details.reps}")
-            Text("sets: ${details.sets}")
-        }*/
     }
 }

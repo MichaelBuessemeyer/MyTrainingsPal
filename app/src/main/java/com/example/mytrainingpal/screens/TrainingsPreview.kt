@@ -24,6 +24,7 @@ import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
+import com.example.mytrainingpal.util.TimeHolder
 
 
 @Composable
@@ -34,6 +35,7 @@ fun TrainingsPreviewScreen(
     musclePainEntryViewModel: MusclePainEntryViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
     exerciseMuscleMapViewModel: ExerciseMuscleMapViewModel,
+    startTime: TimeHolder
 ) {
     // get the current muscle pains
     val todaysMusclePainEntry = RememberTodaysMusclePainEntryState(musclePainEntryViewModel)
