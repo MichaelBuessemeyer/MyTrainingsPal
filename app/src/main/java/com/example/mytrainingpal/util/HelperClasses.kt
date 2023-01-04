@@ -14,8 +14,8 @@ data class TrainingStats(
 
 data class CalendarEntry(
     val date: Date,
-    val musclePainEntry: MusclePainEntryWithMuscles?=null,
-    val workout: WorkoutEntry?=null,
+    val musclePainEntry: MusclePainEntryWithMuscles? = null,
+    val workout: WorkoutEntry? = null,
 )
 
 // used to pass ints by reference

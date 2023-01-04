@@ -18,7 +18,7 @@ data class WorkoutEntry(
     val endTime: Date,
     val comment: String = "This is a standard comment.",
     val picturePath: String? = null,
-){
+) {
     val duration: Int
         get() = TimeUnit.MILLISECONDS.toMinutes(endTime.time - startTime.time).toInt()
 }

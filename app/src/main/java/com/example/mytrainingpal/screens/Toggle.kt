@@ -7,13 +7,16 @@ import com.example.mytrainingpal.components.Screen
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
 import kotlinx.coroutines.delay
+import com.example.mytrainingpal.util.TimeHolder
+import java.util.*
 
 // Inspired by: https://stackoverflow.com/questions/69230364/how-can-i-make-my-composable-recompose-with-a-for-loop-update
 
 @Composable
 fun ToggleScreen(
     navController: NavController,
-    exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>
+    exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
+    endTime: TimeHolder
 ) {
     // TODO: get break duration from settings and pass it to Break composable + plus adjust it with an offset
     var breakDuration: Long = 2600L
@@ -34,7 +37,8 @@ fun ToggleScreen(
     if (currentExerciseCounter == exerciseList.size) {
         LaunchedEffect(key1 = 0) {
             delay(0)
-            navController.navigate(Screen.Settings.route)
+            endTime.value = Date()
+            navController.navigate(Screen.TrainingFinished.route)
         }
     } else if (breakRunning) {
         Break(
