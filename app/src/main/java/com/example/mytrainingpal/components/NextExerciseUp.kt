@@ -15,7 +15,7 @@ fun nextExerciseUp(
 ) {
 
     Column {
-        Text(text = "Next Up:")
+        Text(text = "Up next:")
         // gifs saved under R.drawable.<gifName> (added through the GUI Resource Manager)
         GifImage(gifPath, 100)
     }

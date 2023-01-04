@@ -368,6 +368,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             seatedCalfRaiseId,
                                             arrayOf(leftCalfId, rightCalfId)
                                         )
+                                        // TODO: try to delete this entry and not cause the app to crash somehow
+                                        /*
                                         val standingCalfRaisesId = exerciseDao.insert(
                                             Exercise(
                                                 null,
@@ -379,6 +381,8 @@ abstract class TheMuscleBase : RoomDatabase() {
                                             standingCalfRaisesId,
                                             arrayOf(leftCalfId, rightCalfId)
                                         )
+                                        */
+
 
                                         val workout1Id = workoutEntryDao.insert(
                                             WorkoutEntry(
