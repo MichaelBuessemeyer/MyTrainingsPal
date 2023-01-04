@@ -12,6 +12,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+// Tests inspired by https://developer.android.com/codelabs/jetpack-compose-navigation#9
+
 class NavigationTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -26,7 +28,6 @@ class NavigationTest {
         }
     }
 
-    // Unit test
     @Test
     fun appNavHost_verifyStartDestination() {
         composeTestRule.runOnIdle {
@@ -41,7 +42,6 @@ class NavigationTest {
 
     @Test
     fun bottomNavBar_verifyStartTabOnlyHomeSelected() {
-        composeTestRule.onRoot().printToLog("onRoot")
         composeTestRule.onNodeWithText("Calendar").assertIsNotSelected()
         composeTestRule.onNodeWithText("Muscle Pain").assertIsNotSelected()
         composeTestRule.onNodeWithText("Training").assertIsNotSelected()
