@@ -56,6 +56,9 @@ sealed class Screen(
 
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+    object Toggle :
+        Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
+
 }
 
 enum class RouteGroups(val route: String) {
@@ -63,7 +66,7 @@ enum class RouteGroups(val route: String) {
     MUSCLE_PAIN("musclePain"),
     TRAINING("training"),
     CALENDAR("calendar"),
-    SETTINGS("settings")
+    SETTINGS("settings"),
 }
 
 val tabScreens =
@@ -262,6 +265,7 @@ fun AppNavHost(
                     Text("Still Loading View Model")
                 }
             }
+            composable(Screen.Toggle.route) { ToggleScreen(navController, exercises) }
             // TODO: Add further Trainings Screens
         }
     }

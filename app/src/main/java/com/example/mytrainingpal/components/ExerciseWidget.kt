@@ -20,7 +20,6 @@ fun ExerciseWidget(
     onRepsChanged: (Int) -> Unit,
     onSetsChanged: (Int) -> Unit
 ) {
-
     WidgetCard(hasBorder = false) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
             Column(
