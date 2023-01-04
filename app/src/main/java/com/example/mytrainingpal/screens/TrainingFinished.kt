@@ -59,6 +59,20 @@ fun TrainingFinishedContent(
             )
         }
         //TODO replace with TrainingRecapCard
+        var totalSets: Int = 0
+        var totalWeightLifted: Int = 0
+        var totalWorkoutTime: Int = 0
+        var totalReps: Int = 0
+        doneExercises.forEach() { (exercise, details) ->
+            totalSets += details.sets
+            totalWeightLifted += details.weight
+//            totalWorkoutTime += ???
+            // Array splitting: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin (visited 04.01.23)
+            val repsArray: List<String> = details.reps.split(",").map { it -> it.trim() }
+            repsArray.forEach { it ->
+                totalReps += it.toInt()
+            }
+        }
         WidgetCard(hasBorder = false) {
             Column (
                 modifier = Modifier.padding(8.dp)
@@ -69,23 +83,23 @@ fun TrainingFinishedContent(
                     Column(horizontalAlignment = Alignment.Start) {
                         StatRow(
                             title = "total sets",
-                            stat = 20,
+                            stat = totalSets,
                             imageVector = Icons.Default.CalendarToday
                         )
                         StatRow(
                             title = "kg lifted",
-                            stat = 20,
+                            stat = totalWeightLifted,
                             imageVector = Icons.Default.FitnessCenter
                         )
                         StatRow(
                             title = "minutes",
-                            stat = 20,
+                            stat = totalWorkoutTime,
                             imageVector = Icons.Default.AccessTime
                         )
                         StatRow(
                             title = "total reps",
-                            stat = 20,
-                            imageVector = Icons.Default.FitnessCenter
+                            stat = totalReps,
+                            imageVector = Icons.Default.CalendarToday
                         )
                     }
                 }
