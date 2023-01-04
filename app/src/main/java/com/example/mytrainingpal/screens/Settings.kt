@@ -70,7 +70,6 @@ fun SettingsScreen(
         tabContent = {
             MainSettingsScreenContent(userName = userName,
                 updateName = {
-                    //preferencesViewModel.setName(it)
                     userName = it
                 },
                 age = age,
