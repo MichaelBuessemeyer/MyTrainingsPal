@@ -2,7 +2,6 @@ package com.example.mytrainingpal.model.intermediate_entities
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.example.mytrainingpal.model.MusclePainEntryMap
 import com.example.mytrainingpal.model.entities.ExerciseMuscleMap
 import com.example.mytrainingpal.model.entities.Muscle
 

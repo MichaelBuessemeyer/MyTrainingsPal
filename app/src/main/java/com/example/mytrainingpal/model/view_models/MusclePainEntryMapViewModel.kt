@@ -13,6 +13,7 @@ import com.example.mytrainingpal.model.repositories.MusclePainEntryMapRepository
 class MusclePainEntryMapViewModel(context: Context) : ViewModel() {
 
     val allMusclePainEntryMaps: LiveData<List<MusclePainEntryMap>>
+    val allMusclePainEntriesWithMuscles: LiveData<List<MusclePainEntryWithMuscles>>
     private val repository: MusclePainEntryMapRepository
     val searchResults: MutableLiveData<List<MusclePainEntryMap>>
     val searchResult: MutableLiveData<MusclePainEntryWithMuscles>
@@ -22,6 +23,7 @@ class MusclePainEntryMapViewModel(context: Context) : ViewModel() {
         val musclePainEntryMapDao = muscleDatabase.getMusclePainEntryMapDao()
         repository = MusclePainEntryMapRepository(musclePainEntryMapDao)
         allMusclePainEntryMaps = repository.allMusclePainEntryMaps
+        allMusclePainEntriesWithMuscles = repository.allMusclePainEntriesWithMuscles
         searchResults = repository.searchResults
         searchResult = repository.searchResult
     }
