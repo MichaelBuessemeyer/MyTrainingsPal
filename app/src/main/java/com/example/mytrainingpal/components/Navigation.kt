@@ -304,7 +304,6 @@ fun AppNavHost(
                 }
             }
             composable(Screen.Toggle.route) { ToggleScreen(navController, exercises) }
-            // TODO: Add further Trainings Screens
         }
     }
 }

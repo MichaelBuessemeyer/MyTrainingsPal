@@ -52,11 +52,11 @@ fun TrainingFinishedScreen(
                 var totalReps: Int = 0
                 doneExercises.forEach() { (exercise, details) ->
                     totalSets += details.sets
-                    totalWeightLifted += details.weight
                     // Array splitting method: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin (visited 04.01.23)
                     val repsArray: Array<String> = details.reps.split(",").toTypedArray()
                     repsArray.forEach {
                         totalReps += it.toInt()
+                        totalWeightLifted += details.weight * it.toInt()
                     }
                 }
 
