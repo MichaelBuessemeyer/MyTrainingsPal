@@ -76,5 +76,17 @@ class PreferencesDataStoreHelper(context: Context) : PreferencesDataStoreAPI {
         dataSource.edit { preferences ->
             preferences.clear()
         }
+        // set to default values
+        dataSource.edit { preferences ->
+            preferences[PreferencesConstants.USERNAME_KEY] = "Your Name"
+            preferences[PreferencesConstants.AGE_KEY] = 20
+            preferences[PreferencesConstants.DEFAULT_BREAK_KEY] = 30
+            preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY] = setOf(
+                PreferencesConstants.DAYS[0],
+                PreferencesConstants.DAYS[2],
+                PreferencesConstants.DAYS[4]
+            )
+            preferences[PreferencesConstants.NOTIFICATION_TIME_KEY] = "12:00"
+        }
     }
 }

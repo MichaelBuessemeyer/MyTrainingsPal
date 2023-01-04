@@ -21,7 +21,7 @@ class PreferencesViewModel(context: Context) : ViewModel() {
     private val preferencesDataStoreHelper: PreferencesDataStoreHelper
     var allPreferences: Flow<Map<String, Any>> = flowOf(
         mapOf(
-            USERNAME_KEY.name to "default",
+            USERNAME_KEY.name to "USER NAME",
             AGE_KEY.name to 20,
             DEFAULT_BREAK_KEY.name to 30,
             NOTIFICATION_DAYS_KEY.name to setOf(DAYS[0], DAYS[2], DAYS[4])
