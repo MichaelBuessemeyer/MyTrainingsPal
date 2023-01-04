@@ -55,7 +55,7 @@ fun SettingsScreen(
 
     remember(preferencesState) {
         preferences = preferencesState
-        userName = preferences[PreferencesConstants.USERNAME_KEY.name].toString()
+        userName = (preferences[PreferencesConstants.USERNAME_KEY.name] ?: "Your name") as String
         age = (preferences[PreferencesConstants.AGE_KEY.name] ?: 20) as Int
         println("notifyDays ${preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]}")
         notifyDays = (preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]
