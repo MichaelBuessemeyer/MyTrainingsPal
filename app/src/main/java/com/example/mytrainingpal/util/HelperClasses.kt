@@ -23,4 +23,4 @@ data class CalendarEntry(
 // used to pass ints by reference
 class IntHolder(var value: Int)
 
-class TimeHolder(var time: LocalDateTime)
+class TimeHolder(var time: Date)

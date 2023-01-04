@@ -13,9 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.components.*
 import com.example.mytrainingpal.model.entities.Exercise
+import com.example.mytrainingpal.model.view_models.WorkoutEntryExerciseMapViewModel
+import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.TimeHolder
-import java.time.LocalTime
 
 @Composable
 fun TrainingFinishedScreen(
@@ -23,11 +24,114 @@ fun TrainingFinishedScreen(
     //immutable List?
     doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>,
     startTime: TimeHolder,
-    endTime: TimeHolder
+    endTime: TimeHolder,
+    workoutEntryViewModel: WorkoutEntryViewModel,
+    workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel
 ) {
     TabScreen(
         tabContent = {
-            TrainingFinishedContent(doneExercises, startTime, endTime)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                WidgetCard(hasBorder = false) {
+                    Text(
+                        text = "Congrats Klaus!", //TODO get from preferences (look settings.kt)
+                        style = MaterialTheme.typography.h1,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(20.dp)
+                    )
+                }
+                var totalSets: Int = 0
+                var totalWeightLifted: Int = 0
+                var totalReps: Int = 0
+                doneExercises.forEach() { (exercise, details) ->
+                    totalSets += details.sets
+                    totalWeightLifted += details.weight
+                    // Array splitting method: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin (visited 04.01.23)
+                    val repsArray: Array<String> = details.reps.split(",").toTypedArray()
+                    repsArray.forEach {
+                        totalReps += it.toInt()
+                    }
+                }
+
+                // calculating how long the workout lasted with start and end time
+                // Calculating: https://stackoverflow.com/questions/1555262/calculating-the-difference-between-two-java-date-instances (04.01.23)
+                val totalWorkoutTime: Int = ((endTime.time.time - startTime.time.time)/6000).toInt()
+
+
+                WidgetCard(hasBorder = false) {
+                    Column (
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text(text = "This Training:")
+                        Row {
+                            Spacer(modifier = Modifier.width(20.dp))
+                            Column(horizontalAlignment = Alignment.Start) {
+                                StatRow(
+                                    title = "total sets",
+                                    stat = totalSets,
+                                    imageVector = Icons.Default.CalendarToday
+                                )
+                                StatRow(
+                                    title = "kg lifted",
+                                    stat = totalWeightLifted,
+                                    imageVector = Icons.Default.FitnessCenter
+                                )
+                                // for demo purposes we show the time in seconds. normally it would be minutes
+                                StatRow(
+                                    title = "seconds",
+                                    stat = totalWorkoutTime,
+                                    imageVector = Icons.Default.AccessTime
+                                )
+                                StatRow(
+                                    title = "total reps",
+                                    stat = totalReps,
+                                    imageVector = Icons.Default.CalendarToday
+                                )
+                            }
+                        }
+                    }
+
+                }
+                Row() {
+                    Icon(
+                        imageVector = Icons.Default.Celebration,
+                        contentDescription = "Congrats",
+                        modifier = Modifier.size(100.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Celebration,
+                        contentDescription = "Congrats",
+                        modifier = Modifier.size(100.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Celebration,
+                        contentDescription = "Congrats",
+                        modifier = Modifier.size(100.dp)
+                    )
+                }
+                Button(
+                    border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                    onClick = { /*TODO opens Camera*/ },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.background,
+                        contentColor = MaterialTheme.colors.secondary
+                    ),
+                ) {
+                    Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take progress picture")
+                    Text("Take a progress picture")
+                }
+                doneExercises.forEach() { (exercise, details) ->
+                    ExerciseRecapWidget(
+                        exercise = exercise,
+                        weight = details.weight,
+                        reps = details.reps,
+                        sets = details.sets
+                    )
+                }
+            }
+
         },
         topBarTitle = Screen.TrainingFinished.label,
         topBarIcon = Screen.TrainingFinished.icon,
@@ -44,114 +148,4 @@ fun TrainingFinishedScreen(
             }
         }
     )
-}
-
-@Composable
-fun TrainingFinishedContent(
-    doneExercises: MutableList<Pair<Exercise, ExerciseDetails>>,
-    startTime: TimeHolder,
-    endTime: TimeHolder
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        WidgetCard(hasBorder = false) {
-            Text(
-                text = "Congrats Klaus!", //TODO get from preferences (look settings.kt)
-                style = MaterialTheme.typography.h1,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(20.dp)
-            )
-        }
-        //TODO replace with TrainingRecapCard
-        var totalSets: Int = 0
-        var totalWeightLifted: Int = 0
-        var totalReps: Int = 0
-        doneExercises.forEach() { (exercise, details) ->
-            totalSets += details.sets
-            totalWeightLifted += details.weight
-            // Array splitting method: https://stackoverflow.com/questions/46038476/how-could-i-split-a-string-into-an-array-in-kotlin (visited 04.01.23)
-            val repsArray: Array<String> = details.reps.split(",").toTypedArray()
-            repsArray.forEach {
-                totalReps += it.toInt()
-            }
-        }
-
-        // TODO correct time!
-        val totalWorkoutTime: Int = (totalReps / 3)
-
-
-        WidgetCard(hasBorder = false) {
-            Column (
-                modifier = Modifier.padding(8.dp)
-            ) {
-                Text(text = "This Training:")
-                Row {
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Column(horizontalAlignment = Alignment.Start) {
-                        StatRow(
-                            title = "total sets",
-                            stat = totalSets,
-                            imageVector = Icons.Default.CalendarToday
-                        )
-                        StatRow(
-                            title = "kg lifted",
-                            stat = totalWeightLifted,
-                            imageVector = Icons.Default.FitnessCenter
-                        )
-                        StatRow(
-                            title = "minutes",
-                            stat = totalWorkoutTime,
-                            imageVector = Icons.Default.AccessTime
-                        )
-                        StatRow(
-                            title = "total reps",
-                            stat = totalReps,
-                            imageVector = Icons.Default.CalendarToday
-                        )
-                        Text(text = startTime.time.toString())
-                        Text(text = endTime.time.toString())
-                    }
-                }
-            }
-
-        }
-        Row() {
-            Icon(
-                imageVector = Icons.Default.Celebration,
-                contentDescription = "Congrats",
-                modifier = Modifier.size(100.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Celebration,
-                contentDescription = "Congrats",
-                modifier = Modifier.size(100.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Celebration,
-                contentDescription = "Congrats",
-                modifier = Modifier.size(100.dp)
-            )
-        }
-        Button(
-            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-            onClick = { /*TODO opens Camera*/ },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.secondary
-            ),
-        ) {
-            Icon(imageVector = Icons.Default.PhotoCamera, contentDescription = "Take progress picture")
-            Text("Take a progress picture")
-        }
-        doneExercises.forEach() { (exercise, details) ->
-            ExerciseRecapWidget(
-                exercise = exercise,
-                weight = details.weight,
-                reps = details.reps,
-                sets = details.sets
-            )
-        }
-    }
 }

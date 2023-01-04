@@ -20,9 +20,7 @@ import com.example.mytrainingpal.screens.*
 import com.example.mytrainingpal.util.TimeHolder
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.util.Date
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
 
@@ -216,8 +214,8 @@ fun AppNavHost(
             // list of exercises for current workout. gets updated by reference
             val exercises = mutableListOf<Pair<Exercise, ExerciseDetails>>()
             val duration = IntHolder(0)
-            val startTime = TimeHolder(LocalDateTime.now())
-            val endTime = TimeHolder(LocalDateTime.now())
+            val startTime = TimeHolder(Date())
+            val endTime = TimeHolder(Date())
             composable(Screen.TrainingMain.route) { TrainingScreen(navController, duration) }
             composable(Screen.TrainingsPreview.route) {
                 val owner = LocalViewModelStoreOwner.current
@@ -265,9 +263,14 @@ fun AppNavHost(
                         val factory = GenericViewModelFactory(
                             LocalContext.current
                         )
-                        val musclePainEntryViewModel: MusclePainEntryViewModel = viewModel(
+                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
                             it,
-                            "MusclePainEntryViewModel",
+                            "WorkoutEntryViewModel",
+                            factory
+                        )
+                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel = viewModel(
+                            it,
+                            "WorkoutEntryExerciseMapViewModel",
                             factory
                         )
 
@@ -275,7 +278,9 @@ fun AppNavHost(
                             navController,
                             exercises,
                             startTime,
-                            endTime = TimeHolder(LocalDateTime.now())
+                            endTime = TimeHolder(Date()),
+                            workoutEntryViewModel,
+                            workoutEntryExerciseMapViewModel
                         )
                     }
                 } else {
