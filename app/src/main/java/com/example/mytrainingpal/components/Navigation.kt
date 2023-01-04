@@ -56,6 +56,7 @@ sealed class Screen(
 
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
+
     object Toggle :
         Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
 
