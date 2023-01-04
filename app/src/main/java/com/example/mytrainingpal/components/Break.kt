@@ -104,7 +104,7 @@ fun Break(
                         suggestedRepsForThatExercise = exerciseList[currentExerciseIndex].second.reps.split(
                             ","
                         )[0].toInt(),
-                        setsLeft = exerciseList[currentExerciseIndex].second.sets - (currentExerciseSetCounter + 1)
+                        setsLeft = exerciseList[currentExerciseIndex].second.sets - currentExerciseSetCounter
                     )
                 }
             }
