@@ -1,15 +1,16 @@
-package com.example.mytrainingpal.prefrences
+package com.example.mytrainingpal.model.view_models
 
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mytrainingpal.prefrences.PreferencesConstants.AGE_KEY
-import com.example.mytrainingpal.prefrences.PreferencesConstants.DAYS
-import com.example.mytrainingpal.prefrences.PreferencesConstants.DEFAULT_BREAK_KEY
-import com.example.mytrainingpal.prefrences.PreferencesConstants.NOTIFICATION_DAYS_KEY
-import com.example.mytrainingpal.prefrences.PreferencesConstants.NOTIFICATION_TIME_KEY
-import com.example.mytrainingpal.prefrences.PreferencesConstants.USERNAME_KEY
+import com.example.mytrainingpal.preferences.PreferencesConstants.AGE_KEY
+import com.example.mytrainingpal.preferences.PreferencesConstants.DAYS
+import com.example.mytrainingpal.preferences.PreferencesConstants.DEFAULT_BREAK_KEY
+import com.example.mytrainingpal.preferences.PreferencesConstants.NOTIFICATION_DAYS_KEY
+import com.example.mytrainingpal.preferences.PreferencesConstants.NOTIFICATION_TIME_KEY
+import com.example.mytrainingpal.preferences.PreferencesConstants.USERNAME_KEY
+import com.example.mytrainingpal.preferences.PreferencesDataStoreHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class PreferencesViewModel(context: Context) : ViewModel() {
     private val preferencesDataStoreHelper: PreferencesDataStoreHelper
     var allPreferences: Flow<Map<String, Any>> = flowOf(
         mapOf(
-            USERNAME_KEY.name to "default",
+            USERNAME_KEY.name to "USER NAME",
             AGE_KEY.name to 20,
             DEFAULT_BREAK_KEY.name to 30,
             NOTIFICATION_DAYS_KEY.name to setOf(DAYS[0], DAYS[2], DAYS[4])

@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.R
 import com.example.mytrainingpal.components.*
-import com.example.mytrainingpal.prefrences.PreferencesConstants
-import com.example.mytrainingpal.prefrences.PreferencesViewModel
+import com.example.mytrainingpal.model.view_models.PreferencesViewModel
+import com.example.mytrainingpal.preferences.PreferencesConstants
 import java.io.File
 
 @Composable
@@ -55,7 +55,7 @@ fun SettingsScreen(
 
     remember(preferencesState) {
         preferences = preferencesState
-        userName = preferences[PreferencesConstants.USERNAME_KEY.name].toString()
+        userName = (preferences[PreferencesConstants.USERNAME_KEY.name] ?: "Your name") as String
         age = (preferences[PreferencesConstants.AGE_KEY.name] ?: 20) as Int
         println("notifyDays ${preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]}")
         notifyDays = (preferences[PreferencesConstants.NOTIFICATION_DAYS_KEY.name]
@@ -80,7 +80,7 @@ fun SettingsScreen(
                 updateNotificationDays = { notifyDays = it },
                 defaultBreak = defaultBreak,
                 updateDefaultBreak = { defaultBreak = it },
-                deleteAllData = { preferencesViewModel.deleteAllData() },
+                deleteAllData = { preferencesViewModel.deleteAllData() }, // TODO: also delete all user data from the database
                 navigateToHome = { navController.navigate(RouteGroups.HOME.route) })
         },
         floatingActionButton = {
@@ -207,7 +207,7 @@ fun MainSettingsScreenContent(
             CustomNumberInput(
                 value = defaultBreak,
                 onValueChange = updateDefaultBreak,
-                possibleValues = (15..90).toList(),
+                possibleValues = (5..90).toList(),
                 backgroundColor = MaterialTheme.colors.primary,
                 postText = "Seconds"
             )

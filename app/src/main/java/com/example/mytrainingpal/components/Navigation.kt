@@ -16,12 +16,11 @@ import androidx.navigation.navigation
 import com.example.mytrainingpal.model.GenericViewModelFactory
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.*
-import com.example.mytrainingpal.prefrences.PreferencesViewModel
 import com.example.mytrainingpal.screens.*
-import com.example.mytrainingpal.util.TimeHolder
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
-import java.util.Date
+import com.example.mytrainingpal.util.TimeHolder
+import java.util.*
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
 
@@ -53,8 +52,13 @@ sealed class Screen(
     object Toggle :
         Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
 
-    object TrainingFinished:
-    Screen("trainingFinished", "Finished", Icons.Default.Celebration, RouteGroups.TRAINING.route)
+    object TrainingFinished :
+        Screen(
+            "trainingFinished",
+            "Finished",
+            Icons.Default.Celebration,
+            RouteGroups.TRAINING.route
+        )
 
     object CalendarMain :
         Screen("calendarMain", "Calendar", Icons.Default.CalendarToday, RouteGroups.CALENDAR.route)
@@ -118,11 +122,17 @@ fun AppNavHost(
                                 "WorkoutEntryExerciseMapViewModel",
                                 factory
                             )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
                         HomeScreen(
                             navController,
                             musclePainEntryViewModel,
                             workoutEntryExerciseMapViewModel,
-                            musclePainEntryMapViewModel
+                            musclePainEntryMapViewModel,
+                            preferencesViewModel
                         )
                     }
                 } else {
@@ -258,6 +268,11 @@ fun AppNavHost(
                             "ExerciseMuscleMapViewModel",
                             factory
                         )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
                         TrainingsPreviewScreen(
                             navController,
                             duration,
@@ -265,6 +280,7 @@ fun AppNavHost(
                             musclePainEntryViewModel,
                             musclePainEntryMapViewModel,
                             exerciseMuscleMapViewModel,
+                            preferencesViewModel,
                             startTime = startTime
                         )
                     }
@@ -272,7 +288,30 @@ fun AppNavHost(
                     Text("Still Loading View Model")
                 }
             }
+            composable(Screen.Toggle.route) {
+                val owner = LocalViewModelStoreOwner.current
 
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
+                        ToggleScreen(
+                            navController,
+                            exercises,
+                            endTime,
+                            preferencesViewModel
+                        )
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+            }
             composable(Screen.TrainingFinished.route) {
                 val owner = LocalViewModelStoreOwner.current
 
@@ -286,11 +325,12 @@ fun AppNavHost(
                             "WorkoutEntryViewModel",
                             factory
                         )
-                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel = viewModel(
-                            it,
-                            "WorkoutEntryExerciseMapViewModel",
-                            factory
-                        )
+                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel =
+                            viewModel(
+                                it,
+                                "WorkoutEntryExerciseMapViewModel",
+                                factory
+                            )
 
                         TrainingFinishedScreen(
                             navController,
@@ -305,7 +345,6 @@ fun AppNavHost(
                     Text("Still Loading View Model")
                 }
             }
-            composable(Screen.Toggle.route) { ToggleScreen(navController, exercises, endTime) }
         }
     }
 }
