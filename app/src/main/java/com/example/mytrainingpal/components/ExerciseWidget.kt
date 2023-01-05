@@ -9,7 +9,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.mytrainingpal.model.entities.Exercise
 
 @Composable
@@ -52,7 +51,6 @@ fun ExerciseWidget(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text("Weight: $weight", textAlign = TextAlign.Center)
-                Text("TODO: Add see instructions", fontSize = 4.sp)
             }
             Spacer(modifier = Modifier.weight(.15f))
             Column(

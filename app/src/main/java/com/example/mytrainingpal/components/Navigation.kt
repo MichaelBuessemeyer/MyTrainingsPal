@@ -198,7 +198,6 @@ fun AppNavHost(
                     }
                 } else Text("")
             }
-            // TODO: Add MusclePainDetailsScreen and so on
         }
         navigation(
             route = RouteGroups.CALENDAR.route,
@@ -232,7 +231,6 @@ fun AppNavHost(
                     Text("Still Loading View Model")
                 }
             }
-            // TODO: Add CalendarDetailsScreen and so on
         }
         // Use those to maintain several back stacks for navigation
         navigation(
@@ -331,6 +329,11 @@ fun AppNavHost(
                                 "WorkoutEntryExerciseMapViewModel",
                                 factory
                             )
+                        val preferencesViewModel: PreferencesViewModel = viewModel(
+                            it,
+                            "PreferencesViewModel",
+                            factory
+                        )
 
                         TrainingFinishedScreen(
                             navController,
@@ -338,7 +341,8 @@ fun AppNavHost(
                             startTime,
                             endTime,
                             workoutEntryViewModel,
-                            workoutEntryExerciseMapViewModel
+                            workoutEntryExerciseMapViewModel,
+                            preferencesViewModel
                         )
                     }
                 } else {
