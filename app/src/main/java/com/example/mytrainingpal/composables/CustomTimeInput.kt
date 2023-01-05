@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import android.app.TimePickerDialog
 import androidx.compose.foundation.background

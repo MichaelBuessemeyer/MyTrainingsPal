@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.composables.*
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
 

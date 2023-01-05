@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.composables.*
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.WorkoutEntry
 import com.example.mytrainingpal.model.entities.WorkoutEntryExerciseMap

@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth

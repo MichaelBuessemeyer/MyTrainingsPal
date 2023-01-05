@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas

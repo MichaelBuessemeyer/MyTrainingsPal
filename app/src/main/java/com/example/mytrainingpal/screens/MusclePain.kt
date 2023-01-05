@@ -12,9 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.MusclePainWidget
-import com.example.mytrainingpal.components.Screen
-import com.example.mytrainingpal.components.TabScreen
+import com.example.mytrainingpal.composables.MusclePainWidget
+import com.example.mytrainingpal.composables.Screen
+import com.example.mytrainingpal.composables.TabScreen
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.entities.MusclePainEntry
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel

@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.text.BasicTextField

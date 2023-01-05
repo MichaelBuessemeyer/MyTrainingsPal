@@ -2,9 +2,9 @@ package com.example.mytrainingpal.screens
 
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.Break
-import com.example.mytrainingpal.components.CurrentExercise
-import com.example.mytrainingpal.components.Screen
+import com.example.mytrainingpal.composables.Break
+import com.example.mytrainingpal.composables.CurrentExercise
+import com.example.mytrainingpal.composables.Screen
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.PreferencesViewModel
 import com.example.mytrainingpal.preferences.PreferencesConstants

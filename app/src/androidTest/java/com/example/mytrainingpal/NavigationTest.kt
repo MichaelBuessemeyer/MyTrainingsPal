@@ -5,8 +5,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.mytrainingpal.components.AppNavHost
-import com.example.mytrainingpal.components.Screen
+import com.example.mytrainingpal.composables.AppNavHost
+import com.example.mytrainingpal.composables.Screen
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule

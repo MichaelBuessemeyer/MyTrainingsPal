@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.CalendarListWidget
-import com.example.mytrainingpal.components.Screen
-import com.example.mytrainingpal.components.TabScreen
-import com.example.mytrainingpal.components.WidgetCard
+import com.example.mytrainingpal.composables.CalendarListWidget
+import com.example.mytrainingpal.composables.Screen
+import com.example.mytrainingpal.composables.TabScreen
+import com.example.mytrainingpal.composables.WidgetCard
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
 import com.example.mytrainingpal.util.CalendarEntry

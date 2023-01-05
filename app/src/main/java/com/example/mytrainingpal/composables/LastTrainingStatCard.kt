@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import android.icu.text.DateFormat
 import androidx.compose.foundation.layout.*

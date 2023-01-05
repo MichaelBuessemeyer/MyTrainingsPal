@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.composables.*
 import com.example.mytrainingpal.model.entities.Muscle
 import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.MusclePainEntryViewModel

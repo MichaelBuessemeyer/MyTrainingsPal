@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
