@@ -2,6 +2,8 @@ package com.example.mytrainingpal.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -38,15 +40,6 @@ fun TrainingFinishedScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                WidgetCard(hasBorder = false) {
-                    Text(
-                        text = "Congrats Klaus!", //TODO get from preferences (look settings.kt)
-                        style = MaterialTheme.typography.h1,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(20.dp)
-                    )
-                }
                 var totalSets: Int = 0
                 var totalWeightLifted: Int = 0
                 var totalReps: Int = 0
@@ -64,80 +57,90 @@ fun TrainingFinishedScreen(
                 // Calculating: https://stackoverflow.com/questions/1555262/calculating-the-difference-between-two-java-date-instances (04.01.23)
                 val totalWorkoutTime: Int =
                     ((endTime.value.time - startTime.value.time) / 6000).toInt()
-
-
-                WidgetCard(hasBorder = false) {
-                    Column(
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        Text(text = "This Training:")
-                        Row {
-                            Spacer(modifier = Modifier.width(20.dp))
-                            Column(horizontalAlignment = Alignment.Start) {
-                                StatRow(
-                                    title = "total sets",
-                                    stat = totalSets,
-                                    imageVector = Icons.Default.CalendarToday
-                                )
-                                StatRow(
-                                    title = "kg lifted",
-                                    stat = totalWeightLifted,
-                                    imageVector = Icons.Default.FitnessCenter
-                                )
-                                // for demo purposes we show the time in seconds. normally it would be minutes
-                                StatRow(
-                                    title = "seconds",
-                                    stat = totalWorkoutTime,
-                                    imageVector = Icons.Default.AccessTime
-                                )
-                                StatRow(
-                                    title = "total reps",
-                                    stat = totalReps,
-                                    imageVector = Icons.Default.CalendarToday
-                                )
-                            }
-                        }
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    WidgetCard(hasBorder = false) {
+                        Text(
+                            text = "Congrats Klaus!", //TODO get from preferences (look settings.kt)
+                            style = MaterialTheme.typography.h1,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(20.dp)
+                        )
                     }
 
-                }
-                Row() {
-                    Icon(
-                        imageVector = Icons.Default.Celebration,
-                        contentDescription = "Congrats",
-                        modifier = Modifier.size(100.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Celebration,
-                        contentDescription = "Congrats",
-                        modifier = Modifier.size(100.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Celebration,
-                        contentDescription = "Congrats",
-                        modifier = Modifier.size(100.dp)
-                    )
-                }
-                Button(
-                    border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-                    onClick = { /*TODO opens Camera*/ },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.background,
-                        contentColor = MaterialTheme.colors.secondary
-                    ),
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.PhotoCamera,
-                        contentDescription = "Take progress picture"
-                    )
-                    Text("Take a progress picture")
-                }
-                doneExercises.forEach() { (exercise, details) ->
-                    ExerciseRecapWidget(
-                        exercise = exercise,
-                        weight = details.weight,
-                        reps = details.reps,
-                        sets = details.sets
-                    )
+                    WidgetCard(hasBorder = false) {
+                        Column(
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Text(text = "This Training:")
+                            Row {
+                                Spacer(modifier = Modifier.width(20.dp))
+                                Column(horizontalAlignment = Alignment.Start) {
+                                    StatRow(
+                                        title = "total sets",
+                                        stat = totalSets,
+                                        imageVector = Icons.Default.CalendarToday
+                                    )
+                                    StatRow(
+                                        title = "kg lifted",
+                                        stat = totalWeightLifted,
+                                        imageVector = Icons.Default.FitnessCenter
+                                    )
+                                    // for demo purposes we show the time in seconds. normally it would be minutes
+                                    StatRow(
+                                        title = "seconds",
+                                        stat = totalWorkoutTime,
+                                        imageVector = Icons.Default.AccessTime
+                                    )
+                                    StatRow(
+                                        title = "total reps",
+                                        stat = totalReps,
+                                        imageVector = Icons.Default.CalendarToday
+                                    )
+                                }
+                            }
+                        }
+
+                    }
+                    Row() {
+                        Icon(
+                            imageVector = Icons.Default.Celebration,
+                            contentDescription = "Congrats",
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Celebration,
+                            contentDescription = "Congrats",
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Celebration,
+                            contentDescription = "Congrats",
+                            modifier = Modifier.size(100.dp)
+                        )
+                    }
+                    Button(
+                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                        onClick = { /*TODO opens Camera*/ },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.background,
+                            contentColor = MaterialTheme.colors.secondary
+                        ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PhotoCamera,
+                            contentDescription = "Take progress picture"
+                        )
+                        Text("Take a progress picture")
+                    }
+                    doneExercises.forEach { (exercise, details) ->
+                        ExerciseRecapWidget(
+                            exercise = exercise,
+                            weight = details.weight,
+                            reps = details.reps,
+                            sets = details.sets
+                        )
+                    }
                 }
             }
 

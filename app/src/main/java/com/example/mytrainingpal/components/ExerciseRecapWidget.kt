@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.mytrainingpal.model.entities.Exercise
 
@@ -16,46 +17,63 @@ fun ExerciseRecapWidget(
     weight: Int,
     reps: String,
     sets: Int,
-){
+) {
     WidgetCard(hasBorder = false) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(5.dp)) {
-
-            // This column is meant to contain the image at some point
-            /*Column(
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+        ) {
+            Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f)
             ) {
                 val gifWithInPxl = LocalDensity.current.run { 80.dp.toPx() }.toInt()
                 GifImage(gifPath = exercise.pathToGif, size = gifWithInPxl)
-            }*/
+            }
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(2f)
             ) {
-                Text(exercise.name)
-                Text("Weight: $weight")
+                Text(
+                    exercise.name,
+                    maxLines = 3,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text("Weight: $weight", textAlign = TextAlign.Center)
             }
-            Spacer(modifier = Modifier.weight(1.0F))
+            Spacer(modifier = Modifier.weight(.15f))
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.weight(.5f)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.height(48.dp)
-                ) { Text("Reps:", textAlign = TextAlign.Center) }
+                ) { Text("Reps", textAlign = TextAlign.Center) }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.height(48.dp)
-                ) { Text("Sets:", textAlign = TextAlign.Center) }
+                ) { Text("Sets", textAlign = TextAlign.Center) }
             }
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.height(48.dp)
-                ) { Text(reps , textAlign = TextAlign.Center) }
+                ) { Text(reps, textAlign = TextAlign.Center) }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.height(48.dp)
