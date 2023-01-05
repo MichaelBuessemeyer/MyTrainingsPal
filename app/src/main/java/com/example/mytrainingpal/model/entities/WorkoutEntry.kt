@@ -16,7 +16,7 @@ data class WorkoutEntry(
     val startTime: Date,
     @TypeConverters(DateConverter::class)
     val endTime: Date,
-    val comment: String,
+    val comment: String = "This is a standard comment.",
     val picturePath: String? = null,
 ) {
     val duration: Int

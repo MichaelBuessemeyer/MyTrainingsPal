@@ -2,10 +2,7 @@ package com.example.mytrainingpal.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -22,6 +19,8 @@ import com.example.mytrainingpal.model.view_models.*
 import com.example.mytrainingpal.screens.*
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
+import com.example.mytrainingpal.util.TimeHolder
+import java.util.*
 
 // all of this is very inspired by https://developer.android.com/jetpack/compose/navigation
 
@@ -50,14 +49,23 @@ sealed class Screen(
         RouteGroups.TRAINING.route
     )
 
+    object Toggle :
+        Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
+
+    object TrainingFinished :
+        Screen(
+            "trainingFinished",
+            "Finished",
+            Icons.Default.Celebration,
+            RouteGroups.TRAINING.route
+        )
+
     object CalendarMain :
         Screen("calendarMain", "Calendar", Icons.Default.CalendarToday, RouteGroups.CALENDAR.route)
 
     object Settings :
         Screen("settingsMain", "Settings", Icons.Default.Settings, RouteGroups.SETTINGS.route)
 
-    object Toggle :
-        Screen("toggle", "Toggle", Icons.Default.Settings, RouteGroups.TRAINING.route)
 
 }
 
@@ -234,6 +242,8 @@ fun AppNavHost(
             // list of exercises for current workout. gets updated by reference
             val exercises = mutableListOf<Pair<Exercise, ExerciseDetails>>()
             val duration = IntHolder(0)
+            val startTime = TimeHolder(Date())
+            val endTime = TimeHolder(Date())
             composable(Screen.TrainingMain.route) { TrainingScreen(navController, duration) }
             composable(Screen.TrainingsPreview.route) {
                 val owner = LocalViewModelStoreOwner.current
@@ -270,7 +280,8 @@ fun AppNavHost(
                             musclePainEntryViewModel,
                             musclePainEntryMapViewModel,
                             exerciseMuscleMapViewModel,
-                            preferencesViewModel
+                            preferencesViewModel,
+                            startTime = startTime
                         )
                     }
                 } else {
@@ -293,14 +304,47 @@ fun AppNavHost(
                         ToggleScreen(
                             navController,
                             exercises,
-                            preferencesViewModel,
+                            endTime,
+                            preferencesViewModel
                         )
                     }
                 } else {
                     Text("Still Loading View Model")
                 }
             }
-            // TODO: Add further Trainings Screens
+            composable(Screen.TrainingFinished.route) {
+                val owner = LocalViewModelStoreOwner.current
+
+                if (owner != null) {
+                    owner.let {
+                        val factory = GenericViewModelFactory(
+                            LocalContext.current
+                        )
+                        val workoutEntryViewModel: WorkoutEntryViewModel = viewModel(
+                            it,
+                            "WorkoutEntryViewModel",
+                            factory
+                        )
+                        val workoutEntryExerciseMapViewModel: WorkoutEntryExerciseMapViewModel =
+                            viewModel(
+                                it,
+                                "WorkoutEntryExerciseMapViewModel",
+                                factory
+                            )
+
+                        TrainingFinishedScreen(
+                            navController,
+                            exercises,
+                            startTime,
+                            endTime,
+                            workoutEntryViewModel,
+                            workoutEntryExerciseMapViewModel
+                        )
+                    }
+                } else {
+                    Text("Still Loading View Model")
+                }
+            }
         }
     }
 }

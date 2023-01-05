@@ -16,10 +16,16 @@ class WorkoutEntryRepository(private val workoutEntryDao: WorkoutEntryDao) {
     val searchResults = MutableLiveData<List<WorkoutEntry>>()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-    fun insertWorkoutEntry(newWorkoutEntry: WorkoutEntry) {
+    fun insertWorkoutEntry(newWorkoutEntry: WorkoutEntry): Long {
+        var id: Long = 0
         coroutineScope.launch(Dispatchers.IO) {
-            workoutEntryDao.insert(newWorkoutEntry)
+            id = workoutEntryDao.insert(newWorkoutEntry)
         }
+        return id
+    }
+
+    fun insertWorkoutEntryOnCurrentThread(newWorkoutEntry: WorkoutEntry): Long {
+        return workoutEntryDao.insert(newWorkoutEntry)
     }
 
     fun deleteWorkoutEntry(workoutEntry: WorkoutEntry) {

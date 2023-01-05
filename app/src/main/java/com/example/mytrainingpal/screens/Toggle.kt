@@ -9,7 +9,9 @@ import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.view_models.PreferencesViewModel
 import com.example.mytrainingpal.preferences.PreferencesConstants
 import com.example.mytrainingpal.util.ExerciseDetails
+import com.example.mytrainingpal.util.TimeHolder
 import kotlinx.coroutines.delay
+import java.util.*
 
 // Inspired by: https://stackoverflow.com/questions/69230364/how-can-i-make-my-composable-recompose-with-a-for-loop-update
 
@@ -17,6 +19,7 @@ import kotlinx.coroutines.delay
 fun ToggleScreen(
     navController: NavController,
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
+    endTime: TimeHolder,
     preferencesViewModel: PreferencesViewModel
 ) {
     val preferencesState by preferencesViewModel.allPreferences.collectAsState(mapOf<String, Any>())
@@ -41,7 +44,8 @@ fun ToggleScreen(
     if (currentExerciseCounter == exerciseList.size) {
         LaunchedEffect(key1 = 0) {
             delay(0)
-            navController.navigate(Screen.Settings.route)
+            endTime.value = Date()
+            navController.navigate(Screen.TrainingFinished.route)
         }
     } else if (breakRunning) {
         Break(

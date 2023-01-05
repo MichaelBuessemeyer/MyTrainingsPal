@@ -26,6 +26,8 @@ import com.example.mytrainingpal.states.RememberFetchMusclePainEntryWithMuscles
 import com.example.mytrainingpal.states.RememberTodaysMusclePainEntryState
 import com.example.mytrainingpal.util.ExerciseDetails
 import com.example.mytrainingpal.util.IntHolder
+import com.example.mytrainingpal.util.TimeHolder
+import java.util.*
 
 
 @Composable
@@ -36,7 +38,8 @@ fun TrainingsPreviewScreen(
     musclePainEntryViewModel: MusclePainEntryViewModel,
     musclePainEntryMapViewModel: MusclePainEntryMapViewModel,
     exerciseMuscleMapViewModel: ExerciseMuscleMapViewModel,
-    preferencesViewModel: PreferencesViewModel
+    preferencesViewModel: PreferencesViewModel,
+    startTime: TimeHolder
 ) {
     // get the current muscle pains
     val todaysMusclePainEntry = RememberTodaysMusclePainEntryState(musclePainEntryViewModel)
@@ -141,6 +144,7 @@ fun TrainingsPreviewScreen(
         navController = navController,
         floatingActionButton = {
             StartExerciseFloatingButton {
+                startTime.value = Date()
                 navController.navigate(Screen.Toggle.route)
             }
         }
