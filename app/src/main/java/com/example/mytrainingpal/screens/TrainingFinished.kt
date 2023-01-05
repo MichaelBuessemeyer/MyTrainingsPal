@@ -112,37 +112,47 @@ fun TrainingFinishedScreen(
                         }
 
                     }
-                    Row {
-                        Icon(
-                            imageVector = Icons.Default.Celebration,
-                            contentDescription = "Congrats",
-                            modifier = Modifier.size(100.dp)
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Celebration,
-                            contentDescription = "Congrats",
-                            modifier = Modifier.size(100.dp)
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Celebration,
-                            contentDescription = "Congrats",
-                            modifier = Modifier.size(100.dp)
-                        )
-                    }
-                    Button(
-                        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-                        onClick = { /*TODO opens Camera*/ },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.background,
-                            contentColor = MaterialTheme.colors.secondary
-                        ),
+                    Spacer(modifier =Modifier.height(20.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         Icon(
-                            imageVector = Icons.Default.PhotoCamera,
-                            contentDescription = "Take progress picture"
+                            imageVector = Icons.Default.Celebration,
+                            contentDescription = "Congrats",
+                            modifier = Modifier.size(100.dp)
                         )
-                        Text("Take a progress picture")
+                        Icon(
+                            imageVector = Icons.Default.Celebration,
+                            contentDescription = "Congrats",
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Celebration,
+                            contentDescription = "Congrats",
+                            modifier = Modifier.size(100.dp)
+                        )
                     }
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(
+                            border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+                            onClick = { /*TODO opens Camera*/ },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = MaterialTheme.colors.background,
+                                contentColor = MaterialTheme.colors.secondary
+                            ),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.PhotoCamera,
+                                contentDescription = "Take progress picture"
+                            )
+                            Text("Take a progress picture")
+                        }
+                    }
+                    Spacer(modifier =Modifier.height(20.dp))
                     doneExercises.forEach { (exercise, details) ->
                         ExerciseRecapWidget(
                             exercise = exercise,
@@ -158,6 +168,7 @@ fun TrainingFinishedScreen(
         topBarTitle = Screen.TrainingFinished.label,
         topBarIcon = Screen.TrainingFinished.icon,
         navController = navController,
+        withNavBar = false,
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 saveWorkoutToDatabase(

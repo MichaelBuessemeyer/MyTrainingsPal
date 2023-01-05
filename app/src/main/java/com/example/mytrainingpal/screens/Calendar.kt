@@ -27,6 +27,7 @@ import com.example.mytrainingpal.model.view_models.MusclePainEntryMapViewModel
 import com.example.mytrainingpal.model.view_models.WorkoutEntryViewModel
 import com.example.mytrainingpal.util.CalendarEntry
 import com.example.mytrainingpal.util.calendarFromDate
+import com.example.mytrainingpal.util.dateWithTimeToOnlyDate
 import com.example.mytrainingpal.util.localDateToJavaDate
 import io.github.boguszpawlowski.composecalendar.StaticCalendar
 import io.github.boguszpawlowski.composecalendar.rememberCalendarState
@@ -66,7 +67,7 @@ fun CalendarScreenContent(
                 calendarMap[date] = CalendarEntry(date, musclePainEntry)
             }
             for (workoutEntry in allWorkouts) {
-                val date = workoutEntry.date
+                val date = dateWithTimeToOnlyDate(workoutEntry.date)
                 val existingMusclePainEntry = calendarMap[date]?.musclePainEntry
                 calendarMap[date] =
                     CalendarEntry(date, musclePainEntry = existingMusclePainEntry, workoutEntry)

@@ -11,7 +11,7 @@ fun localDateToJavaDate(date: LocalDate): Date {
     ).time
 }
 
-fun localDateToOnlyDate(date: Date): Date {
+fun dateWithTimeToOnlyDate(date: Date): Date {
     val cal = calendarFromDate(date)
     return GregorianCalendar(
         cal.get(Calendar.YEAR),
