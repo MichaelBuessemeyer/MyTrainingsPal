@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.example.mytrainingpal.components.AppNavHost
+import com.example.mytrainingpal.composables.AppNavHost
 import com.example.mytrainingpal.ui.theme.MyTrainingPalTheme
 
 

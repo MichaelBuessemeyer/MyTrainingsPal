@@ -12,7 +12,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.composables.*
 import com.example.mytrainingpal.model.MusclePainEntryMapConstants
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.model.entities.Muscle

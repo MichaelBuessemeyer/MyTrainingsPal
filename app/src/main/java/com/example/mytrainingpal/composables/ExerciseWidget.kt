@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.components
+package com.example.mytrainingpal.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -12,11 +12,13 @@ import androidx.compose.ui.unit.dp
 import com.example.mytrainingpal.model.entities.Exercise
 
 @Composable
-fun ExerciseRecapWidget(
+fun ExerciseWidget(
     exercise: Exercise,
     weight: Int,
-    reps: String,
+    reps: Int,
     sets: Int,
+    onRepsChanged: (Int) -> Unit,
+    onSetsChanged: (Int) -> Unit
 ) {
     WidgetCard(hasBorder = false) {
         Row(
@@ -70,14 +72,16 @@ fun ExerciseRecapWidget(
                     .padding(5.dp)
                     .weight(1f)
             ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.height(48.dp)
-                ) { Text(reps, textAlign = TextAlign.Center) }
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.height(48.dp)
-                ) { Text(sets.toString(), textAlign = TextAlign.Center) }
+                CustomNumberInput(
+                    value = reps,
+                    onValueChange = onRepsChanged,
+                    possibleValues = (1..30).toList()
+                )
+                CustomNumberInput(
+                    value = sets,
+                    onValueChange = onSetsChanged,
+                    possibleValues = (1..20).toList()
+                )
             }
         }
     }

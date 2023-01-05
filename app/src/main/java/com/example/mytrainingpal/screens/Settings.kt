@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mytrainingpal.R
-import com.example.mytrainingpal.components.*
+import com.example.mytrainingpal.composables.*
 import com.example.mytrainingpal.model.view_models.PreferencesViewModel
 import com.example.mytrainingpal.preferences.PreferencesConstants
 import java.io.File
