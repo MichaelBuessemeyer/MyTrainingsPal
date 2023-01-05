@@ -1,4 +1,4 @@
-package com.example.mytrainingpal.screens
+package com.example.mytrainingpal.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
@@ -17,8 +17,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.mytrainingpal.components.nextExerciseUp
 import com.example.mytrainingpal.model.entities.Exercise
 import com.example.mytrainingpal.util.ExerciseDetails
 
@@ -27,16 +25,13 @@ import kotlinx.coroutines.delay
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Break(
-    navController: NavController,
     exerciseList: MutableList<Pair<Exercise, ExerciseDetails>>,
     currentExerciseIndex: Int,
     totalSets: Int,
     currentSet: Int,
-    currentExerciseSetCounter: Int
+    currentExerciseSetCounter: Int,
+    breakTime: Int = 3
 ) {
-    // TODO: get break duration from Toggle
-    val totalBreakTimeInSeconds = 2
-
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
     ) {
@@ -65,7 +60,7 @@ fun Break(
                         contentAlignment = Alignment.Center
                     ) {
                         BreakTimer(
-                            totalTime = totalBreakTimeInSeconds * 1000L,
+                            totalTime = breakTime * 1000L,
                             inactiveBarColor = MaterialTheme.colors.primary,
                             activeBarColor = MaterialTheme.colors.secondary,
                             modifier = Modifier.size(180.dp)
