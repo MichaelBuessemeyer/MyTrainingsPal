@@ -69,7 +69,8 @@ fun HomeScreenContent(
     RememberAddingSoreMusclesToList(musclePainEntryMapViewModel, soreMuscles)
 
     val preferencesState by preferencesViewModel.allPreferences.collectAsState(mapOf<String, Any>())
-    val userName: String = preferencesState[PreferencesConstants.USERNAME_KEY.name].toString()
+    val userName: String =
+        (preferencesState[PreferencesConstants.USERNAME_KEY.name] ?: "Your Name") as String
 
     Column(
         Modifier.verticalScroll(rememberScrollState()),
