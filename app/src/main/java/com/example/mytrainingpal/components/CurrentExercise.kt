@@ -154,7 +154,6 @@ fun CurrentExercise(
                             onValueChange = {
                                 try {
                                     myReps = it.toInt()
-                                    // TODO: last item of last rep doesn't get set properly
                                 } catch (
                                     _: NumberFormatException
                                 ) {
